@@ -39,7 +39,7 @@ public class Stage extends Window {
      * @param name the specified key
      * @param callback the action to store
      * @throws NullPointerException if the specified key or value is <i>null</i>
-     * @see setStyle
+     * @see setStyle(Style style)
      */
     protected void addStyle(Style name, Runnable callback) {
         STAGE_STYLES.put(name, callback);
