@@ -43,6 +43,7 @@ public abstract class Application implements Launchable {
 
 	protected abstract void init();
 
+	//auto show the window
 	@Override
 	public void onstart() {
 		start(primaryStage);

@@ -4,6 +4,9 @@ import java.awt.Rectangle;
 
 @SuppressWarnings("serial")
 public abstract class Window extends FocusableWindow {
+    /**
+     * Sets the window's location to the center of the main screen.
+     */
     public void centerOnScreen() {
         Rectangle bounds = Screen.getBounds();
         double clientWidth = bounds.getWidth(), clientHeight =  bounds.getHeight();

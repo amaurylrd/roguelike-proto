@@ -12,7 +12,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("salut");
         primaryStage.setSize(400, 400);
-        primaryStage.centerOnScreen();
+        //primaryStage.centerOnScreen();
         
         //Routine loop = new Routine(primaryStage);
         //loop.start();
