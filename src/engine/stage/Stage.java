@@ -76,7 +76,7 @@ public class Stage extends Window {
      * 
      * @param name the specified key
      * @param scene the scene to store
-     * @throws NullPointerException if the specified key or value is null
+     * @throws NullPointerException if the specified key or value is <i>null</i>
      * @see setScene(String name)
      * @see setScene(Scene scene)
      */
@@ -89,7 +89,7 @@ public class Stage extends Window {
      * 
      * @param name the specified scene's name
      * @return whether the name is contained in the layout of scene
-     * @see getScene
+     * @see getScene()
      */
     public boolean setScene(String name) {
         if (!scenes.containsKey(name))
@@ -99,11 +99,12 @@ public class Stage extends Window {
     }
 
     /**
-     * Sets the scene to the specified scene if not null. The scene is not added to the map.
+     * Sets the scene to the specified scene if not <i>null</i>.
+     * The scene is not added to the map.
      * 
      * @param scene the specified scene
-     * @return whether the scene is null or not
-     * @see getScene
+     * @return whether the scene is <i>null</i> or not
+     * @see getScene()
      */
     public boolean setScene(Scene scene) {
         if (scene == null)
@@ -116,7 +117,8 @@ public class Stage extends Window {
      * Gets the scene currently displayed.
      * 
      * @return the scene
-     * @see setScene
+     * @see setScene(String name)
+     * @see setScene(Scene scene)
      */
     public Scene getScene() {
         return currentScene;

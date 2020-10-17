@@ -1,6 +1,5 @@
 import engine.application.Application;
 import engine.stage.Stage;
-import engine.stage.Stage.Style;
 
 public class Launcher extends Application {
     public static void main(String[] args) {
