@@ -1,32 +1,9 @@
 package engine.stage;
 
-import javax.swing.JFrame;
 import java.awt.Rectangle;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 
 @SuppressWarnings("serial")
-public abstract class Window extends JFrame {
-    public Runnable onfocus = () -> {};
-    public Runnable onblur = () -> {};
-
-    public Window() {
-        super();
-        addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                if (onfocus != null)
-                    onfocus.run();
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                if (onfocus != null)
-                    onblur.run();
-            }
-        });
-    }
-
+public abstract class Window extends FocusableWindow {
     public void centerOnScreen() {
         Rectangle bounds = Screen.getBounds();
         double clientWidth = bounds.getWidth(), clientHeight =  bounds.getHeight();
