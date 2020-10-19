@@ -55,6 +55,7 @@ public class Screen {
             return screen;
         } catch (HeadlessException exception) {
             exception.printStackTrace(new PrintStream(System.err));
+            //TODO: mettre un message plus clair
         }
         return null;
     }

@@ -13,7 +13,7 @@ public abstract class Application implements Launchable {
 	public static void launch(String[] args) {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		String classdName = Application.class.getName();
-		System.out.println("Debug: Method "+methodName+" in "+classdName+" was called.");
+		System.out.println("Debug: Method " + methodName + " in " + classdName + " was called.");
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		
 		boolean classFound = false;
@@ -25,9 +25,9 @@ public abstract class Application implements Launchable {
 					if (Application.class.isAssignableFrom(caller))
 						Plateform.launchApplication((Class<? extends Application>) caller, args);
 					else
-						throw new RuntimeException("Error: "+caller+" is not a subclass of "+classdName+".");
+						throw new RuntimeException("Error: "+caller+" is not a subclass of " + classdName + ".");
 				} catch (ClassNotFoundException exception) {
-					throw new RuntimeException("Error: Failed to return the class object representing the "+classdName+" super-class.", exception);
+					throw new RuntimeException("Error: Failed to return the class object representing the " + classdName + " super-class.", exception);
 				}
 			}
 		}

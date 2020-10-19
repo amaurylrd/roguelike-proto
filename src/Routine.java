@@ -56,6 +56,7 @@ public class Routine {
                             }
                             catch (InterruptedException e) {
                                 e.printStackTrace(new PrintStream(System.err));
+                                //TODO: mettre un message plus clair
                             }
                             currentTime = System.nanoTime();
                         }
@@ -75,7 +76,8 @@ public class Routine {
         try {
 			thread.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace(new PrintStream(System.err));
+            e.printStackTrace(new PrintStream(System.err));
+            //TODO: mettre un message plus clair
 		}
     }
 
