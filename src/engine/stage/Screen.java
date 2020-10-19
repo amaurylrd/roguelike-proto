@@ -46,7 +46,7 @@ public class Screen {
     /**
      * Returns the default screen {@code GraphicsDevice} of the local {@code GraphicsEnvironment}.
      * 
-     * @return the default screen.
+     * @return the default screen
      * @throws HeadlessException - if {@link isHeadless()} returns {@value true}
      */
     public static GraphicsDevice getDefaultScreen() {
@@ -60,6 +60,11 @@ public class Screen {
         return null;
     }
 
+    /**
+     * Returns the bounds of the {@code GraphicsConfiguration} of the primary screen.
+     * 
+     * @return the bounds of the primary screen
+     */
     public static Rectangle getBounds() {
         GraphicsDevice screen = Screen.getPrimaryScreen();
         GraphicsConfiguration configuration = screen.getDefaultConfiguration();

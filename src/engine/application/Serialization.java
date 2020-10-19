@@ -7,9 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Serialization {
+public class Serialization {
     private static String filename = "";
 
+    private Serialization() {}
+    
     public static void save(Serializable object) {
         try {
             FileOutputStream fos = new FileOutputStream(filename);
