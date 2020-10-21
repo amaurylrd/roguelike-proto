@@ -1,5 +1,3 @@
-import java.io.PrintStream;
-
 import engine.stage.Stage;
 
 public class Routine {
@@ -27,8 +25,7 @@ public class Routine {
                     
                     if (!pause) {
                         while (currentTime - lastUpdateTime > updateTime && updateCount < maxUpdates) {
-                            //System.out.println("update");
-                            //TODO: stage.update();
+                            stage.getScene().update(); //update
                             lastUpdateTime += updateTime;
                             updateCount++;
                         }
@@ -36,8 +33,7 @@ public class Routine {
                         lastUpdateTime = currentTime - lastUpdateTime > updateTime ? currentTime - updateTime : lastUpdateTime;
                         float interpolation = Math.min(1f, (float) ((currentTime - lastUpdateTime)/updateTime));
                         
-                        //System.out.println("render");
-                        //TODO: stage.render(interpolation);
+                        stage.getScene().render(interpolation); //draw
                         frameCount++;
                         lastRenderTime = currentTime;
 
@@ -53,10 +49,8 @@ public class Routine {
                             Thread.yield();
                             try {
                                 Thread.sleep(1);
-                            }
-                            catch (InterruptedException e) {
-                                e.printStackTrace(new PrintStream(System.err));
-                                //TODO: mettre un message plus clair
+                            } catch (InterruptedException exception) {
+                                throw new RuntimeException("Error: Fails to sleep, the main loop has been interrupted by another thread.", exception);
                             }
                             currentTime = System.nanoTime();
                         }
@@ -67,17 +61,22 @@ public class Routine {
     }
 
     public synchronized void start() {
-        running = true;
-        thread.start();
+        if (!running) {
+            running = true;
+            try {
+                thread.start();
+            } catch (IllegalThreadStateException exception) {
+                throw new RuntimeException("Error: Occurs when trying to start a thread already running.", exception);
+            }
+        }
     }
 
     public synchronized void stop() {
         running = false;
         try {
 			thread.join();
-		} catch (InterruptedException e) {
-            e.printStackTrace(new PrintStream(System.err));
-            //TODO: mettre un message plus clair
+		} catch (InterruptedException exception) {
+            throw new RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread.", exception);
 		}
     }
 

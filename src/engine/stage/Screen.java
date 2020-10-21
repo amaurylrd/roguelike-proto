@@ -7,7 +7,6 @@ import java.awt.GraphicsConfiguration;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.HeadlessException;
-import java.io.PrintStream;
 
 public class Screen {
     private Screen() {}
