@@ -1,5 +1,8 @@
 package engine.application;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import engine.stage.Stage;
 
 @SuppressWarnings("unchecked")
@@ -46,6 +49,12 @@ public abstract class Application implements Launchable {
 	//auto show the window
 	@Override
 	public void onstart() {
+		primaryStage.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent event) {
+				stop();
+			}
+		});
 		start(primaryStage);
 		primaryStage.setVisible(true);
 	}
