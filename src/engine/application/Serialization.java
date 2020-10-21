@@ -21,8 +21,7 @@ public class Serialization {
                 oos.flush();
                 oos.close();
             } catch (IOException exception) {
-                throw new RuntimeException("Error: .", exception);
-                //TODO: mettre un message plus clair
+                throw new RuntimeException("Error: Occurs when writint the stream header in the file " + filename + ".", exception);
             }
             fos.close();
         } catch (IOException exception) {
