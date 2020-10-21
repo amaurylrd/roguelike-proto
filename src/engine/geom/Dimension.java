@@ -7,15 +7,15 @@ public class Dimension {
     /**
      * The width dimension. (negative values can't be used)
      */
-    protected double width;
+    private double width;
 
     /**
      * The height dimension. (negative values can't be used)
      */
-    protected double height;
+    private double height;
     
     /**
-     * Constructs a {@code Dimension} and initializes it to the specified width and specified height.
+     * Constructs a {@code Dimension} and initializes it to the specified {@code width} and {@code height}.
      * 
      * @param width the specified width
      * @param height the specified height
@@ -111,6 +111,31 @@ public class Dimension {
      */
     public Dimension getSize() {
         return new Dimension(width, height);
+    }
+
+    /**
+     * Creates and returns a copy of this object.
+     */
+    @Override
+    public Dimension clone() {
+        return getSize();
+    }
+    
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     */
+    @Override 
+    public boolean equals(Object object) {
+        if (this == object)
+            return true; 
+        if (object == null)
+            return false; 
+        
+        if (!(object instanceof Dimension))
+            return false; 
+        
+        Dimension downcast = (Dimension) object;
+        return width == downcast.width && height == downcast.height;
     }
 
     /**

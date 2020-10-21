@@ -7,12 +7,12 @@ public class Position {
     /**
      * The x coordinate of the point.
      */
-    public double x;
+    private double x;
     
     /**
      * The y coordinate of the point.
      */
-    public double y;
+    private double y;
 
     /**
      * Constructs and initializes a {@code Position} with the specified coordinates.
@@ -119,6 +119,31 @@ public class Position {
      */
     public void translateY(double dy) {
         setY(y + dy);
+    }
+
+    /**
+     * Creates and returns a copy of this object.
+     */
+    @Override
+    public Position clone() {
+        return getLocation();
+    }
+    
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     */
+    @Override 
+    public boolean equals(Object object) {
+        if (this == object)
+            return true; 
+        if (object == null)
+            return false; 
+        
+        if (!(object instanceof Position))
+            return false; 
+        
+        Position downcast = (Position) object;
+        return x == downcast.x && y == downcast.y;
     }
 
     /**
