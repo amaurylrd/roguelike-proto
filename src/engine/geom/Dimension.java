@@ -26,7 +26,7 @@ public class Dimension {
     }
 
     /**
-     * Throws an <code>Exception</code> if the specified value is either NaN, infinite or negative.
+     * Throws an {@code Exception} if the specified value is either <i>NaN</i>, infinite or negative.
      * 
      * @param value the specified value
      * @param name the name of the variable
@@ -52,7 +52,7 @@ public class Dimension {
         return width;
     }
 
-     /**
+    /**
      * Returns the height of the dimension.
      * 
      * @return the height of the dimension
@@ -63,13 +63,13 @@ public class Dimension {
     }
 
     /**
-     * Sets the width of the dimension to the specified width.
+     * Sets the width of the dimension to the specified {@code width}.
      * 
      * @param width the specified width
      * @throws ArithmeticException if the width is NaN or infinite
      * @throws IllegalArgumentException if the width is negative
-     * @see getWidth
-     * @see validate
+     * @see getWidth()
+     * @see validate(double value, String name)
      */
     public void setWidth(double width) {
         validate(width, "width");
@@ -77,13 +77,13 @@ public class Dimension {
     }
 
     /**
-     * Sets the height of the dimension to the specified height.
+     * Sets the height of the dimension to the specified {@code height}.
      * 
      * @param height the specified height
      * @throws ArithmeticException if the height is NaN or infinite
      * @throws IllegalArgumentException if the height is negative
-     * @see getHeight
-     * @see validate
+     * @see getHeight()
+     * @see validate(double value, String name)
      */
     public void setHeight(double height) {
         validate(height, "height");
@@ -91,13 +91,13 @@ public class Dimension {
     }
 
     /**
-     * Sets the size of the dimension to the specified width and height.
+     * Sets the size of the dimension to the specified {@code width} and {@code height}.
      * 
      * @param width the specified width
      * @param height the specified height
-     * @see getSize
-     * @see setWidth
-     * @see setHeight
+     * @see getSize(double width, double height)
+     * @see setWidth(double width)
+     * @see setHeight(double height)
      */
     public void setSize(double width, double height) {
         setWidth(width);
@@ -107,17 +107,17 @@ public class Dimension {
     /** 
      * Gets the size of the dimension.
      *
-     * @return a new instance of <code>Dimension2D</code> with the same width and height
+     * @return a new instance of {@code Dimension} with the same width and height
      */
-    public Dimension2D getSize() {
-        return new Dimension2D(width, height);
+    public Dimension getSize() {
+        return new Dimension(width, height);
     }
 
     /**
-     * Returns a string representation of the values of this <code>Dimension2D</code> object's height and width fields.
+     * Returns a string representation of the values of this {@code Dimension} object's height and width fields.
      */
     @Override
     public String toString() {
-        return this.getClass().getSimpleName()+"[width:"+width+", height:"+height+"]";
+        return this.getClass().getSimpleName() + "[width:" + width + ", height:" + height + "]";
     }
 }
