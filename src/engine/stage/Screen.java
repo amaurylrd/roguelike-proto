@@ -54,10 +54,8 @@ public class Screen {
             GraphicsDevice screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             return screen;
         } catch (HeadlessException exception) {
-            exception.printStackTrace(new PrintStream(System.err));
-            //TODO: mettre un message plus clair
+            throw new RuntimeException("Error: Environnement does not support mouse, keyboard or display.", exception);
         }
-        return null;
     }
 
     /**

@@ -19,6 +19,7 @@ public class Launcher extends Application {
 
     @Override
     public void stop() {
+        //save game Serialization.save()
     }
 
     @Override
