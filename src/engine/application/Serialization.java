@@ -30,7 +30,7 @@ public class Serialization {
     }
 
     public static Serializable load() {
-        Serializable x = null;
+        Serializable proxy = null;
         try {
             FileInputStream fis = new FileInputStream(filename);
             try {
@@ -52,6 +52,6 @@ public class Serialization {
             throw new RuntimeException("Error: Failed to open or close the file " + filename + ".", exception);
         }
         //new File("../Save/sauvegarde.dat").delete(); ou pas
-        return x;
+        return proxy;
     }
 }

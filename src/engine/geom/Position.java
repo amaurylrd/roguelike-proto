@@ -108,7 +108,7 @@ public class Position {
      * @see setX(int x)
      */
     public void translateX(int dx) {
-        setX(this.x + dx);
+        setX(x + dx);
     }
 
     /**
@@ -118,7 +118,7 @@ public class Position {
      * @see setY(int y)
      */
     public void translateY(int dy) {
-        setY(this.y + dy);
+        setY(y + dy);
     }
 
     /**
