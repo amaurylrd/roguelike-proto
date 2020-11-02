@@ -1,28 +1,24 @@
 import engine.application.Application;
+import engine.scene.Entity;
+import engine.scene.Scene;
 import engine.stage.Stage;
 
 public class Launcher extends Application {
     public static void main(String[] args) {
         Application.launch(args);
-        System.out.println("message");
     }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("salut");
-        primaryStage.setSize(400, 400);
-        //primaryStage.centerOnScreen();
-        
-        //Routine loop = new Routine(primaryStage);
-        //loop.start();
+        primaryStage.setUndecorated(true);
+        primaryStage.addScene("test", new Scene());
+        primaryStage.setScene("test");
+        primaryStage.thread.start();
     }
 
     @Override
-    public void stop() {
-        //save game Serialization.save()
-    }
+    public void stop() {}
 
     @Override
-    protected void init() {
-    }
+    protected void init() {}
 }

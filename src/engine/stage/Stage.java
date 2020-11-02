@@ -1,74 +1,33 @@
 package engine.stage;
 
-import javax.swing.JFrame;
+import engine.scene.Scene;
+
 import java.util.Map;
 import java.util.Hashtable;
-
-import engine.scene.Scene;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * The class {@code Stage} is the top level container of the application.
  */
 @SuppressWarnings("serial")
 public class Stage extends Window {
-    public enum Style {
-        WINDOWED, FULLSCREEN, WINDOWED_FULLSCREEN;
-    }
-
-    private final Map<Style, Runnable> STAGE_STYLES = new Hashtable<Style, Runnable>();
-
-    /**
-     * Applies a default style to the window if it is not displayed.
-     * 
-     * @param style the name of the style
-     * @return <i>true</i> if the style could be applied, <i>false</i> otherwise
-     */
-    public boolean setStyle(Style style) {
-        if (!isDisplayable() && STAGE_STYLES.containsKey(style)) {
-            STAGE_STYLES.get(style).run();
-            toFront();
-            requestFocusInWindow();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Associates a specified action with the specified key in the map of styles.
-     * 
-     * @param name the specified key
-     * @param callback the action to store
-     * @throws NullPointerException if the specified key or value is <i>null</i>
-     * @see setStyle(Style style)
-     */
-    protected void addStyle(Style name, Runnable callback) {
-        STAGE_STYLES.put(name, callback);
-    }
-
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
-    private Scene currentScene;
+    private String currentScene = "";
+    private String deepcopy = "";
+    private static Stage instance = null;
 
-    public Stage() {
-        super();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private Stage() {}
 
-        addStyle(Style.WINDOWED, () -> {
-            setBounds(Screen.getBounds());
-            setUndecorated(false);
-            setExtendedState(JFrame.NORMAL);
-        });
-
-        addStyle(Style.FULLSCREEN, () -> {
-            setBounds(Screen.getBounds());
-            setUndecorated(true);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-        });
-
-        addStyle(Style.WINDOWED_FULLSCREEN, () -> {
-            setBounds(Screen.getBounds());
-            setUndecorated(false);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-        });
+    public static Stage create() {
+        if (instance == null)
+            instance = new Stage();
+        return instance;
     }
 
     /**
@@ -76,12 +35,13 @@ public class Stage extends Window {
      * 
      * @param name the specified key
      * @param scene the scene to store
-     * @throws NullPointerException if the specified key or value is <i>null</i>
      * @see setScene(String name)
-     * @see setScene(Scene scene)
      */
     public void addScene(String name, Scene scene) {
-        scenes.put(name, scene);
+        if (name != null && scene != null) {
+            scenes.put(name, scene);
+            scene.bind(this);
+        }
     }
 
     /**
@@ -94,33 +54,99 @@ public class Stage extends Window {
     public boolean setScene(String name) {
         if (!scenes.containsKey(name))
             return false;
-        currentScene = scenes.get(name);
-        return true;
-    }
-
-    /**
-     * Sets the scene to the specified scene if not <i>null</i>.
-     * The scene is not added to the map.
-     * 
-     * @param scene the specified scene
-     * @return whether the scene is <i>null</i> or not
-     * @see getScene()
-     */
-    public boolean setScene(Scene scene) {
-        if (scene == null)
-            return false;
-        currentScene = scene;
+        currentScene = name;
         return true;
     }
 
     /**
      * Gets the scene currently displayed.
      * 
-     * @return the scene
+     * @return the current scene
      * @see setScene(String name)
-     * @see setScene(Scene scene)
      */
     public Scene getScene() {
-        return currentScene;
+        return currentScene == "" || !scenes.containsKey(currentScene) ? null : scenes.get(currentScene);
     }
+
+    public void save() {
+        try {
+            FileOutputStream fos = new FileOutputStream(deepcopy);
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject((Serializable) this);
+                oos.flush();
+                oos.close();
+            } catch (IOException exception) {
+                throw new RuntimeException("Error: Occurs when writing the stream header in the file " + deepcopy + ".", exception);
+            }
+            fos.close();
+        } catch (IOException exception) {
+            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + " for serialiation.", exception);
+        }
+    }
+
+    private Stage restore() {
+        Stage proxy = null;
+        try {
+            FileInputStream fis = new FileInputStream(deepcopy);
+            try {
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                try {
+                    proxy = (Stage) ois.readObject();
+                    ois.close();
+                } catch (IOException | ClassNotFoundException exception) {
+                    throw new RuntimeException("Error: Failed to read the serialized object from stream.", exception);
+                }
+                fis.close();
+            } catch (IOException exception) {
+                throw new RuntimeException("Error: Failed to read the serialized file " + deepcopy + ".", exception);
+            }
+        } catch (IOException exception) {
+            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + ".", exception);
+        }
+        return proxy;
+    }
+
+    private boolean saveExists() {
+        return new File(deepcopy).exists();
+    }
+
+    // getScene().clear();
+    //                 getScene().render(getScene().getBuffer());
+    //                 getScene().show();
+
+    private volatile boolean running = false;
+    private volatile boolean paused = false;
+    public Thread thread = new Thread(new Runnable() {
+        public void run() {
+            
+            
+            running = true;
+            while (running) {
+                System.nanoTime();
+                if (!paused) {
+                    Scene sc = getScene();
+                    sc.clear();
+                    sc.update(0.2f);
+                    sc.render(sc.getContext());
+                    sc.show();
+                }
+            }
+        }
+
+        public synchronized void stop() {
+            running = false;
+            try {
+			    thread.join();
+		    } catch (InterruptedException exception) {
+                throw new RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread.", exception);
+		    }
+        }
+        
+        public void pause() {
+            paused = !paused;
+        }
+    });
+
+    
 }

@@ -1,10 +1,5 @@
 package engine.scene;
 
 public class Camera {
-    
-    public Camera(int x, int y) {
-
-    }
-
-
+    public Camera(int xoff, int yoff) {}
 }

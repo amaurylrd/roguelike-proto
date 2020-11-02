@@ -1,13 +1,13 @@
 package engine.application;
 
+import engine.stage.Stage;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import engine.stage.Stage;
-
 @SuppressWarnings("unchecked")
 public abstract class Application implements Launchable {
-	private Stage primaryStage = new Stage();
+	private Stage primaryStage = Stage.create();
 
 	public static void launch() {
 		Application.launch(null);
@@ -61,6 +61,7 @@ public abstract class Application implements Launchable {
 	@Override
 	public void onstop() {
 		stop();
+		primaryStage.save();
 		primaryStage.dispose();
 		System.exit(0);
 	}

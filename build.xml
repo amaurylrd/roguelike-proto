@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="roguelike-proto" default="default" basedir="./">
+	<property name="src.dir" value="./src"/>
+	<property name="bin.dir" value="./bin"/>
+	<property name="doc.dir" value="./javadoc"/>
+
+	<target name="default" depends="clean,compile,run,javadoc"></target>
+
+	<target name="compile">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
+			<compilerarg value="-Xlint:-serial"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classpath="${bin.dir}" classname="Launcher" fork="true" failonerror="false"/>
+	</target>
+
+	<target name="clean">
+		<delete>
+  			<fileset dir="." includes="**/*.class"/>
+		</delete>
+	</target>
+	
+	<target name="javadoc" depends="compile">
+		<delete dir="${doc.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<javadoc destdir="${doc.dir}">
+			<fileset dir="${src.dir}"/>
+		</javadoc>
+	</target>
+</project>

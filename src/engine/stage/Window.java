@@ -1,9 +1,17 @@
 package engine.stage;
 
 import java.awt.Rectangle;
+import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public abstract class Window extends FocusableWindow {
+public abstract class Window extends JFrame {
+    public Window() {
+        super();
+        setBounds(Screen.getBounds());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+
     /**
      * Sets the window's location to the center of the main screen.
      */

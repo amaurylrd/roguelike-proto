@@ -1,14 +1,12 @@
 import engine.stage.Stage;
 
-public class Routine {
-    private Thread thread;
+public class Routine implements Runnable {
+    private final Thread thread = new Thread(this);
     private volatile boolean running = false;
     private volatile boolean pause = false;
 
-    public Routine(Stage stage) {
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
+    @Override
+    public void run() {
                 int fps = 60, ups = 60; 
                 long updateTime = 1000000000/ups;
                 long renderTime = 1000000000/fps;
@@ -25,7 +23,7 @@ public class Routine {
                     
                     if (!pause) {
                         while (currentTime - lastUpdateTime > updateTime && updateCount < maxUpdates) {
-                            stage.getScene().update(); //update
+                            //stage.getScene().update(); //update
                             lastUpdateTime += updateTime;
                             updateCount++;
                         }
@@ -33,7 +31,7 @@ public class Routine {
                         lastUpdateTime = currentTime - lastUpdateTime > updateTime ? currentTime - updateTime : lastUpdateTime;
                         float interpolation = Math.min(1f, (float) ((currentTime - lastUpdateTime)/updateTime));
                         
-                        stage.getScene().render(interpolation); //draw
+                        //stage.getScene().render(interpolation); //draw
                         frameCount++;
                         lastRenderTime = currentTime;
 
@@ -57,8 +55,6 @@ public class Routine {
                     }
                 }
             }
-        });
-    }
 
     public synchronized void start() {
         if (!running) {

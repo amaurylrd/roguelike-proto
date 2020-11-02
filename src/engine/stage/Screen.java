@@ -57,12 +57,12 @@ public class Screen {
         }
     }
 
-    /**
-     * Returns the bounds of the {@code GraphicsConfiguration} of the primary screen.
-     * 
-     * @return the bounds of the primary screen
-     */
-    public static Rectangle getBounds() {
+   /**
+    * Returns the inner bounds of the {@code GraphicsConfiguration} of the primary screen.
+    *
+    * @return the bounds of the primary screen without task bar
+    */
+    public static Rectangle getInnerBounds() {
         GraphicsDevice screen = Screen.getPrimaryScreen();
         GraphicsConfiguration configuration = screen.getDefaultConfiguration();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(configuration);
@@ -72,5 +72,15 @@ public class Screen {
         bounds.width -= (insets.left + insets.right);
         bounds.height -= (insets.top + insets.bottom);
         return bounds;
+    }
+
+    /**
+     * Returns the bounds of the {@code GraphicsConfiguration} of the primary screen.
+     * 
+     * @return the bounds of the primary screen
+     */
+    public static Rectangle getBounds() {
+        GraphicsDevice screen = Screen.getPrimaryScreen();
+        return screen.getDefaultConfiguration().getBounds();
     }
 }
