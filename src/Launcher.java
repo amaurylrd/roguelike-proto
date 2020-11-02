@@ -1,5 +1,4 @@
 import engine.application.Application;
-import engine.scene.Entity;
 import engine.scene.Scene;
 import engine.stage.Stage;
 

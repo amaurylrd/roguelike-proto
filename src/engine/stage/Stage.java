@@ -51,7 +51,7 @@ public class Stage extends Window {
      * @return whether the name is contained in the layout of scene
      * @see getScene()
      */
-    public boolean setScene(String name) {
+    public boolean setScene(String name) { //changer dans le timer
         if (!scenes.containsKey(name))
             return false;
         currentScene = name;
@@ -111,25 +111,38 @@ public class Stage extends Window {
         return new File(deepcopy).exists();
     }
 
-    // getScene().clear();
-    //                 getScene().render(getScene().getBuffer());
-    //                 getScene().show();
-
     private volatile boolean running = false;
     private volatile boolean paused = false;
     public Thread thread = new Thread(new Runnable() {
         public void run() {
-            
-            
-            running = true;
+            final int UPS = 60;
+            final int UPDATE_TIME = 1000000000/UPS;
+            final int MAX_UPDATES = 5;
+
+            long lastUpdateTime = System.nanoTime();
+            Scene scene = getScene();
+            running = true; //overide de start
             while (running) {
-                System.nanoTime();
+                int updateCount = 0;
                 if (!paused) {
-                    Scene sc = getScene();
-                    sc.clear();
-                    sc.update(0.2f);
-                    sc.render(sc.getContext());
-                    sc.show();
+                    long currentTime = System.nanoTime();
+                
+                    while (currentTime - lastUpdateTime > UPDATE_TIME && updateCount < MAX_UPDATES) {
+                        //scene.update(currentTime - lastUpdateTime);
+                        System.out.println(updateCount);
+                        System.out.println(lastUpdateTime);
+                        System.out.println(currentTime);
+                        
+                        lastUpdateTime += UPDATE_TIME;
+                        updateCount++;
+                    }
+
+                    lastUpdateTime = currentTime - lastUpdateTime > UPDATE_TIME ? currentTime - UPDATE_TIME : lastUpdateTime;
+                    float interpolation = Math.min(1f, (float) ((currentTime - lastUpdateTime)/UPDATE_TIME));
+                    
+                    scene.clear();
+                    scene.render(scene.getContext());
+                    scene.show();
                 }
             }
         }
