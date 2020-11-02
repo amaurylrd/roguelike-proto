@@ -8,7 +8,11 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.HeadlessException;
 
-public class Screen {
+/**
+ * The class {@code Screen} describes the characteristics of a graphics destination such as monitor.
+ * In a virtual device multi-screen environment in which the desktop area could span multiple physical screen devices, the bounds of the Screen objects are relative to the Screen.primary.
+ */
+public final class Screen {
     private Screen() {}
 
     /**
@@ -83,4 +87,14 @@ public class Screen {
         GraphicsDevice screen = Screen.getPrimaryScreen();
         return screen.getDefaultConfiguration().getBounds();
     }
+
+    /**
+     * Gets the resolution of this screen.
+     * 
+     * @return The resolution of the primary screen
+     */
+    public double getScale() {
+        Rectangle bounds = Screen.getBounds();
+        return bounds.height/bounds.width;
+    } 
 }
