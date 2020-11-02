@@ -55,6 +55,7 @@ public abstract class Application implements Launchable {
 			}
 		});
 		start(primaryStage);
+		primaryStage.pack();
 		primaryStage.setVisible(true);
 	}
 
