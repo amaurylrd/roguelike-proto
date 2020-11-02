@@ -9,7 +9,8 @@ public abstract class Window extends JFrame {
         super();
         setBounds(Screen.getBounds());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
     }
 
     /**
