@@ -17,6 +17,8 @@ public class Rectangle {
      */
     public Position position;
 
+    private double rotation = Math.PI;
+
     /**
      * Constructs a new {@code Rectangle} to the specified {@code x}, {@code y}, {@code width}, and {@code height}.
      *
@@ -180,6 +182,37 @@ public class Rectangle {
      */
     public boolean contains(double x, double y, double width, double height) {
         return contains(x, y) && x + width <= dimension.getWidth() && y + height <= dimension.getHeight();
+    }
+
+    /**
+     * Rotates the Z axis of this {@code Rectangle} in counter-clockwise direction.
+     * The point (x, y) becomes (xcosθ−ysinθ, xsinθ+ycosθ).
+     * 
+     * @param theta the angle of rotation in radians
+     */
+    public void rotate(double theta) {
+        double x = position.getX(), y = position.getY();
+        position.setX(Math.cos(theta) * x - Math.sin(theta) * y);
+        position.setY(Math.sin(theta) * x + Math.cos(theta) * y);
+        rotation = theta;
+    }
+
+    /**
+     * Gets the rotation of this {@code Rectangle} in radians.
+     * 
+     * @return the rotation theta
+     */
+    public double getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Gets the rotation of any rectangle in radians.
+     * 
+     * @return the rotation theta
+     */
+    public static double getRotation(double x, double y, double oppositeX, double oppositeY) {
+        return Math.atan((x - oppositeX)/(y - oppositeY));
     }
 
     /**

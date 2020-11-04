@@ -11,7 +11,7 @@ public class Scene extends Canvas implements Drawable {
     private Camera camera;
     private Map<Integer, Collection<Entity>> gameObjects = new TreeMap<Integer, Collection<Entity>>(); 
     //plus tard remplacer la liste par un hierarchy tree
-     
+
     public class Test extends Entity {
         int x = 100;
         int y = 300;

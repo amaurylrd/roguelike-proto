@@ -131,39 +131,8 @@ public class Stage extends Window {
                 scene.clear();
                 scene.render(scene.getContext());
                 scene.show();
+            }
         }
-    }
-            // final int UPS = 60;
-            // final int UPDATE_TIME = 1000000000/UPS;
-            // final int MAX_UPDATES = 5;
-
-            // long lastUpdateTime = System.nanoTime();
-            // Scene scene = getScene();
-            // running = true; //overide de start
-            // while (running) {
-            //     int updateCount = 0;
-            //     if (!paused) {
-            //         long currentTime = System.nanoTime();
-                
-            //         while (currentTime - lastUpdateTime > UPDATE_TIME && updateCount < MAX_UPDATES) {
-            //             //scene.update(currentTime - lastUpdateTime);
-            //             System.out.println(updateCount);
-            //             System.out.println(lastUpdateTime);
-            //             System.out.println(currentTime);
-                        
-            //             lastUpdateTime += UPDATE_TIME;
-            //             updateCount++;
-            //         }
-
-            //         lastUpdateTime = currentTime - lastUpdateTime > UPDATE_TIME ? currentTime - UPDATE_TIME : lastUpdateTime;
-            //         float interpolation = Math.min(1f, (float) ((currentTime - lastUpdateTime)/UPDATE_TIME));
-                    
-            //         scene.clear();
-            //         scene.render(scene.getContext());
-            //         scene.show();
-            //     }
-            // }
-        //}
 
         public synchronized void stop() {
             running = false;
