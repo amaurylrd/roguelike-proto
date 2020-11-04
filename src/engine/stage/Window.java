@@ -3,22 +3,25 @@ package engine.stage;
 import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
-public abstract class Window extends JFrame implements WindowFocusListener {
+public abstract class Window extends JFrame implements WindowFocusListener, ComponentListener {
     public Window() {
         super();
         setBounds(Screen.getBounds());
         setFocusable(true);
-        setResizable(false);
-        setUndecorated(true);
+        //setResizable(false);
+        //setUndecorated(true);
 
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
+        addComponentListener(this);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getRootPane().registerKeyboardAction(event -> {
@@ -46,9 +49,7 @@ public abstract class Window extends JFrame implements WindowFocusListener {
      * @param event the event to be processed
      */
     @Override
-    public void windowGainedFocus(WindowEvent event) {
-        handleFocus(true, event);
-    }
+    public void windowGainedFocus(WindowEvent event) {}
 
     /**
      * Invoked when the window is no longer the focused Window, which means
@@ -58,9 +59,38 @@ public abstract class Window extends JFrame implements WindowFocusListener {
      * @param event the event to be processed
      */
     @Override
-    public void windowLostFocus(WindowEvent event) {
-        handleFocus(false, event);
-    }
+    public void windowLostFocus(WindowEvent event) {}
 
-    public abstract void handleFocus(boolean focused, WindowEvent event); 
+
+    /**
+     * Invoked when the component's size changes.
+     * 
+     * @param event the event to be processed
+     */
+    @Override
+    public void componentResized(ComponentEvent event) {}
+
+    /**
+     * Invoked when the component's position changes.
+     * 
+     * @param event the event to be processed
+     */
+    @Override
+    public void componentMoved(ComponentEvent event) {}
+
+    /**
+     * Invoked when the component has been made visible.
+     * 
+     * @param event the event to be processed
+     */
+    @Override
+    public void componentShown(ComponentEvent event) {}
+
+    /**
+     * Invoked when the component has been made invisible.
+     * 
+     * @param event the event to be processed
+     */
+    @Override
+    public void componentHidden(ComponentEvent event) {}
 }

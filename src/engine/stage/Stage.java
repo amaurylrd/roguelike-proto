@@ -4,7 +4,6 @@ import engine.scene.Scene;
 
 import java.util.Map;
 import java.util.Hashtable;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,7 +22,8 @@ public class Stage extends Window {
     private String deepcopy = "";
     private static Stage instance = null;
 
-    private Stage() {}
+    private Stage() {
+    }
 
     public static Stage create() {
         if (instance == null)
@@ -151,10 +151,4 @@ public class Stage extends Window {
             paused = !paused;
         }
     });
-
-    @Override
-    public void handleFocus(boolean focused, WindowEvent event) {
-        // TODO Auto-generated method stub
-
-    }
 }
