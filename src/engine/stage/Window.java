@@ -1,13 +1,12 @@
 package engine.stage;
 
+import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import javax.swing.AbstractAction;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import static javax.swing.KeyStroke.getKeyStroke;
-import static java.awt.event.KeyEvent.VK_ESCAPE;
-import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
 public abstract class Window extends JFrame implements WindowFocusListener {
@@ -17,18 +16,14 @@ public abstract class Window extends JFrame implements WindowFocusListener {
         setFocusable(true);
         setResizable(false);
         setUndecorated(true);
-        
+
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getRootPane().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), "ESC");
-        getRootPane().getActionMap().put("ESC", new AbstractAction() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent event) {
-                dispose();
-            }
-        });
+        getRootPane().registerKeyboardAction(event -> {
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
     /**

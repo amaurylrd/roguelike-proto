@@ -52,7 +52,7 @@ public abstract class Application implements Launchable {
 		primaryStage.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {
-				stop();
+				onstop();
 			}
 		});
 		start(primaryStage);
@@ -63,9 +63,8 @@ public abstract class Application implements Launchable {
 	@Override
 	public void onstop() {
 		stop();
-		primaryStage.save();
+		//primaryStage.save(); need debug
 		primaryStage.setVisible(false);
-		primaryStage.dispatchEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSING));
 		primaryStage.dispose();
 		System.exit(0);
 	}

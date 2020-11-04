@@ -36,7 +36,7 @@ public abstract class Canvas {
 
     public void show() {
         onscreen.drawImage(offscreenImage, 0, 0, null);
-        rootPane.repaint();
+        rootPane.getContentPane().repaint();
         rootPane.revalidate();
     }
 
