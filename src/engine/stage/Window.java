@@ -16,8 +16,8 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
         super();
         setBounds(Screen.getBounds());
         setFocusable(true);
-        //setResizable(false);
-        //setUndecorated(true);
+        setResizable(false);
+        setUndecorated(true);
 
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
@@ -40,7 +40,7 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
         double centerY = bounds.getMinY() + (clientHeight - windowHeight) / 2;
         setLocation(Double.isNaN(centerX) ? 0 : (int) centerX, Double.isNaN(centerY) ? 0 : (int) centerY);
     }
-
+    
     /**
      * Invoked when the window is set to be the focused Window, which means
      * that the Window, or one of its subcomponents, will receive keyboard
