@@ -9,7 +9,6 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setUndecorated(true);
         primaryStage.addScene("test", new Scene());
         primaryStage.setScene("test");
         primaryStage.thread.start();

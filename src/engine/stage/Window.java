@@ -2,6 +2,10 @@ package engine.stage;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import javax.swing.AbstractAction;
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
+import static javax.swing.KeyStroke.getKeyStroke;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
 
@@ -10,10 +14,21 @@ public abstract class Window extends JFrame implements WindowFocusListener {
     public Window() {
         super();
         setBounds(Screen.getBounds());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setFocusable(true);
+        setResizable(false);
+        setUndecorated(true);
+        
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getRootPane().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), "ESC");
+        getRootPane().getActionMap().put("ESC", new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent event) {
+                dispose();
+            }
+        });
     }
 
     /**
@@ -36,7 +51,9 @@ public abstract class Window extends JFrame implements WindowFocusListener {
      * @param event the event to be processed
      */
     @Override
-    public void windowGainedFocus(WindowEvent event) {}
+    public void windowGainedFocus(WindowEvent event) {
+        handleFocus(true, event);
+    }
 
     /**
      * Invoked when the window is no longer the focused Window, which means
@@ -46,5 +63,9 @@ public abstract class Window extends JFrame implements WindowFocusListener {
      * @param event the event to be processed
      */
     @Override
-    public void windowLostFocus(WindowEvent event) {}
+    public void windowLostFocus(WindowEvent event) {
+        handleFocus(false, event);
+    }
+
+    public abstract void handleFocus(boolean focused, WindowEvent event); 
 }

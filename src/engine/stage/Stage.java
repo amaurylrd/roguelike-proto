@@ -4,6 +4,7 @@ import engine.scene.Scene;
 
 import java.util.Map;
 import java.util.Hashtable;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +23,8 @@ public class Stage extends Window {
     private String deepcopy = "";
     private static Stage instance = null;
 
-    private Stage() {}
+    private Stage() {
+    }
 
     public static Stage create() {
         if (instance == null)
@@ -33,7 +35,7 @@ public class Stage extends Window {
     /**
      * Associates the specified scene with the specified key in the map of scene.
      * 
-     * @param name the specified key
+     * @param name  the specified key
      * @param scene the scene to store
      * @see setScene(String name)
      */
@@ -51,7 +53,7 @@ public class Stage extends Window {
      * @return whether the name is contained in the layout of scene
      * @see getScene()
      */
-    public boolean setScene(String name) { //changer dans le timer
+    public boolean setScene(String name) { // changer dans le timer
         if (!scenes.containsKey(name))
             return false;
         currentScene = name;
@@ -77,11 +79,13 @@ public class Stage extends Window {
                 oos.flush();
                 oos.close();
             } catch (IOException exception) {
-                throw new RuntimeException("Error: Occurs when writing the stream header in the file " + deepcopy + ".", exception);
+                throw new RuntimeException("Error: Occurs when writing the stream header in the file " + deepcopy + ".",
+                        exception);
             }
             fos.close();
         } catch (IOException exception) {
-            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + " for serialiation.", exception);
+            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + " for serialiation.",
+                    exception);
         }
     }
 
@@ -117,13 +121,13 @@ public class Stage extends Window {
         public void run() {
             final int TARGET_FPS = 60;
             final long RENDER_TIME = 1000000000 / TARGET_FPS;
-            
+
             long lastUpdateTime = System.nanoTime();
             Scene scene = getScene();
             while (true) {
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
-                
+
                 double elapsed = updateTime / (double) RENDER_TIME;
                 scene.update((float) elapsed);
                 lastUpdateTime = currentTime;
@@ -137,16 +141,21 @@ public class Stage extends Window {
         public synchronized void stop() {
             running = false;
             try {
-			    thread.join();
-		    } catch (InterruptedException exception) {
-                throw new RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread.", exception);
-		    }
+                thread.join();
+            } catch (InterruptedException exception) {
+                throw new RuntimeException(
+                        "Error: Fails to join, the main loop has been interrupted by another thread.", exception);
+            }
         }
-        
+
         public void pause() {
             paused = !paused;
         }
     });
 
-    
+    @Override
+    public void handleFocus(boolean focused, WindowEvent event) {
+        // TODO Auto-generated method stub
+
+    }
 }

@@ -48,6 +48,7 @@ public abstract class Application implements Launchable {
 
 	@Override
 	public void onstart() {
+		primaryStage.requestFocusInWindow();
 		primaryStage.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {
