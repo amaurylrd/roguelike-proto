@@ -64,6 +64,8 @@ public abstract class Application implements Launchable {
 	public void onstop() {
 		stop();
 		primaryStage.save();
+		primaryStage.setVisible(false);
+		primaryStage.dispatchEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSING));
 		primaryStage.dispose();
 		System.exit(0);
 	}
