@@ -1,46 +1,15 @@
 package engine.scene.entity;
 
-import engine.geom.shape.Rectangle;
+import engine.geom.Veclocity;
 
-public abstract class Entity implements Drawable {
-    protected Rectangle offbox;
-    private boolean opaque = false;
+public abstract class Entity extends Component implements Collidable {
+    protected Veclocity veclocity;
     private boolean grounded = false;
     private boolean solid = false;
-    private int layer;
-    //add animation, hitbox
 
-    public Entity(int x, int y, double width, double height, int zindex) {
-        init(x, y, width, height, zindex);
-    }
-
-    public Entity(int x, int y, double width, double height) {
-        init(x, y, width, height, 0);
-    }
-
-    public void init(int x, int y, double width, double height, int zindex) {
-        offbox = new Rectangle(x, y, width, height);
-        setLayer(zindex);
-    }
-
-    /**
-     * Sets opacity as specified.
-     * 
-     * @param isOpaque <i>true</i> if this component should be opaque
-     * @see isOpaque()
-     */
-    public void setOpaque(boolean isOpaque) {
-    	opaque = isOpaque;
-    }
-
-    /**
-     * Checks whether or not this component is opaque.
-     * 
-     * @return <i>true</i> if this component is completely opaque, <i>false</i> otherwise
-     * @see setOpaque(boolean isOpaque)
-     */
-    public boolean isOpaque() {
-    	return opaque;
+    public Entity(double x, double y, double width, double height, int layer) {
+        super(x, y, width, height, layer);
+        veclocity = new Veclocity(0, 0);
     }
 
     /**
@@ -82,22 +51,31 @@ public abstract class Entity implements Drawable {
     public boolean isSolid() {
     	return solid;
     }
-
-    /**
-     * Gets the z-index of this component.
-     * 
-     * @return the z-index
-     */
-    public int getLayer() {
-        return layer;
-    }
-
-    /**
-     * Sets the z-index of this component.
-     * 
-     * @param zindex the stack level of the generated box in the current stacking context
-     */
-    public void setLayer(int zindex) {
-        layer = zindex;
-    }
 }
+
+//     protected Rectangle offbox;
+//     /**
+//      * velocity x
+//      */
+//     private double xspeed;
+//     private double yspeed;
+//     private int layer;
+    
+//     private boolean grounded = false;
+//     private boolean solid = false;
+    
+//     //add animation, hitbox
+
+//     public Entity(int x, int y, double width, double height, int zindex) {
+//         init(x, y, width, height, zindex);
+//     }
+
+//     public Entity(int x, int y, double width, double height) {
+//         init(x, y, width, height, 0);
+//     }
+
+//     public void init(int x, int y, double width, double height, int zindex) {
+//         offbox = new Rectangle(x, y, width, height);
+//         setLayer(zindex);
+//     }
+// }

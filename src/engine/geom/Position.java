@@ -5,14 +5,9 @@ package engine.geom;
  */
 public class Position {
     /**
-     * The x coordinate of the point.
+     * The coordinates (x, y) of the point.
      */
-    private double x;
-    
-    /**
-     * The y coordinate of the point.
-     */
-    private double y;
+    private double[] position;
 
     /**
      * Constructs and initializes a {@code Position} with the specified coordinates.
@@ -22,27 +17,17 @@ public class Position {
      * @see setLocation(double x, double y)
      */
     public Position(double x, double y) {
-        setLocation(x, y);
+        position = new double[] {x, y};
     }
 
     /**
-     * Returns the x coordinate of the point.
+     * Returns the x coordinate of the coordinates.
      * 
      * @return the x coordinate
      * @see setX(double x)
      */
     public double getX() {
-        return x;
-    }
-
-    /**
-     * Returns the y coordinate of the point.
-     * 
-     * @return the y coordinate
-     * @see setY(double y)
-     */
-    public double getY() {
-        return y;
+        return position[0];
     }
 
     /**
@@ -52,7 +37,17 @@ public class Position {
      * @see getX()
      */
     public void setX(double x) {
-        this.x = x;
+        position[0] = x;
+    }
+
+    /**
+     * Returns the y coordinate of the coordinates.
+     * 
+     * @return the y coordinate
+     * @see setY(double y)
+     */
+    public double getY() {
+        return position[1];
     }
 
     /**
@@ -62,7 +57,7 @@ public class Position {
      * @see getY()
      */
     public void setY(double y) {
-        this.y = y;
+        position[1] = y;
     }
 
     /**
@@ -85,7 +80,7 @@ public class Position {
      * @see setLocation(double x, double y)
      */
     public Position getLocation() {
-        return new Position(x, y);
+        return new Position(getX(), getY());
     }
 
     /**
@@ -108,7 +103,7 @@ public class Position {
      * @see setX(double x)
      */
     public void translateX(double dx) {
-        setX(x + dx);
+        setX(getX() + dx);
     }
 
     /**
@@ -118,7 +113,7 @@ public class Position {
      * @see setY(double y)
      */
     public void translateY(double dy) {
-        setY(y + dy);
+        setY(getY() + dy);
     }
 
     /**
@@ -138,12 +133,10 @@ public class Position {
             return true; 
         if (object == null)
             return false; 
-        
         if (!(object instanceof Position))
-            return false; 
-        
+            return false;
         Position downcast = (Position) object;
-        return x == downcast.x && y == downcast.y;
+        return getX() == downcast.getX() && getY() == downcast.getY();
     }
 
     /**
@@ -153,6 +146,6 @@ public class Position {
      */
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "[x:" + x + ", y:" + y + "]";
+        return this.getClass().getSimpleName() + "[x:" + getX() + ", y:" + getY() + "]";
     }
 }

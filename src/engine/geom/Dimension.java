@@ -5,14 +5,9 @@ package engine.geom;
  */
 public class Dimension {
     /**
-     * The width dimension. (negative values can't be used)
+     * The width and height of this {@code Dimension}. (negative values can't be used)
      */
-    private double width;
-
-    /**
-     * The height dimension. (negative values can't be used)
-     */
-    private double height;
+    private double[] dimension;
     
     /**
      * Constructs a {@code Dimension} and initializes it to the specified {@code width} and {@code height}.
@@ -22,7 +17,7 @@ public class Dimension {
      * @see setSize(double width, double height)
      */
     public Dimension(double width, double height) {
-        setSize(width, height);
+        dimension = new double[] {width, height};
     }
 
     /**
@@ -49,7 +44,7 @@ public class Dimension {
      * @see setWidth(double width)
      */
     public double getWidth() {
-        return width;
+        return dimension[0];
     }
 
     /**
@@ -59,7 +54,7 @@ public class Dimension {
      * @see setHeight(double height)
      */
     public double getHeight() {
-        return height;
+        return dimension[1];
     }
 
     /**
@@ -73,7 +68,7 @@ public class Dimension {
      */
     public void setWidth(double width) {
         validate(width, "width");
-        this.width = width;
+        dimension[0] = width;
     }
 
     /**
@@ -87,7 +82,7 @@ public class Dimension {
      */
     public void setHeight(double height) {
         validate(height, "height");
-        this.height = height;
+        dimension[1] = height;
     }
 
     /**
@@ -110,7 +105,7 @@ public class Dimension {
      * @return a new instance of {@code Dimension} with the same width and height
      */
     public Dimension getSize() {
-        return new Dimension(width, height);
+        return new Dimension(getWidth(), getHeight());
     }
 
     /**
@@ -127,15 +122,13 @@ public class Dimension {
     @Override 
     public boolean equals(Object object) {
         if (this == object)
-            return true; 
+            return true;
         if (object == null)
-            return false; 
-        
+            return false;
         if (!(object instanceof Dimension))
-            return false; 
-        
+            return false;
         Dimension downcast = (Dimension) object;
-        return width == downcast.width && height == downcast.height;
+        return getWidth() == downcast.getWidth() && getHeight() == downcast.getHeight();
     }
 
     /**
@@ -143,6 +136,6 @@ public class Dimension {
      */
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "[width:" + width + ", height:" + height + "]";
+        return this.getClass().getSimpleName() + "[width:" + getWidth() + ", height:" + getHeight() + "]";
     }
 }
