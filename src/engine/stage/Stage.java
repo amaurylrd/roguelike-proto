@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Stage extends Window {
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
     private String currentScene = "";
-    private String deepcopy = "";
+    private String deepcopy = "test.lol";
     private static Stage instance = null;
 
     private Stage() {
@@ -74,17 +74,18 @@ public class Stage extends Window {
             FileOutputStream fos = new FileOutputStream(deepcopy);
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject((Serializable) this);
+                System.out.println("write");
+                oos.writeObject(this);
+                System.out.println("flush");
                 oos.flush();
+                System.out.println("close");
                 oos.close();
             } catch (IOException exception) {
-                throw new RuntimeException("Error: Occurs when writing the stream header in the file " + deepcopy + ".",
-                        exception);
+                throw new RuntimeException("Error: Occurs when writing the stream header in the file " + deepcopy + ".", exception);
             }
             fos.close();
         } catch (IOException exception) {
-            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + " for serialiation.",
-                    exception);
+            throw new RuntimeException("Error: Failed to open or close the file " + deepcopy + " for serialiation.", exception);
         }
     }
 

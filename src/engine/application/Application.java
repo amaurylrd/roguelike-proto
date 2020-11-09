@@ -63,8 +63,8 @@ public abstract class Application implements Launchable {
 	@Override
 	public void onstop() {
 		stop();
-		//primaryStage.save(); need debug
 		primaryStage.setVisible(false);
+		primaryStage.save();
 		primaryStage.dispose();
 		System.exit(0);
 	}
