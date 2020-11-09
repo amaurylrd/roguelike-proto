@@ -1,4 +1,4 @@
-package engine.scene;
+package engine.scene.entity;
 
 import engine.geom.shape.Rectangle;
 

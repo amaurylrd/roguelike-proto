@@ -1,5 +1,8 @@
 package engine.scene;
 
+import engine.scene.entity.Entity;
+import engine.scene.entity.Drawable;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
