@@ -3,6 +3,7 @@ package engine.scene;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 import engine.scene.entity.particle.Particle;
+import sandbox.TestParticle;
 import sandbox.TestRectangle;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class Scene extends Canvas implements Drawable {
     public void update(float dt) {
         
         for (int i = 0; i < 3; i++)
-            add(new Particle(200, 200, 50, 2));
+            add(new TestParticle());
         
         for (Collection<Component> layer : gameObjects.values()) {
             Iterator<Component> iterator = layer.iterator();

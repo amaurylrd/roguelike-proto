@@ -1,15 +1,15 @@
 package engine.scene.entity;
 
-import engine.geom.Veclocity;
+import engine.physics2d.Vector;
 
 public abstract class Entity extends Component implements Collidable {
-    protected Veclocity veclocity;
+    protected Vector veclocity;
     private boolean grounded = false;
     private boolean solid = false;
 
     public Entity(double x, double y, double width, double height, int layer) {
         super(x, y, width, height, layer);
-        veclocity = new Veclocity(0, 0);
+        veclocity = new Vector(0, 0);
     }
 
     /**

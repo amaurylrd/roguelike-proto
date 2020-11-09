@@ -6,13 +6,13 @@ import engine.util.Random;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
-public class Particle extends Entity {
+public abstract class Particle extends Entity {
     private int rgb = 0xffffffff;
     private int alpha = 255;
 
     public Particle(int x, int y, double size, int layer) {
         super(x, y, size, size, layer);
-        veclocity.setSpeed(Random.random(-1, 1), Random.random(-1, 1));
+        veclocity.set(Random.random(-1, 1), Random.random(-1, 1));
     }
 
     public void setColor(int r, int g, int b) {
@@ -28,7 +28,7 @@ public class Particle extends Entity {
     public void update(float dt) {
         bounds.position.setX(bounds.position.getX() + veclocity.getX()*dt);
         bounds.position.setY(bounds.position.getY() + veclocity.getY()*dt);
-        alpha -= 1;
+        alpha -= 1; //fade
     }
 
     @Override
