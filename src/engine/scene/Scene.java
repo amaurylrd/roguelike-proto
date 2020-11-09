@@ -1,81 +1,76 @@
 package engine.scene;
 
-import engine.scene.entity.Entity;
+import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
+
+import sandbox.TestRectangle;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
-import static java.util.Arrays.asList;
 
 public class Scene extends Canvas implements Drawable {
     private Camera camera;
-    private Map<Integer, Collection<Entity>> gameObjects = new TreeMap<Integer, Collection<Entity>>(); 
-    //plus tard remplacer la liste par un hierarchy tree
-
-    public class Test extends Entity {
-        int x = 100;
-        int y = 300;
-        int w = 500;
-        int h = 500;
-        int xspeed = 20;
-        int yspeed = 30;
-
-        public Test(int z) {
-            super(0, 0, 0, 0, z);
-        }
-
-        @Override
-        public void update(float dt) {
-            x += xspeed * dt;
-        }
-
-        @Override
-        public void render(Graphics2D graphics) {
-            graphics.draw(new java.awt.geom.Rectangle2D.Double(x, y, w, h));
-        }
-    }
+    private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
+    //plus tard peut-être remplacer la liste par un hierarchy tree si besoin d'exprimer des dépendances
 
     public Scene() {
-        add(new Test(-2));
-        add(new Test(1));
+        add(new TestRectangle(-2), new TestRectangle(1));
     }
 
-    public void add(Entity... components) {
-        for (Entity component : components) {
-            Collection<Entity> layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new ArrayList<Entity>());
-            layer.add(component);
+    public void add(Component... components) {
+        for (Component component : components) {
+            if (component != null) {
+                Collection<Component> layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new ArrayList<Component>());
+                layer.add(component);
+            }
         }
     }
 
-    public void remove(Entity... components) {
-        Collection<Entity> remaining = asList(components);
-        for (Collection<Entity> layer : gameObjects.values()) {
-            while (!remaining.isEmpty()) {
-                for (Entity component : remaining)
-                    if (layer.remove(component))
-                        remaining.remove(component);
+    public void remove(Component... components) {
+        for (Component component : components) {
+            int key = component.getLayer();
+            if (gameObjects.containsKey(key)) {
+                Collection<Component> layer = gameObjects.get(key);
+                List<Component> list = Collections.synchronizedList(new ArrayList<Component>(layer));
+                synchronized (list) {
+                    Iterator<Component> iterator = list.iterator();
+                    while (iterator.hasNext() && !component.equals(iterator.next())) {
+                        iterator.remove();
+                        if (list.isEmpty())
+                            gameObjects.remove(key);
+                    }
+                }
             }
         }
     }
 
     @Override
     public void update(float dt) {
-        for (Collection<Entity> layer : gameObjects.values())
-            for (Entity component : layer)
-                component.update(dt);
+        for (Collection<Component> layer : gameObjects.values()) {
+            Iterator<Component> iterator = layer.iterator();
+            while (iterator.hasNext()) {
+                Component component = iterator.next();
+                if (component.isRemovable())
+                    iterator.remove();
+                else
+                    component.update(dt);
+            }
+        }
     }
 
     @Override
     public void render(Graphics2D graphics) {
-        //graphics.drawImage(mon iamge);
-
-        //render tile/background <- tree
-        //render entites <- une queue
-        for (Collection<Entity> layer : gameObjects.values())
-            for (Entity component : layer)
-                component.render(graphics);
+        for (Collection<Component> layer : gameObjects.values()) {
+            for (Component component : layer) {
+                if (component.isOpaque())
+                    component.render(graphics);
+            }
+        }
     }
 }
