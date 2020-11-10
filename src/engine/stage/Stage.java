@@ -122,8 +122,9 @@ public class Stage extends Window {
             final long RENDER_TIME = 1000000000 / TARGET_FPS;
 
             long lastUpdateTime = System.nanoTime();
-            Scene scene = getScene();
+            System.out.println("Debug: The stage is now running the game loop.");
             while (true) {
+                Scene scene = getScene();
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
 
