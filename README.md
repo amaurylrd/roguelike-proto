@@ -8,4 +8,4 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 [contributors-shield]: https://img.shields.io/github/contributors/amaurylrd/roguelike-proto.svg?style=flat-square
 [contributors-url]: https://github.com/amaurylrd/roguelike-proto/graphs/contributors
 
-[![](https://opencollective.com/html-react-parser/contributors.svg?width=890&button=false)](https://github.com/remarkablemark/html-react-parser/graphs/contributors)
+[![](https://opencollective.com/html-react-parser/contributors.svg?width=890&button=false)](https://github.com/amaurylrd/roguelike-proto/graphs/contributors)
