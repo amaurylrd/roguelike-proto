@@ -117,13 +117,16 @@ public class Stage extends Window {
     private volatile boolean running = false;
     private volatile boolean paused = false;
     public Thread thread = new Thread(new Runnable() {
+        @Override
         public void run() {
             final int TARGET_FPS = 60;
             final long RENDER_TIME = 1000000000 / TARGET_FPS;
 
             long lastUpdateTime = System.nanoTime();
             System.out.println("Debug: The stage is now running the game loop.");
-            while (true) {
+            running = true;
+            while (running) {
+                //TODO: if  (!paused)
                 Scene scene = getScene();
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
@@ -136,16 +139,15 @@ public class Stage extends Window {
                 scene.render(scene.getContext());
                 scene.show();
             }
-        }
-
-        public synchronized void stop() {
-            running = false;
             try {
                 thread.join();
             } catch (InterruptedException exception) {
-                throw new RuntimeException(
-                        "Error: Fails to join, the main loop has been interrupted by another thread.", exception);
+                throw new RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread.", exception);
             }
+        }
+
+        public void stop() {
+            running = false;
         }
 
         public void pause() {
