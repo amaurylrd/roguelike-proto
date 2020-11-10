@@ -7,4 +7,4 @@
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 
-[![Build Status](https://travis-ci.org/amaurylrd/roguelike-proto.png?branch=master)](https://travis-ci.org/amaurylrd/roguelike-proto)
+*Continuous Integration* [![Build Status](https://travis-ci.org/amaurylrd/roguelike-proto.png?branch=master)](https://travis-ci.org/amaurylrd/roguelike-proto)
