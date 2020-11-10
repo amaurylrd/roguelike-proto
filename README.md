@@ -4,8 +4,9 @@
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
 [contributors-url]: https://github.com/amaurylrd/roguelike-proto/graphs/contributors
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
-
+Project Link: [https://github.com/your_username/repo_name](projet-url)
 
 [![Build Status](https://travis-ci.org/amaurylrd/roguelike-proto.png?branch=master)](https://travis-ci.org/amaurylrd/roguelike-proto "Continuous Integration")
+
+[projet-url]: https://github.com/amaurylrd/roguelike-proto/
