@@ -50,4 +50,8 @@ public class Vector {
         x *= factor;
         y *= factor;
     }
+
+    public double dot(Vector vector) {
+		return x * vector.x + y * vector.y;
+    }
 }
