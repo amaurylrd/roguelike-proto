@@ -4,64 +4,42 @@
 	<property name="dst.dir" value="./bin"/>
 	<property name="doc.dir" value="./javadoc"/>
 
-	<property name="scala-compiler" value="include/runtime/scala-compiler-0.28.0.jar"/>
-	<property name="scala-library" value="include/runtime/scala-library-2.12.2.jar"/>
-	<property name="scala-reflect" value="include/runtime/scala-reflect-2.12.2.jar"/>
+	<path id="scala.classpath">
+    	<fileset dir="./include/runtime">
+			<include name="*.jar"/>
+		</fileset>
+    </path>
 
 	<target name="default" depends="clean,compile,run,javadoc"></target>
 
-	<!-- <target name="init">
-    	<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar"/>
+	<target name="compile" description="build">
+		<fileset id="test" dir="./include/runtime">
+			<include name="*.jar"/>
+		</fileset>
 
-    	<path id="build.classpath">
-      		<pathelement location="${scala-library.jar}"/>
-      		<pathelement location="${dst.dir}"/>
-    	</path>
-    	
+		<echo message="JDK root: ${java.version.checked}"/>
+		<echo message="Javac version: ${scala.home}"/>
 		<taskdef resource="scala/tools/ant/antlib.xml">
-    		<classpath>
-        		<pathelement location="${scala.home}/lib/scala-compiler.jar"   />
-        		<pathelement location="${scala-library.jar}"   />
-      		</classpath>
+      		<classpath refid="scala.classpath"/>
     	</taskdef>
 
-		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="build.classpath">
-      		<include name="**/*.scala"/>
-    	</scalac>
-  	</target> -->
-
-	<target name="scalac">
-		<path id="build.classpath">
-    		<pathelement location="${scala-library}"/>
-    		<pathelement location="${dst.dir}"/>
-  		</path>
-
-    	<taskdef resource="scala/tools/ant/antlib.xml">
-    		<classpath>
-      			<pathelement location="${scala-compiler}"/>
-      			<pathelement location="${scala-reflect}"/>
-      			<pathelement location="${scala-library}"/>
-    		</classpath>
-  		</taskdef>
-
-		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="build.classpath">
+		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath">
     		<include name="**/*.scala"/>
+			<include name="**/*.java"/>
   		</scalac>
-  	</target>
 
-	<target name="compile">
+		<echo message="JDK version: ${java.version}"/>
 		<javac srcdir="${src.dir}" destdir="${dst.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
 			<compilerarg value="-Xlint:-serial"/>
 		</javac>
 	</target>
 
 	<target name="run" depends="compile">
-		<java classpath="${dst.dir}" classname="Launcher" fork="true" failonerror="false"/>
+		<java classpath="${dst.dir}" classpathref="scala.classpath" classname="Launcher" fork="true" failonerror="false"/>
 	</target>
-	<!-- classpathref="build.classpath" -->
 
 	<target name="clean">
-		<delete>
+		<delete failonerror="false">
   			<fileset dir="." includes="**/*.class"/>
 		</delete>
 	</target>
