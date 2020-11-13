@@ -13,12 +13,10 @@
 	<target name="default" depends="clean,compile,run,javadoc"></target>
 
 	<target name="compile" description="build">
-		<fileset id="test" dir="./include/runtime">
+		<fileset dir="./include/runtime">
 			<include name="*.jar"/>
 		</fileset>
 
-		<echo message="JDK root: ${java.version.checked}"/>
-		<echo message="Javac version: ${scala.home}"/>
 		<taskdef resource="scala/tools/ant/antlib.xml">
       		<classpath refid="scala.classpath"/>
     	</taskdef>
