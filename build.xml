@@ -1,31 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="roguelike-proto" default="default" basedir="./">
 	<property name="src.dir" value="./src"/>
-	<property name="bin.dir" value="./bin"/>
+	<property name="dst.dir" value="./bin"/>
 	<property name="doc.dir" value="./javadoc"/>
+
+	<property name="scala-compiler" value="include/runtime/scala-compiler-0.28.0.jar"/>
+	<property name="scala-library" value="include/runtime/scala-library-2.12.2.jar"/>
+	<property name="scala-reflect" value="include/runtime/scala-reflect-2.12.2.jar"/>
 
 	<target name="default" depends="clean,compile,run,javadoc"></target>
 
+	<!-- <target name="init">
+    	<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar"/>
+
+    	<path id="build.classpath">
+      		<pathelement location="${scala-library.jar}"/>
+      		<pathelement location="${dst.dir}"/>
+    	</path>
+    	
+		<taskdef resource="scala/tools/ant/antlib.xml">
+    		<classpath>
+        		<pathelement location="${scala.home}/lib/scala-compiler.jar"   />
+        		<pathelement location="${scala-library.jar}"   />
+      		</classpath>
+    	</taskdef>
+
+		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="build.classpath">
+      		<include name="**/*.scala"/>
+    	</scalac>
+  	</target> -->
+
+	<target name="scalac">
+		<path id="build.classpath">
+    		<pathelement location="${scala-library}"/>
+    		<pathelement location="${dst.dir}"/>
+  		</path>
+
+    	<taskdef resource="scala/tools/ant/antlib.xml">
+    		<classpath>
+      			<pathelement location="${scala-compiler}"/>
+      			<pathelement location="${scala-reflect}"/>
+      			<pathelement location="${scala-library}"/>
+    		</classpath>
+  		</taskdef>
+
+		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="build.classpath">
+    		<include name="**/*.scala"/>
+  		</scalac>
+  	</target>
+
 	<target name="compile">
-		<javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
+		<javac srcdir="${src.dir}" destdir="${dst.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
 			<compilerarg value="-Xlint:-serial"/>
 		</javac>
 	</target>
 
 	<target name="run" depends="compile">
-		<java classpath="${bin.dir}" classname="Launcher" fork="true" failonerror="false"/>
+		<java classpath="${dst.dir}" classname="Launcher" fork="true" failonerror="false"/>
 	</target>
+	<!-- classpathref="build.classpath" -->
 
 	<target name="clean">
 		<delete>
   			<fileset dir="." includes="**/*.class"/>
 		</delete>
 	</target>
+
+	<target name="fclean" depends="clean">
+		<delete dir="${doc.dir}"/>
+	</target>
 	
 	<target name="javadoc" depends="compile">
 		<delete dir="${doc.dir}"/>
 		<mkdir dir="${doc.dir}"/>
-		<javadoc destdir="${doc.dir}">
+		<javadoc destdir="${doc.dir}" version="true" deprecation="yes" unchecked="yes">
 			<fileset dir="${src.dir}"/>
 		</javadoc>
 	</target>

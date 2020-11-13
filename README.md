@@ -7,3 +7,18 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 [contributors-url]: https://github.com/amaurylrd/roguelike-proto/graphs/contributors
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
+
+integration
+
+https://ant.apache.org/bindownload.cgi
+
+scalac tasks require Apache Ant version 1.6
+
+Requirements
+Ant 1.6 or higher
+Scala 2.2 or higher
+
+reflect since NEW: For scala 2.10.2 you need scala-reflect: -->
+
+
+ant binary 1.10.9 requires minimum of Java 8 at runtime

@@ -2,7 +2,6 @@ package engine.scene;
 
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
-import engine.scene.entity.particle.Particle;
 import sandbox.TestParticle;
 import sandbox.TestRectangle;
 
