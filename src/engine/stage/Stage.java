@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream;
 public class Stage extends Window {
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
     private String currentScene = "";
-    private String deepcopy = "test.lol";
+    private String deepcopy = "";
     private static Stage instance = null;
 
     private Stage() {
@@ -69,6 +69,7 @@ public class Stage extends Window {
     }
 
     public void save() {
+        //TODO: debug saving game to location
         try {
             FileOutputStream fos = new FileOutputStream(deepcopy);
             try {
