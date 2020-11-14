@@ -28,26 +28,19 @@ This project is a mixed Java and Scala application.
 
 ## Build
 
+https://github.com/amaurylrd/roguelike-proto/blob/main/build.xml
+
 ### *Tasks*
-
-lien vers fichier
-
-| task      | depends   |     |   |   |
-|---------  |----       |  ---|---|---|
-| compile   |           |     |   |   |
-| run       | compile   |     |   |   |
-| clean     |           |     |   |   |
-| fclean    | clean     |     |   |   |
-| javadoc   |           |     |   |   |
 
 Usage :  ``` ant <task>```
 
-default : depends fclean, run, javadoc
-compile: 
-run:
-clean:
-fclean:
-javadoc:
+| task      | depends   | description  |
+|---------  |---------  | -----------  |
+| compile   |           |     |
+| run       | compile   |     |
+| clean     |           |     |
+| fclean    | clean     |     |
+| javadoc   |           |     |
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
