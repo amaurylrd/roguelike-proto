@@ -15,8 +15,7 @@ This project is a mixed Java and Scala application.
 1. [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6 or higher
 1. [Java JRE](https://www.java.com/en/download/) at least 8
 
-> We're living the future so
-> the present is our past.
+> NOTE: scalac ant task require Apache Ant version 1.6
 
 #### *Requirements*
 
