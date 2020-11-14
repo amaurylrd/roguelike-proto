@@ -13,6 +13,9 @@ This project is a mixed Java and Scala application.
 ### *Requirements*
 
 [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6 or higher
+[Java JRE](https://www.java.com/en/download/) at least 8
+
+#### *Requirements*
 
 ## Build Note
 
@@ -45,4 +48,3 @@ ant binary 1.10.9 requires minimum of Java 8 at runtime
 
 2.12.8 scala/tools/antlib.xml removed
 
-java at least 8
