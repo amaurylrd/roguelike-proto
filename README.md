@@ -12,7 +12,7 @@ This project is a mixed Java and Scala application.
 
 ### *Requirements*
 
-xxx
+[![Apache Ant]](https://ant.apache.org/bindownload.cgi) 1.6 or higher
 
 ## Build Note
 
@@ -30,7 +30,7 @@ javadoc:
 This application is using Java and Scala
 integration
 
-https://ant.apache.org/bindownload.cgi
+
 
 scalac tasks require Apache Ant version 1.6
 
