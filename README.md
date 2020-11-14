@@ -13,6 +13,7 @@ This project is a mixed Java and Scala application.
 ### *Requirements*
 
 [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6 or higher
+
 [Java JRE](https://www.java.com/en/download/) at least 8
 
 #### *Requirements*
