@@ -42,6 +42,6 @@ Usage: ``` ant <task>```
 | fclean    | clean     | also removes documentation   |
 | javadoc   |           | generates code documentation |
 
-### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
+# NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
 ...
