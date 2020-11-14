@@ -32,7 +32,7 @@ https://github.com/amaurylrd/roguelike-proto/blob/main/build.xml
 
 ### *Tasks*
 
-Usage :  ``` ant <task>```
+>**USAGE:** ``` ant <task>```
 
 | task      | depends   | description                  |
 |---------  |---------  | ---------------------------  |
