@@ -30,6 +30,9 @@ This project is a mixed Java and Scala application.
 
 ### *Tasks*
 
+
+Usage :  ``` ant xx```
+
 default : depends fclean, run, javadoc
 compile: 
 run:
