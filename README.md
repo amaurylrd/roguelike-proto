@@ -10,7 +10,7 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 
 This project is a mixed Java and Scala application.
 
-### *Requirements
+### *Requirements*
 
 xxx
 
