@@ -10,7 +10,6 @@ import java.util.TreeMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
 
@@ -36,13 +35,12 @@ public class Scene extends Canvas implements Drawable {
         for (Component component : components) {
             int key = component.getLayer();
             if (gameObjects.containsKey(key)) {
-                Collection<Component> layer = gameObjects.get(key);
-                List<Component> list = Collections.synchronizedList(new ArrayList<Component>(layer));
-                synchronized (list) {
-                    Iterator<Component> iterator = list.iterator();
+                Collection<Component> layer = Collections.synchronizedCollection(new ArrayList<Component>(gameObjects.get(key)));
+                synchronized (layer) {
+                    Iterator<Component> iterator = layer.iterator();
                     while (iterator.hasNext() && !component.equals(iterator.next())) {
                         iterator.remove();
-                        if (list.isEmpty())
+                        if (layer.isEmpty())
                             gameObjects.remove(key);
                     }
                 }
