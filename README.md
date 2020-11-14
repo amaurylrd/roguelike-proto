@@ -34,13 +34,13 @@ https://github.com/amaurylrd/roguelike-proto/blob/main/build.xml
 
 Usage :  ``` ant <task>```
 
-| task      | depends   | description  |
-|---------  |---------  | -----------  |
-| compile   |           |     |
-| run       | compile   |     |
-| clean     |           |     |
-| fclean    | clean     |     |
-| javadoc   |           |     |
+| task      | depends   | description                 |
+|---------  |---------  | --------------------------  |
+| compile   |           | builds from src/ to bin/    |
+| run       | compile   | launches the application    |
+| clean     |           | removes all .class files    |
+| fclean    | clean     | also removes documentation  |
+| javadoc   |           | generates the documentation |
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
