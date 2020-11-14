@@ -13,9 +13,7 @@ This project is a mixed Java and Scala application.
 ### *Requirements*
 
 1. [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6 or higher
-1. [Java JRE](https://www.java.com/en/download/) at least 8
-
->**NOTE:** ant binary 1.10.9 requires minimum of Java 8 at runtime
+1. [Java JRE](https://www.java.com/en/download/) at least 8 (since ant binary 1.10.9 requires minimum of Java 8 at runtime)
 
 >**NOTE:** scalac ant task require Apache Ant version 1.6
 
