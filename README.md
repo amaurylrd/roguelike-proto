@@ -26,10 +26,9 @@ This project is a mixed Java and Scala application.
 
 >**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala-compiler.jar files after 2.12.8 
 
+## Build
 
-## Build Note
-
-# Ant tasks
+### *Tasks*
 
 default : depends fclean, run, javadoc
 compile: 
