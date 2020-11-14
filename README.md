@@ -44,21 +44,4 @@ Usage :  ``` ant <task>```
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
-This application is using Java and Scala
-integration
-
-
-
-scalac tasks require Apache Ant version 1.6
-
-Requirements
-Ant 1.6 or higher
-Scala 2.2 or higher
-
-reflect since NEW: For scala 2.10.2 you need scala-reflect: -->
-
-
-ant binary 1.10.9 requires minimum of Java 8 at runtime
-
-2.12.8 scala/tools/antlib.xml removed
-
+...
