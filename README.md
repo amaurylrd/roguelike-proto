@@ -8,11 +8,11 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
-##Development Note
+## Development Note
 
-##Build Note
+## Build Note
 
-Ant tasks
+# Ant tasks
 
 default : depends fclean, run, javadoc
 compile: 
