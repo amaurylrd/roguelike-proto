@@ -19,11 +19,12 @@ This project is a mixed Java and Scala application.
 
 ### *Integration*
 
-1. Scala 2.12.2
+1. Scala 2.12.2 in /include/runtime/
+  1. scala-compiler-2.12.2.jar
+  1. scala-library-2.12.2.jar
+  1. scala-reflect-2.12.2.jar (needed since scala 2.10.2)
 
-2.12.8 scala/tools/antlib.xml removed
-
-reflect since NEW: For scala 2.10.2 you need scala-reflect
+>**NOTE:** scala/tools/antlib.xml was removed after 2.12.8 
 
 ## Build Note
 
