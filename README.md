@@ -15,9 +15,16 @@ This project is a mixed Java and Scala application.
 1. [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6 or higher
 1. [Java JRE](https://www.java.com/en/download/) at least 8
 
+>**NOTE:** ant binary 1.10.9 requires minimum of Java 8 at runtime
 >**NOTE:** scalac ant task require Apache Ant version 1.6
 
-#### *Requirements*
+### *Integration*
+
+1. Scala 2.12.2
+
+2.12.8 scala/tools/antlib.xml removed
+
+reflect since NEW: For scala 2.10.2 you need scala-reflect
 
 ## Build Note
 
