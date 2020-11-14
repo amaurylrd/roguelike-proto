@@ -10,7 +10,7 @@
 		</fileset>
     </path>
 
-	<target name="default" depends="clean,compile,run,javadoc"></target>
+	<target name="default" depends="fclean,run,javadoc"></target>
 
 	<target name="compile" description="build">
 		<fileset dir="./include/runtime">
@@ -21,7 +21,7 @@
       		<classpath refid="scala.classpath"/>
     	</taskdef>
 
-		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath">
+		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath" logging="none">
     		<include name="**/*.scala"/>
 			<include name="**/*.java"/>
   		</scalac>
