@@ -8,6 +8,17 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
+
+Ant tasks
+
+default : depends fclean, run, javadoc
+compile: 
+run:
+clean:
+fclean:
+javadoc:
+
+This application is using Java and Scala
 integration
 
 https://ant.apache.org/bindownload.cgi
