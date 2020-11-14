@@ -8,6 +8,9 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 
 ### NOM DE PROJET (PROJET LICENCE 3 INFORMATIQUE RENNES 1 ISTIC)
 
+##Development Note
+
+##Build Note
 
 Ant tasks
 
