@@ -6,11 +6,11 @@ Project Link: [https://github.com/amaurylrd/roguelike-proto/](https://github.com
 [contributors-shield]: https://img.shields.io/github/contributors/amaurylrd/roguelike-proto.svg?style=flat-square
 [contributors-url]: https://github.com/amaurylrd/roguelike-proto/graphs/contributors
 
-## Development Note
+### Development Note
 
 This project is a mixed Java and Scala application.
 
-# Requirements
+## Requirements
 
 xxx
 
