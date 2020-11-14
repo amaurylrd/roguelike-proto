@@ -30,8 +30,17 @@ This project is a mixed Java and Scala application.
 
 ### *Tasks*
 
+lien vers fichier
 
-Usage :  ``` ant xx```
+| task      | depends   |     |   |   |
+|---------  |----       |  ---|---|---|
+| compile   |           |     |   |   |
+| run       | compile   |     |   |   |
+| clean     |           |     |   |   |
+| fclean    | clean     |     |   |   |
+| javadoc   |           |     |   |   |
+
+Usage :  ``` ant <task>```
 
 default : depends fclean, run, javadoc
 compile: 
