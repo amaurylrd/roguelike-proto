@@ -40,6 +40,7 @@ public abstract class Application implements Launchable {
 	
 	protected void setup() {
 		System.out.println("Debug: The application reached setup functions.");
+		Ressource.preload();
 		init();
 		onstart();
 	}
