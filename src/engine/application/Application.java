@@ -13,10 +13,11 @@ public abstract class Application implements Launchable {
 		Application.launch(null);
 	}
 
+	
 	public static void launch(String[] args) {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		String classdName = Application.class.getName();
-		System.out.println("Debug: Method " + methodName + " in " + classdName + " was called.");
+		Plateform.trace("Debug: Method " + methodName + " in " + classdName + " was called.");
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		
 		boolean classFound = false;
@@ -39,7 +40,7 @@ public abstract class Application implements Launchable {
 	}
 	
 	protected void setup() {
-		System.out.println("Debug: The application reached setup functions.");
+		Plateform.trace("Debug: The application reached setup functions.");
 		Ressource.preload();
 		init();
 		onstart();

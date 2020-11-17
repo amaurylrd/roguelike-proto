@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
 
-public class Ressource {
+public abstract class Ressource {
     private static Hashtable<String, Image> assets;
 
     protected static void preload() {
@@ -16,7 +16,7 @@ public class Ressource {
         String[] ressourceFiles = ressourceFolder.list();
 
         if (ressourceFiles != null) {
-            System.out.println("Debug: " + Ressource.class.getName() + " preloads assets from " + ressourceRoot + ".");
+            Plateform.trace("Debug: " + Ressource.class.getName() + " preloads assets from " + ressourceRoot + ".");
             for (String ressourceFile : ressourceFiles) {
                 String ressourcePath = ressourceRoot + ressourceFile;
                 try {

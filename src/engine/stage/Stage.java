@@ -1,5 +1,6 @@
 package engine.stage;
 
+import engine.application.Plateform;
 import engine.scene.Scene;
 
 import java.util.Map;
@@ -124,7 +125,7 @@ public class Stage extends Window {
             final long RENDER_TIME = 1000000000 / TARGET_FPS;
 
             long lastUpdateTime = System.nanoTime();
-            System.out.println("Debug: The stage is now running the game loop.");
+            Plateform.trace("Debug: The stage is now running the game loop.");
             running = true;
             while (running) {
                 //TODO: if  (!paused)
@@ -132,7 +133,7 @@ public class Stage extends Window {
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
 
-                double elapsed = updateTime / (double) RENDER_TIME;
+                double elapsed = updateTime/(double) RENDER_TIME;
                 scene.update((float) elapsed);
                 lastUpdateTime = currentTime;
 

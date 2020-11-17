@@ -3,8 +3,23 @@ package engine.application;
 import java.lang.reflect.Constructor;
 
 public abstract class Plateform {
+	/**
+	 * Command line arguments.
+	 */
 	public static String[] parameters;
 
+	/**
+	 * Set to true to see debug print.
+	 */
+	public static final boolean debug = true;
+
+	/**
+     * This method is called by the standalone launcher.
+     * It must not be called more than once or an exception will be thrown.
+     *
+     * @param appClass application class
+     * @param args command line arguments
+     */
 	public static void launchApplication(Class<? extends Application> appClass, String[] args) {
 		Plateform.parameters = args == null ? new String[] {} : args;
 		try {
@@ -17,6 +32,13 @@ public abstract class Plateform {
 			}
 		} catch (NoSuchMethodException | SecurityException exception) {
 			throw new RuntimeException("Error: Unable to construct the application instance : " + appClass + ".", exception);
+		}
+	}
+
+	public static void trace(String message) {
+		if (debug) {
+			System.out.println(message);
+			//TODO: ecrire les logs dans un fichier
 		}
 	}
 }
