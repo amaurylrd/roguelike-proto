@@ -24,7 +24,7 @@ This project is a mixed Java and Scala application.
    1. scala-library-2.12.2.jar
    1. scala-reflect-2.12.2.jar (needed since scala 2.10.2)
 
->**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala-compiler.jar files after 2.12.8 
+>**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala compiler unjared files after 2.12.8 
 
 ## Build
 
