@@ -23,7 +23,7 @@ public abstract class Ressource {
                     Image ressource = ImageIO.read(Ressource.class.getResource(ressourcePath));
                     String ressourceName = ressourceFile.substring(0, ressourceFile.lastIndexOf('.'));
                     if (assets.put(ressourceName, ressource) != null)
-                        throw new RuntimeException("Warning: Duplicated occurrence of asset " + ressourceName + " .");
+                        throw new RuntimeException("Warning: Duplicated occurrences of asset " + ressourceName + " .");
                 } catch (IOException exception) {
                     throw new RuntimeException("Error: Fails to load asset " + ressourceFile + " .", exception);
                 }
