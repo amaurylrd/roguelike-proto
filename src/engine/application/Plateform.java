@@ -38,7 +38,6 @@ public abstract class Plateform {
 	public static void trace(String message) {
 		if (debug) {
 			System.out.println(message);
-			//TODO: ecrire les logs dans un fichier
 		}
 	}
 }
