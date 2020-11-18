@@ -11,13 +11,13 @@ public class TestRectangle extends Entity {
 
     @Override
     public void update(float dt) {
-        double x = bounds.position.getX() + 20 * dt;
-        bounds.position.setX(x);
+        double x = bounds.getX() + 20 * dt;
+        bounds.setX(x);
     }
 
     @Override
     public void draw(Graphics2D graphics) {
-        graphics.draw(bounds.Rectangle2D());
+        graphics.draw(bounds.stroke());
     }
 
     @Override

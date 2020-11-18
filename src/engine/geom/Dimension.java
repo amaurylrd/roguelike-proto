@@ -1,23 +1,28 @@
 package engine.geom;
-
 /**
  * The {@code Dimension} class encapsulates the width and height of a component.
+ * Negative width and height can't be used.
  */
 public class Dimension {
     /**
-     * The width and height of this {@code Dimension}. (negative values can't be used)
+     * The width (negative values can't be used).
      */
-    private double[] dimension;
-    
+    public double width;
+
+    /**
+     * The height (negative values can't be used).
+     */
+    public double height;
+
     /**
      * Constructs a {@code Dimension} and initializes it to the specified {@code width} and {@code height}.
      * 
      * @param width the specified width
      * @param height the specified height
-     * @see setSize(double width, double height)
+     * @see setSize
      */
     public Dimension(double width, double height) {
-        dimension = new double[] {width, height};
+        setSize(width, height);
     }
 
     /**
@@ -41,20 +46,20 @@ public class Dimension {
      * Returns the width of the dimension.
      * 
      * @return the width of the dimension
-     * @see setWidth(double width)
+     * @see setWidth
      */
     public double getWidth() {
-        return dimension[0];
+        return width;
     }
 
     /**
      * Returns the height of the dimension.
      * 
      * @return the height of the dimension
-     * @see setHeight(double height)
+     * @see setHeight
      */
     public double getHeight() {
-        return dimension[1];
+        return height;
     }
 
     /**
@@ -63,12 +68,12 @@ public class Dimension {
      * @param width the specified width
      * @throws ArithmeticException if the width is NaN or infinite
      * @throws IllegalArgumentException if the width is negative
-     * @see getWidth()
-     * @see validate(double value, String name)
+     * @see getWidth
+     * @see validate
      */
     public void setWidth(double width) {
         validate(width, "width");
-        dimension[0] = width;
+        this.width = width;
     }
 
     /**
@@ -77,12 +82,12 @@ public class Dimension {
      * @param height the specified height
      * @throws ArithmeticException if the height is NaN or infinite
      * @throws IllegalArgumentException if the height is negative
-     * @see getHeight()
-     * @see validate(double value, String name)
+     * @see getHeight
+     * @see validate
      */
     public void setHeight(double height) {
         validate(height, "height");
-        dimension[1] = height;
+        this.height = height;
     }
 
     /**
@@ -90,9 +95,9 @@ public class Dimension {
      * 
      * @param width the specified width
      * @param height the specified height
-     * @see getSize(double width, double height)
-     * @see setWidth(double width)
-     * @see setHeight(double height)
+     * @see getSize
+     * @see setWidth
+     * @see setHeight
      */
     public void setSize(double width, double height) {
         setWidth(width);
@@ -105,7 +110,7 @@ public class Dimension {
      * @return a new instance of {@code Dimension} with the same width and height
      */
     public Dimension getSize() {
-        return new Dimension(getWidth(), getHeight());
+        return this.clone();
     }
 
     /**
@@ -113,7 +118,7 @@ public class Dimension {
      */
     @Override
     public Dimension clone() {
-        return getSize();
+        return new Dimension(getWidth(), getHeight());
     }
     
     /**

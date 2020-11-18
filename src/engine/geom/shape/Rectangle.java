@@ -1,54 +1,71 @@
 package engine.geom.shape;
 
 import engine.geom.Dimension;
-import engine.geom.Position;
 
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Path2D;
 
 /**
  * The class {@code Rectangle} specifies an area in space.
  */
-public class Rectangle {
+public class Rectangle extends Polygon {
     /**
-     * The dimension of the rectangle.
+     * The {@code Dimension} of the rectangle.
      */
-    public Dimension dimension;
-
-    /**
-     * The top-left corner coordonates of the rectangle.
-     */
-    public Position position;
-
-    private double rotation = Math.PI;
-
+    private Dimension size;
+    
     /**
      * Constructs a new {@code Rectangle} to the specified {@code x}, {@code y},
      * {@code width}, and {@code height}.
      *
-     * @param x      the specified x coordinate
-     * @param y      the specified y coordinate
-     * @param width  the width of the rectangle
+     * @param x the specified x coordinate
+     * @param y he specified y coordinate
+     * @param width the width of the rectangle
      * @param height the height of the rectangle
      */
     public Rectangle(double x, double y, double width, double height) {
-        position = new Position(x, y);
-        dimension = new Dimension(width, height);
+        super(new double[] {x, x + width, x + width, x}, new double[] {y, y, y + height, y + height});
+        size = new Dimension(width, height);
+    }
+    
+    /**
+     * Returns the x coordinate of the coordinates.
+     * 
+     * @return the x coordinate
+     * @see setX
+     */
+    public double getX() {
+        return points[0].x;
     }
 
     /**
-     * Sets the bounding Rectangle of this {@code Rectangle} to the specified
-     * {@code x}, {@code y}, {@code width}, and {@code height}.
-     *
-     * @param x      the specified x
-     * @param y      the specified y
-     * @param width  the specified width
-     * @param height the specified height
-     * @see setSize(double width, double height)
-     * @see setLocation(double x, double y)
+     * Returns the y coordinate of the coordinates.
+     * 
+     * @return the y coordinate
+     * @see setY
      */
-    public void setBounds(double x, double y, double width, double height) {
-        setSize(width, height);
-        setLocation(x, y);
+    public double getY() {
+        return points[0].y;
+    }
+
+    /**
+     * Returns the width of the dimension.
+     * 
+     * @return the width of the dimension
+     * @see setWidth
+     */
+    public double getWidth() {
+        return size.getWidth();
+    }
+
+    /**
+     * Returns the height of the dimension.
+     * 
+     * @return the height of the dimension
+     * @see setHeight
+     */
+    public double getHeight() {
+        return size.getHeight();
     }
 
     /**
@@ -57,170 +74,27 @@ public class Rectangle {
      * @return the bounds of the rectangle
      */
     public Rectangle getBounds() {
-        return new Rectangle(position.getX(), position.getY(), dimension.getWidth(), dimension.getHeight());
-    }
-
-    //TODO:Commentaire
-    public Rectangle2D Rectangle2D() {
-        return new Rectangle2D.Double(position.getX(), position.getY(), dimension.getWidth(), dimension.getHeight());
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     /**
-     * Sets the size of the rectangle to the specified {@code width} and
-     * {@code height}.
+     * Gets the location of the rectangle.
      *
-     * @param width  the specified width
-     * @param height the specified height
-     * @see getSize()
+     * @return the coordinates
+     * @see setLocation
      */
-    public void setSize(double width, double height) {
-        dimension.setSize(width, height);
+    public Point2D.Double getLocation() {
+        return new Point2D.Double(getX(), getY());
     }
 
     /**
-     * Sets the size of the rectangle to the specified {@code width} and
-     * {@code height}.
+     * Gets the size of the rectangle.
      *
-     * @param width  the specified width
-     * @param height the specified height
-     * @see getSize()
+     * @return the dimension
+     * @see setSize
      */
-    public void setSize(Dimension size) {
-        dimension = size.clone();
-    }
-
-    /**
-     * Sets the location of the rectangle to the specified coordinates.
-     *
-     * @param x the new x coordinate
-     * @param y the new y coordinate
-     * @see getLocation()
-     */
-    public void setLocation(double x, double y) {
-        position.setLocation(x, y);
-    }
-
-    /**
-     * Sets the location of the rectangle to the specified coordinates.
-     *
-     * @param location the new top-left corner of the rectangle
-     * @see getLocation()
-     */
-    public void setLocation(Position location) {
-        position = location.clone();
-    }
-
-    /**
-    * Gets the size of the rectangle.
-    *
-    * @return the dimension
-    * @see setSize
-    */
     public Dimension getSize() {
-        return dimension.getSize();
-    }
-
-    /**
-    * Gets the location of the rectangle.
-    *
-    * @return the coordinates
-    * @see setLocation
-    */
-    public Position getLocation() {
-        return position.getLocation();
-    }
-
-    /**
-     * Returns the center of the rectangle.
-     * 
-     * @return the center coordonate
-     * @see getCenterX
-     * @see getCenterY
-     */
-    public Position getCenter() {
-        return new Position(getCenterX(), getCenterY());
-    }
-
-    /**
-     * Returns the x center coordinate of the rectangle.
-     * 
-     * @return the x center coordinate
-     */
-    public double getCenterX() {
-        return position.getX() + dimension.getWidth() * 0.5;
-    }
-
-    /**
-     * Returns the y center coordinate of the rectangle.
-     * 
-     * @return the y center coordinate
-     */
-    public double getCenterY() {
-        return position.getY() + dimension.getHeight() * 0.5;
-    }
-
-    /**
-     * Translates the rectangle the indicated distance, to the right along the X
-     * coordinate axis, and downward along the Y coordinate axis.
-     *
-     * @param dx the distance to move along the X axis
-     * @param dy the distance to move along the Y axis
-     * @see translate(double dx, double dy)
-     */
-    public void translate(double dx, double dy) {
-        position.translate(dx, dy);
-    }
-
-    /**
-     * Checks whether or not this rectangle contains the point at the specified
-     * location (x, y).
-     *
-     * @param px the specified x coordinate
-     * @param py the specified y coordinate
-     * @return <i>true</i> if the point (x, y) is inside this rectangle,
-     *         <i>false</i> otherwise.
-     */
-    public boolean contains(double px, double py) {
-        return px >= position.getX() && py >= position.getY() && px < position.getX() + dimension.getWidth()
-                && py < position.getY() + dimension.getHeight();
-    }
-
-    /**
-     * Checks whether this rectangle entirely contains the rectangle at the
-     * specified location and dimension.
-     * 
-     * @param x      the specified x coordinate
-     * @param y      the specified y coordinate
-     * @param width  the specified width
-     * @param height the specified height
-     * @return <i>true</i> if the rectangle (x, y, width, height) is inside this
-     *         rectangle, <i>false</i> otherwise.
-     * @see contains(double px, double py)
-     */
-    public boolean contains(double x, double y, double width, double height) {
-        return contains(x, y) && x + width <= dimension.getWidth() && y + height <= dimension.getHeight();
-    }
-
-    /**
-     * Rotates the Z axis of this {@code Rectangle} in counter-clockwise direction.
-     * The point (x, y) becomes (xcosθ−ysinθ, xsinθ+ycosθ).
-     * 
-     * @param theta the angle of rotation in radians
-     */
-    public void rotate(double theta) {
-        double x = position.getX(), y = position.getY();
-        position.setX(Math.cos(theta) * x - Math.sin(theta) * y);
-        position.setY(Math.sin(theta) * x + Math.cos(theta) * y);
-        rotation = theta;
-    }
-
-    /**
-     * Gets the rotation of this {@code Rectangle} in radians.
-     * 
-     * @return the rotation theta
-     */
-    public double getRotation() {
-        return rotation;
+        return size.getSize();
     }
 
     /**
@@ -233,35 +107,109 @@ public class Rectangle {
     }
 
     /**
-     * Creates and returns a copy of this object.
+     * Sets the x coordinate of the point to the specified coordinate.
+     *
+     * @param x the new x coordinate
+     * @see getX
      */
-    @Override
-    public Rectangle clone() {
-        return getBounds();
+    public void setX(double x) {
+        validate(x, "x");
+        double offsetX = Math.abs(x - points[0].x);
+        translateX(offsetX);
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one.
+     * Sets the y coordinate of the point to the specified coordinate.
+     *
+     * @param y the new x coordinate
+     * @see getY
      */
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
-        if (object == null)
-            return false;
-
-        if (!(object instanceof Rectangle))
-            return false;
-
-        Rectangle downcast = (Rectangle) object;
-        return dimension.equals(downcast.dimension) && position.equals(downcast.position);
+    public void setY(double y) {
+        validate(y, "y");
+        double offsetY = Math.abs(y - points[0].y);
+        translateY(offsetY);
     }
 
     /**
-     * Returns a string representation of the values of this {@code Rectangle}.
+     * Sets the width of the dimension to the specified {@code width}.
+     * 
+     * @param width the specified width
+     * @throws ArithmeticException if the width is NaN or infinite
+     * @throws IllegalArgumentException if the width is negative
+     * @see getWidth
      */
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + "[" + position + ", " + dimension + "]";
+    public void setWidth(double width) {
+        double offset = Math.abs(width - getWidth());
+        points[1].x += offset;
+        points[2].x += offset;
+        size.setWidth(width);
+    }
+
+    /**
+     * Sets the height of the dimension to the specified {@code height}.
+     * 
+     * @param height the specified height
+     * @throws ArithmeticException if the height is NaN or infinite
+     * @throws IllegalArgumentException if the height is negative
+     * @see getHeight
+     */
+    public void setHeight(double height) {
+        double offset = Math.abs(height - getHeight());
+        points[2].y += offset;
+        points[3].y += offset;
+        size.setHeight(height);
+    }
+
+    /**
+     * Sets the bounding Rectangle of this {@code Rectangle} to the specified
+     * {@code x}, {@code y}, {@code width}, and {@code height}.
+     *
+     * @param x      the specified x
+     * @param y      the specified y
+     * @param width  the specified width
+     * @param height the specified height
+     * @see setSize
+     * @see setLocation
+     */
+    public void setBounds(double x, double y, double width, double height) {
+        setSize(width, height);
+        setLocation(x, y);
+    }
+
+    /**
+     * Sets the location of the rectangle to the specified coordinates.
+     *
+     * @param x the new x coordinate
+     * @param y the new y coordinate
+     * @see getLocation()
+     */
+    public void setLocation(double x, double y) {
+        setX(x);
+        setY(y);
+    }
+
+    /**
+     * Sets the size of the rectangle to the specified {@code width} and
+     * {@code height}.
+     *
+     * @param width  the specified width
+     * @param height the specified height
+     * @see getSize
+     */
+    public void setSize(double width, double height) {
+        setWidth(width);
+        setHeight(height);
+    }
+
+    /**
+     * Sets the size of the rectangle to the specified {@code width} and
+     * {@code height}.
+     *
+     * @param width  the specified width
+     * @param height the specified height
+     * @see getSize
+     */
+    public void setSize(Dimension dimension) {
+        setSize(dimension.width, dimension.height);
     }
 }

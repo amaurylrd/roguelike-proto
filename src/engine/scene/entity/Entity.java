@@ -52,30 +52,3 @@ public abstract class Entity extends Component implements Collidable {
     	return solid;
     }
 }
-
-//     protected Rectangle offbox;
-//     /**
-//      * velocity x
-//      */
-//     private double xspeed;
-//     private double yspeed;
-//     private int layer;
-    
-//     private boolean grounded = false;
-//     private boolean solid = false;
-    
-//     //add animation, hitbox
-
-//     public Entity(int x, int y, double width, double height, int zindex) {
-//         init(x, y, width, height, zindex);
-//     }
-
-//     public Entity(int x, int y, double width, double height) {
-//         init(x, y, width, height, 0);
-//     }
-
-//     public void init(int x, int y, double width, double height, int zindex) {
-//         offbox = new Rectangle(x, y, width, height);
-//         setLayer(zindex);
-//     }
-// }

@@ -16,7 +16,6 @@ import java.awt.Graphics2D;
 public class Scene extends Canvas implements Drawable {
     private Camera camera;
     private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
-    //plus tard peut-être remplacer la liste par un hierarchy tree si besoin d'exprimer des dépendances
 
     public Scene() {
         add(new TestRectangle(-2), new TestRectangle(1));
@@ -53,7 +52,7 @@ public class Scene extends Canvas implements Drawable {
         
         for (int i = 0; i < 3; i++)
             add(new TestParticle());
-        
+                
         for (Collection<Component> layer : gameObjects.values()) {
             Iterator<Component> iterator = layer.iterator();
             while (iterator.hasNext()) {

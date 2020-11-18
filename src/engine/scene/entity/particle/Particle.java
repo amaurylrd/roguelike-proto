@@ -26,16 +26,16 @@ public abstract class Particle extends Entity {
 
     @Override
     public void update(float dt) {
-        bounds.position.setX(bounds.position.getX() + veclocity.getX()*dt);
-        bounds.position.setY(bounds.position.getY() + veclocity.getY()*dt);
+        bounds.setX(bounds.getX() + veclocity.getX()*dt);
+        bounds.setY(bounds.getY() + veclocity.getY()*dt);
         alpha -= 1; //fade
     }
 
     @Override
     public void draw(Graphics2D graphics) {
         graphics.setColor(getColor());
-        double size = bounds.dimension.getWidth();
-        graphics.fill(new java.awt.geom.Ellipse2D.Double(bounds.position.getX(), bounds.position.getY(), size, size));
+        double size = bounds.getSize().width;
+        graphics.fill(new java.awt.geom.Ellipse2D.Double(bounds.getX(), bounds.getY(), size, size));
     }
 
     @Override

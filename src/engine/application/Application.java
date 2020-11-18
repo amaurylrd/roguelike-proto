@@ -50,7 +50,6 @@ public abstract class Application implements Launchable {
 
 	@Override
 	public void onstart() {
-		primaryStage.requestFocusInWindow();
 		primaryStage.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {
@@ -60,6 +59,9 @@ public abstract class Application implements Launchable {
 		start(primaryStage);
 		primaryStage.pack();
 		primaryStage.setVisible(true);
+		primaryStage.requestFocusInWindow();
+		primaryStage.toFront();
+		Plateform.trace("Debug: The frame is now visible.");
 	}
 
 	@Override
