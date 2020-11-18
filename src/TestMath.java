@@ -1,4 +1,4 @@
-public class Math { //arithmetic 2d class
+public class TestMath { //arithmetic 2d class
     //diference final, private construct, abstract ?
 
     public static float lerp(float a, float b, float f) {

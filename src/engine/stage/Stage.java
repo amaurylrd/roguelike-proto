@@ -22,8 +22,7 @@ public class Stage extends Window {
     private String deepcopy = "";
     private static Stage instance = null;
 
-    private Stage() {
-    }
+    private Stage() {}
 
     public static Stage create() {
         if (instance == null)
