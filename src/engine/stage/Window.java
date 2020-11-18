@@ -22,9 +22,11 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
     public Window() {
         super();
         setBounds(Screen.getBounds());
+        setPreferredSize(getSize());
         setFocusable(true);
         setResizable(false);
         setUndecorated(true);
+        setIgnoreRepaint(false);
 
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
