@@ -12,6 +12,10 @@ public class Polygon implements Shape {
 			this.x = x;
 			this.y = y;
 		}
+
+		public double distance(Point p) {
+			return Math.abs((p.x - x)*(p.x - x) + (p.y - y)*(p.y- y));
+		}
 	}
 
 	/**
@@ -22,7 +26,7 @@ public class Polygon implements Shape {
 	/**
 	 * The number of vertices in this {@code Polygon}.
 	 */
-	protected int npoints;
+	protected int vertices;
 
 	/**
      * The rotation in radians applied to this {@code Polygon}. 
@@ -41,8 +45,8 @@ public class Polygon implements Shape {
 	public Polygon(double[] x, double[] y) {
 		validate(x, "x");
 		validate(y, "y");
-		npoints = Math.min(x.length, y.length);
-		points = new Point[npoints];
+		vertices = Math.min(x.length, y.length);
+		points = new Point[vertices];
 		for (int i = 0; i < points.length; ++i)
 			points[i] = new Point(x[i], y[i]);
 	}
@@ -85,18 +89,18 @@ public class Polygon implements Shape {
      *
      * @param x the specified x coordinate
      * @param y the specified y coordinate
-     * @return <i>true</i> if the point (x, y) is inside this {@code Polygon}, <i>false</i> otherwise.
+     * @return <i>true</i> if the point (x, y) is inside this {@code Polygon}, <i>false</i> otherwise
      */
 	@Override
 	public boolean contains(double x, double y) {
-		if (npoints > 2) {
+		if (vertices > 2) {
 			boolean pos = false, neg = false;
-			for (int i = 0; i < npoints; ++i) {
+			for (int i = 0; i < vertices; ++i) {
 				double px = points[i].x, py = points[i].y;
 				if (px == x && py == y)
 					return true;
 
-				int j = i + 1 != npoints ? i + 1 : 0;
+				int j = (i + 1)%vertices;
 				double crossProduct = (x - px)*(points[j].y - py) - (y - py)*(points[j].x - px);
 				if (crossProduct > 0)
 					pos = true;
@@ -111,26 +115,95 @@ public class Polygon implements Shape {
 	}
 
 	/**
+	 * Checks whenever two polygons intersect.
+	 * It considers overlapping not an insertection.
+	 * 
+	 * @param polygon the second polygon
+	 * @return <i>true</i> if the {@code polygon} intersects this {@code Polygon}, <i>false</i> otherwise
+	 */
+	public boolean intersects(Polygon polygon) {
+		for (int i = 0; i < vertices; ++i) {
+			int ii = (i + 1)%vertices;
+			Point[] edge = new Point[] {points[i], points[ii]};
+			for (int j = 0; j < polygon.vertices; ++j) {
+				int jj = (j + 1)%polygon.vertices;
+				Point[] edge1 = new Point[] {polygon.points[j], polygon.points[jj]};
+				
+				double a = edge[1].y - edge[0].y;
+				double b = edge[0].x - edge[1].x;
+				double c = a*edge[0].x + b*edge[0].y;
+				double a1 = edge1[1].y - edge1[0].y;
+				double b1 = edge1[0].x - edge1[1].x;
+				double c1 = a1*edge1[0].x + b1*edge1[0].y;
+
+				double determinant = a*b1 - a1*b;
+				if (determinant >= 0.0000001) {
+					double x = (b1*c - b*c1)/determinant;
+					double y = (a*c1 - a1*c)/determinant;
+					
+					if (inside(x, edge[0].x, edge[1].x) && inside(x, edge1[0].x, edge1[1].x)
+						&& inside(y, edge[0].y, edge[1].y) && inside(y, edge1[0].y, edge1[1].y))
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if {@code x} is inside {@code a} and {@code b}.
+	 * 
+	 * @param x the specicifed value to verify
+	 * @param a the first number
+	 * @param b the second number
+	 * @return <i>true</i> if {@code x} is inside the first and second number, <i>false</i> otherwise
+	 */
+	private boolean inside(double x, double a, double b) {
+		if (a < b)
+			return a <= x && x <= b;
+		return b < a ? a >= x && x >= b : a == x;
+	}
+
+	/**
+	 * Gives the area of this {@code Polygon}.
+	 * 
+	 * @return the area
+	 */
+	public double area() {
+		double area = 0.0;
+		for (int i = 0; i < vertices; ++i) {
+			int j = (i + 1)%vertices;
+			area += points[i].x*points[j].y;
+			area -= points[i].y*points[j].x;
+		}
+		return 0.5*Math.abs(area);
+	}
+
+	/**
      * Translates this point, at location (x, y) by {@code dx} along the x axis.
+	 * Post-translation the point (x, y) becomes (x+dx, y)
      *
      * @param dx the x coordinate to add
+	 * @throws ArithmeticException if {@code dx} is either NaN or infinite
      */
 	@Override
 	public void translateX(double dx) {
 		validate(dx, "dx");
-		for (int i = 0; i < npoints; ++i)
+		for (int i = 0; i < vertices; ++i)
 			points[i].x += dx;
 	}
 
 	/**
      * Translates this point, at location (x, y) by {@code dy} along the y axis.
-     *
+	 *	Post-translation the point (x, y) becomes (x, y+dy)
+	 *
      * @param dy the y coordinate to add
+	 * @throws ArithmeticException if {@code dy} is either NaN or infinite
      */
 	@Override
 	public void translateY(double dy) {
 		validate(dy, "dy");
-		for (int i = 0; i < npoints; ++i)
+		for (int i = 0; i < vertices; ++i)
 			points[i].y += dy;
 	}
 
@@ -142,8 +215,8 @@ public class Polygon implements Shape {
 	public Point centroid() {
 		double tmp, determinant = 0.0;
 		double centroidX = 0.0, centroidY = 0.0;
-		for (int i = 0; i < npoints; i++) {
-			int j = i + 1 != npoints ? i + 1 : 0;
+		for (int i = 0; i < vertices; i++) {
+			int j = (i + 1)%vertices;
 			tmp = points[i].x * points[j].y - points[j].x*points[i].y;
 
 			centroidX += (points[i].x + points[j].x)*tmp;
@@ -163,12 +236,12 @@ public class Polygon implements Shape {
      */
 	public Point center() {
 		double centerX = 0.0, centerY = 0.0;
-		for (int i = 0; i < npoints; ++i) {
+		for (int i = 0; i < vertices; ++i) {
 			centerX += points[i].x;
 			centerY += points[i].y;
 		}
-		centerX /= npoints;
-		centerY /= npoints;
+		centerX /= vertices;
+		centerY /= vertices;
 		return new Point(centerX, centerY);
 	}
 
@@ -182,7 +255,7 @@ public class Polygon implements Shape {
 	public void rotate(double theta) {
 		rotation -= theta;
 		Point massCenter = centroid();
-		for (int i = 0; i < npoints; i++) {
+		for (int i = 0; i < vertices; i++) {
 			double centerX = massCenter.x, centerY = massCenter.y;
 			points[i].x -= centerX;
 			points[i].y -= centerY;
@@ -211,7 +284,7 @@ public class Polygon implements Shape {
 	public java.awt.Shape stroke() {
 		Path2D path = new Path2D.Double();
 		path.moveTo(points[0].x, points[0].y);
-        for (int i = 1; i < npoints; ++i)
+        for (int i = 1; i < vertices; ++i)
                 path.lineTo(points[i].x, points[i].y);
         path.closePath();
         return path;

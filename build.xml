@@ -23,7 +23,6 @@
 
 		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath" logging="none">
     		<include name="**/*.scala"/>
-			<include name="**/*.java"/>
   		</scalac>
 
 		<echo message="JDK version: ${java.version}"/>

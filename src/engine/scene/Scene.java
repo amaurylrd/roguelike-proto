@@ -19,6 +19,7 @@ public class Scene extends Canvas implements Drawable {
 
     public Scene() {
         add(new TestRectangle(-2), new TestRectangle(1));
+        add(new TestParticle());
     }
 
     public void add(Component... components) {
@@ -49,10 +50,6 @@ public class Scene extends Canvas implements Drawable {
 
     @Override
     public void update(float dt) {
-        
-        for (int i = 0; i < 3; i++)
-            add(new TestParticle());
-                
         for (Collection<Component> layer : gameObjects.values()) {
             Iterator<Component> iterator = layer.iterator();
             while (iterator.hasNext()) {
