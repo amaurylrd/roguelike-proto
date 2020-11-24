@@ -49,6 +49,13 @@ public abstract class Application implements Launchable {
 			throw new RuntimeException("Error: Unable to determine application class.");
 	}
 	
+	/**
+	 * This method is called by {@code Plateform} to initiliaze the {@code Application}.
+	 * This is also where is done preload.
+	 * 
+	 * @see init
+	 * @see onstart
+	 */
 	protected void setup() {
 		Plateform.trace("Debug: The application reached setup functions.");
 		Ressource.preload();
@@ -56,8 +63,14 @@ public abstract class Application implements Launchable {
 		onstart();
 	}
 
+	/**
+	 * This is the first method to be called to setup the {@code Application}.
+	 */
 	protected abstract void init();
 
+	/**
+	 * This method is called right after init to start and show the {@code stage}.
+	 */
 	@Override
 	public void onstart() {
 		primaryStage.addWindowListener(new WindowAdapter() {
@@ -75,6 +88,10 @@ public abstract class Application implements Launchable {
 		Plateform.trace("Debug: The frame is now visible.");
 	}
 
+	/**
+	 * This method is called to exit the {@code Application} and release the {@code Stage}.
+	 * This is also where the game state is serialized.
+	 */
 	@Override
 	public void onstop() {
 		stop();

@@ -18,8 +18,6 @@ public abstract class Ressource {
 
     /**
      * Preloads and maps all the assets in the ressource directory.
-     * 
-     * @throws RuntimeException on I/O error
      */
     protected static void preload() {
         String ressourceRoot = "./res/";
@@ -46,6 +44,11 @@ public abstract class Ressource {
         return assets.get(name);
     }
 
+    /**
+     * Returns the list of preloaded files.
+     * 
+     * @return the keys of the hashtable
+     */
     public static Enumeration<String> listNames() {
         return assets.keys();
     }
