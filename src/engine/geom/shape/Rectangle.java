@@ -3,7 +3,6 @@ package engine.geom.shape;
 import engine.geom.Dimension;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Path2D;
 
 /**
  * The class {@code Rectangle} specifies an area in space.

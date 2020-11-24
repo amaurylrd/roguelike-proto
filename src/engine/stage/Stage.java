@@ -20,10 +20,19 @@ public class Stage extends Window {
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
     private String currentScene = "";
     private String deepcopy = "";
+
+    /**
+     * The instance of this singleton.
+     */
     private static Stage instance = null;
 
     private Stage() {}
 
+    /**
+     * Gets the instance of this singleton {@code Stage}.
+     * 
+     * @return the object instance
+     */
     public static Stage create() {
         if (instance == null)
             instance = new Stage();
@@ -69,7 +78,7 @@ public class Stage extends Window {
     }
 
     public void save() {
-        //TODO: debug saving game to location
+        //TODO: debug saving game
         try {
             FileOutputStream fos = new FileOutputStream(deepcopy);
             try {

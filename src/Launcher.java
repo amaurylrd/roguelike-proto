@@ -2,8 +2,6 @@ import engine.application.Application;
 import engine.scene.Scene;
 import engine.stage.Stage;
 
-import engine.physics2d.Vector;
-
 public class Launcher extends Application {
     public static void main(String[] args) {
         Application.launch(args);

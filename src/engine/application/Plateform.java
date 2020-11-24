@@ -18,7 +18,7 @@ public abstract class Plateform {
 	 * It must not be called more than once or an exception will be thrown.
 	 *
 	 * @param appClass application class
-	 * @param args command line arguments
+	 * @param args command-line arguments
 	 */
 	public static void launchApplication(Class<? extends Application> appClass, String[] args) {
 		Plateform.parameters = args == null ? new String[] {} : args;
@@ -35,6 +35,11 @@ public abstract class Plateform {
 		}
 	}
 
+	/**
+	 * Prints the log {@code message} is this {@code Plateform} debug mod is on.
+	 * 
+	 * @param message the message to print to console
+	 */
 	public static void trace(String message) {
 		if (debug) {
 			System.out.println(message);

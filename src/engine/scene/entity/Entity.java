@@ -12,6 +12,11 @@ public abstract class Entity extends Component implements Collidable {
         veclocity = new Vector(0, 0);
     }
 
+    public Entity(double x, double y, double width, double height) {
+        super(x, y, width, height, 0);
+        veclocity = new Vector(0, 0);
+    }
+
     /**
      * Specifies whether this component is grounded or not.
      * 

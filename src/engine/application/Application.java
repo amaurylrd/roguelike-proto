@@ -7,13 +7,23 @@ import java.awt.event.WindowEvent;
 
 @SuppressWarnings("unchecked")
 public abstract class Application implements Launchable {
+	/**
+	 * The stage of this {@code Application}.
+	 */
 	private Stage primaryStage = Stage.create();
 
+	/**
+	 * Calls the method launch with no arguments.
+	 */
 	public static void launch() {
 		Application.launch(null);
 	}
 
-	
+	/**
+	 * Instanciates the main thread and calls the method launchApplication of class {@code Plateform}.
+	 * 
+	 * @param args the command-line arguments
+	 */
 	public static void launch(String[] args) {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		String classdName = Application.class.getName();

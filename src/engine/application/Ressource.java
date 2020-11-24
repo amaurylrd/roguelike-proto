@@ -7,9 +7,20 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
 
+/**
+ * The class {@code Ressource} stores all the assets .
+ */
 public abstract class Ressource {
+    /**
+     * The map of assets.
+     */
     private static Hashtable<String, Image> assets;
 
+    /**
+     * Preloads and maps all the assets in the ressource directory.
+     * 
+     * @throws RuntimeException on I/O error
+     */
     protected static void preload() {
         String ressourceRoot = "./res/";
         File ressourceFolder = new File(ressourceRoot);

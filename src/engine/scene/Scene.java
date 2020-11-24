@@ -17,10 +17,7 @@ public class Scene extends Canvas implements Drawable {
     private Camera camera;
     private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
 
-    public Scene() {
-        add(new TestRectangle(-2), new TestRectangle(1));
-        add(new TestParticle());
-    }
+    public Scene() {}
 
     public void add(Component... components) {
         for (Component component : components) {

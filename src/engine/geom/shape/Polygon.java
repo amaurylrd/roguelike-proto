@@ -1,27 +1,13 @@
 package engine.geom.shape;
 
 import java.awt.geom.Path2D;
-
+import java.awt.geom.Point2D;
 //Convex and Closed
 public class Polygon implements Shape {
-	protected class Point {
-		public double x;
-		public double y;
-
-		public Point(double x, double y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		public double distance(Point p) {
-			return Math.abs((p.x - x)*(p.x - x) + (p.y - y)*(p.y- y));
-		}
-	}
-
 	/**
      * The vertices of this {@code Polygon}.
      */
-	protected Point[] points;
+	protected Point2D.Double[] points;
 
 	/**
 	 * The number of vertices in this {@code Polygon}.
@@ -46,9 +32,9 @@ public class Polygon implements Shape {
 		validate(x, "x");
 		validate(y, "y");
 		vertices = Math.min(x.length, y.length);
-		points = new Point[vertices];
+		points = new Point2D.Double[vertices];
 		for (int i = 0; i < points.length; ++i)
-			points[i] = new Point(x[i], y[i]);
+			points[i] = new Point2D.Double(x[i], y[i]);
 	}
 
 	/**
@@ -124,10 +110,10 @@ public class Polygon implements Shape {
 	public boolean intersects(Polygon polygon) {
 		for (int i = 0; i < vertices; ++i) {
 			int ii = (i + 1)%vertices;
-			Point[] edge = new Point[] {points[i], points[ii]};
+			Point2D.Double[] edge = new Point2D.Double[] {points[i], points[ii]};
 			for (int j = 0; j < polygon.vertices; ++j) {
 				int jj = (j + 1)%polygon.vertices;
-				Point[] edge1 = new Point[] {polygon.points[j], polygon.points[jj]};
+				Point2D.Double[] edge1 = new Point2D.Double[] {polygon.points[j], polygon.points[jj]};
 				
 				double a = edge[1].y - edge[0].y;
 				double b = edge[0].x - edge[1].x;
@@ -212,7 +198,7 @@ public class Polygon implements Shape {
      * 
      * @return the center coordonates
      */
-	public Point centroid() {
+	public Point2D.Double centroid() {
 		double tmp, determinant = 0.0;
 		double centroidX = 0.0, centroidY = 0.0;
 		for (int i = 0; i < vertices; i++) {
@@ -225,7 +211,7 @@ public class Polygon implements Shape {
 		}
 		centroidX /= 3*determinant;
 		centroidY /= 3*determinant;
-		return new Point(centroidX, centroidY);
+		return new Point2D.Double(centroidX, centroidY);
 		
 	}
 
@@ -234,7 +220,7 @@ public class Polygon implements Shape {
      * 
      * @return the center coordonates
      */
-	public Point center() {
+	public Point2D.Double center() {
 		double centerX = 0.0, centerY = 0.0;
 		for (int i = 0; i < vertices; ++i) {
 			centerX += points[i].x;
@@ -242,7 +228,7 @@ public class Polygon implements Shape {
 		}
 		centerX /= vertices;
 		centerY /= vertices;
-		return new Point(centerX, centerY);
+		return new Point2D.Double(centerX, centerY);
 	}
 
 	/**
@@ -254,7 +240,7 @@ public class Polygon implements Shape {
 	@Override
 	public void rotate(double theta) {
 		rotation -= theta;
-		Point massCenter = centroid();
+		Point2D.Double massCenter = centroid();
 		for (int i = 0; i < vertices; i++) {
 			double centerX = massCenter.x, centerY = massCenter.y;
 			points[i].x -= centerX;
