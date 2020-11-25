@@ -2,7 +2,10 @@ package engine.geom.shape;
 
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
-//Convex and Closed
+
+/**
+ * This class represents a polygon (should be convex and closed).
+ */
 public class Polygon implements Shape {
 	/**
      * The vertices of this {@code Polygon}.
@@ -38,12 +41,12 @@ public class Polygon implements Shape {
 	}
 
 	/**
-     * Checks the coordinates and throws an {@code Exception} if a value is either NaN, infinite or null.
+     * Checks the coordinates and throws an {@code Exception} if a value is either <i>NaN</i>, infinite or <i>null</i>.
      * 
      * @param coordinates the specified coordinates
      * @param name the name of the variables
-     * @throws NullPointerException unless {@code points[]} is not null
-     * @throws ArithmeticException if any coordinate is either NaN or infinite
+     * @throws NullPointerException unless {@code coordinates[]} is not <i>null</i>
+     * @throws ArithmeticException if any coordinate is either <i>NaN</i> or infinite
      */
 	protected void validate(double[] coordonates, String name) {
 		if (coordonates == null || coordonates.length < 1)
@@ -57,11 +60,11 @@ public class Polygon implements Shape {
 	}
 
 	/**
-     * Checks the specified coordinate and throws an {@code Exception} if a value is either NaN or infinite.
+     * Checks the specified coordinate and throws an {@code Exception} if a value is either <i>NaN</i> or infinite.
      * 
      * @param coordinate the specified coordinate
      * @param name the name of the variable
-     * @throws ArithmeticException if {@code coordonate} is either NaN or infinite
+     * @throws ArithmeticException if {@code coordonate} is either <i>NaN</i> or infinite
      */
 	protected void validate(double coordonate, String name) {
 		if (Double.isNaN(coordonate))
@@ -166,11 +169,11 @@ public class Polygon implements Shape {
 	}
 
 	/**
-     * Translates this point, at location (x, y) by {@code dx} along the x axis.
+     * Translates this point, at location (x, y) by {@code dx} along the X axis.
 	 * Post-translation the point (x, y) becomes (x+dx, y)
      *
-     * @param dx the x coordinate to add
-	 * @throws ArithmeticException if {@code dx} is either NaN or infinite
+     * @param dx the x coordinate to be added
+	 * @throws ArithmeticException if {@code dx} is either <i>NaN</i> or infinite
      */
 	@Override
 	public void translateX(double dx) {
@@ -180,11 +183,11 @@ public class Polygon implements Shape {
 	}
 
 	/**
-     * Translates this point, at location (x, y) by {@code dy} along the y axis.
+     * Translates this point, at location (x, y) by {@code dy} along the Y axis.
 	 *	Post-translation the point (x, y) becomes (x, y+dy)
 	 *
-     * @param dy the y coordinate to add
-	 * @throws ArithmeticException if {@code dy} is either NaN or infinite
+     * @param dy the y coordinate to be added
+	 * @throws ArithmeticException if {@code dy} is either <i>NaN</i> or infinite
      */
 	@Override
 	public void translateY(double dy) {
@@ -271,7 +274,7 @@ public class Polygon implements Shape {
 		Path2D path = new Path2D.Double();
 		path.moveTo(points[0].x, points[0].y);
         for (int i = 1; i < vertices; ++i)
-                path.lineTo(points[i].x, points[i].y);
+            path.lineTo(points[i].x, points[i].y);
         path.closePath();
         return path;
 	}
