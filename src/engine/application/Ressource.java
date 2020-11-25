@@ -40,12 +40,19 @@ public abstract class Ressource {
         }
     }
 
+    /**
+     * Retrives an asset by its {@code name} in the table of assets.
+     * It will return <i>null</i> if the map does not contain the value for the specified key.
+     * 
+     * @param name the key whose associated value is to be returned
+     * @return the image mapped for the {@code name} or <i>null</i> if it does not exists in table
+     */
     public static Image ressource(String name) {
         return assets.get(name);
     }
 
     /**
-     * Returns the list of preloaded files.
+     * Returns an enumeration of the preloaded files in the hashtable.
      * 
      * @return the keys of the hashtable
      */
