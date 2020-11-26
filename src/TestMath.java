@@ -42,4 +42,15 @@ public class TestMath { //arithmetic 2d class
 			quickSort(array, j + 1, lst);
 		}
 	}
+
+	/**
+	 * Returns a number whose value is limited to the given range.
+	 *
+	 * @param min the lower boundary of the output range
+	 * @param max the upper boundary of the output range
+	 * @return a number in the range [min, max]
+	 */
+	public static double clamp(double value, double min, double max) {
+		return Math.min(Math.max(value, min), max);
+	}
 }

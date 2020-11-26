@@ -152,7 +152,7 @@ public class Polygon implements Shape {
 			return a <= x && x <= b;
 		return b < a ? a >= x && x >= b : a == x;
 	}
-
+	
 	/**
 	 * Gives the area of this {@code Polygon}.
 	 * 
