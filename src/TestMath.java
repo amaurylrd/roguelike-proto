@@ -46,6 +46,7 @@ public class TestMath { //arithmetic 2d class
 	/**
 	 * Returns a number whose value is limited to the given range.
 	 *
+	 * @param value th specified number to clamp
 	 * @param min the lower boundary of the output range
 	 * @param max the upper boundary of the output range
 	 * @return a number in the range [min, max]
