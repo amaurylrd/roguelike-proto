@@ -2,8 +2,6 @@ package engine.scene;
 
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
-import sandbox.TestParticle;
-import sandbox.TestRectangle;
 
 import java.util.ArrayList;
 import java.util.TreeMap;

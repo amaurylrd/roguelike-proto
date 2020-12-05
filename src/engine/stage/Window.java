@@ -1,5 +1,7 @@
 package engine.stage;
 
+import engine.application.Properties;
+
 import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;

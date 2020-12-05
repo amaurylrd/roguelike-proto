@@ -51,14 +51,15 @@ public abstract class Application implements Launchable {
 	
 	/**
 	 * This method is called by {@code Plateform} to initiliaze the {@code Application}.
-	 * This is also where is done preload.
+	 * This is also where are done preloads.
 	 * 
 	 * @see init
 	 * @see onstart
 	 */
 	protected void setup() {
 		Plateform.trace("Debug: The application reached setup functions.");
-		Ressource.preload();
+		Properties.load();
+		Ressources.preload();
 		init();
 		onstart();
 	}
@@ -73,6 +74,7 @@ public abstract class Application implements Launchable {
 	 */
 	@Override
 	public void onstart() {
+		primaryStage.setTitle(Properties.property("project.name"));
 		primaryStage.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {

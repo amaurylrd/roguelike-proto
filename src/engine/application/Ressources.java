@@ -5,31 +5,34 @@ import java.io.IOException;
 import java.awt.Image;
 import java.util.Enumeration;
 import java.util.Hashtable;
+
 import javax.imageio.ImageIO;
 
 /**
- * The class {@code Ressource} stores all the assets .
+ * The class {@code Ressources} stores all the assets .
  */
-public abstract class Ressource {
+public final class Ressources {
     /**
      * The map of assets.
      */
     private static Hashtable<String, Image> assets;
 
+    private Ressources() {}
+
     /**
      * Preloads and maps all the assets in the ressource directory.
      */
     protected static void preload() {
-        String ressourceRoot = "./res/";
+        final String ressourceRoot = ""; //Properties.property(""); //TODO;assets folder
         File ressourceFolder = new File(ressourceRoot);
         String[] ressourceFiles = ressourceFolder.list();
 
         if (ressourceFiles != null) {
-            Plateform.trace("Debug: " + Ressource.class.getName() + " preloads assets from " + ressourceRoot + ".");
+            Plateform.trace("Debug: " + Ressources.class.getName() + " preloads assets from " + ressourceRoot + ".");
             for (String ressourceFile : ressourceFiles) {
                 String ressourcePath = ressourceRoot + ressourceFile;
                 try {
-                    Image ressource = ImageIO.read(Ressource.class.getResource(ressourcePath));
+                    Image ressource = ImageIO.read(Ressources.class.getResource(ressourcePath));
                     String ressourceName = ressourceFile.substring(0, ressourceFile.lastIndexOf('.'));
                     if (assets.put(ressourceName, ressource) != null)
                         throw new RuntimeException("Warning: Duplicated occurrences of asset " + ressourceName + " .");
@@ -48,7 +51,7 @@ public abstract class Ressource {
      * @return the image mapped for the {@code name} or <i>null</i> if it does not exists in table
      */
     public static Image ressource(String name) {
-        return assets.get(name);
+        return assets == null ? null : assets.get(name);
     }
 
     /**
@@ -57,6 +60,6 @@ public abstract class Ressource {
      * @return the keys of the hashtable
      */
     public static Enumeration<String> listNames() {
-        return assets.keys();
+        return assets == null ? null : assets.keys();
     }
 }
