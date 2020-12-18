@@ -3,6 +3,10 @@ package engine.scene;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 
+import engine.scene.image.Sprite;
+import sandbox.TestRectangle;
+import sandbox.TestSprite;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
@@ -15,7 +19,12 @@ public class Scene extends Canvas implements Drawable {
     private Camera camera;
     private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
 
-    public Scene() {}
+    public Scene() {
+        add(new TestRectangle(0));
+        TestSprite test = new TestSprite(50, 50, 100, 200, 0);
+        test.sprite = new Sprite("spritetest", 400, 500, 6);
+        add(test);
+    }
 
     public void add(Component... components) {
         for (Component component : components) {

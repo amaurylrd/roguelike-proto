@@ -2,7 +2,7 @@ package engine.application;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -15,7 +15,7 @@ public final class Ressources {
     /**
      * The map of assets.
      */
-    private static Hashtable<String, Image> assets;
+    private static Hashtable<String, BufferedImage> assets;
 
     private Ressources() {}
 
@@ -23,16 +23,16 @@ public final class Ressources {
      * Preloads and maps all the assets in the ressource directory.
      */
     protected static void preload() {
-        final String ressourceRoot = ""; //Properties.property(""); //TODO;assets folder
+        final String ressourceRoot = Properties.property("ressource.path");
         File ressourceFolder = new File(ressourceRoot);
         String[] ressourceFiles = ressourceFolder.list();
-
         if (ressourceFiles != null) {
             Plateform.trace("Debug: " + Ressources.class.getName() + " preloads assets from " + ressourceRoot + ".");
+            assets = new Hashtable<String, BufferedImage>();
             for (String ressourceFile : ressourceFiles) {
-                String ressourcePath = ressourceRoot + ressourceFile;
+                String ressourcePath = ressourceRoot + "/" + ressourceFile;
                 try {
-                    Image ressource = ImageIO.read(Ressources.class.getResource(ressourcePath));
+                    BufferedImage ressource = ImageIO.read(new File(ressourcePath));
                     String ressourceName = ressourceFile.substring(0, ressourceFile.lastIndexOf('.'));
                     if (assets.put(ressourceName, ressource) != null)
                         throw new RuntimeException("Warning: Duplicated occurrences of asset " + ressourceName + " .");
@@ -50,7 +50,7 @@ public final class Ressources {
      * @param name the key whose associated value is to be returned
      * @return the image mapped for the {@code name} or <i>null</i> if it does not exists in table
      */
-    public static Image ressource(String name) {
+    public static BufferedImage ressource(String name) {
         return assets == null ? null : assets.get(name);
     }
 

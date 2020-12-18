@@ -1,7 +1,5 @@
 package engine.stage;
 
-import engine.application.Properties;
-
 import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -80,7 +78,7 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
      */
     @Override
     public void componentResized(ComponentEvent event) {}
-
+    
     /**
      * Invoked when the component's position changes.
      * 
