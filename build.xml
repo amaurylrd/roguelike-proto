@@ -13,9 +13,14 @@
 	<target name="default" depends="fclean,run,javadoc"></target>
 
 	<target name="compile" description="build">
-		<fileset dir="./include/runtime">
-			<include name="*.jar"/>
+		<fileset id="include.fileset" dir="./include/">
+			<include name="**/*.jar"/>
 		</fileset>
+		
+		<pathconvert pathsep="&#xA;" property="includes" refid="include.fileset">
+    		<mapper type="flatten"/>
+		</pathconvert>
+		<echo>${includes}</echo>
 
 		<taskdef resource="scala/tools/ant/antlib.xml">
       		<classpath refid="scala.classpath"/>

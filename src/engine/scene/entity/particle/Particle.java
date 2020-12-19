@@ -1,10 +1,10 @@
 package engine.scene.entity.particle;
 
-import engine.scene.entity.Entity;
-import engine.util.Random;
-
 import java.awt.Graphics2D;
 import java.awt.Color;
+
+import engine.scene.entity.Entity;
+import engine.util.Random;
 
 public abstract class Particle extends Entity {
     private int rgb = 0xffffffff;

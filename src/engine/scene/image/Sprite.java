@@ -1,8 +1,8 @@
 package engine.scene.image;
 
-import engine.application.Ressources;
-
 import java.awt.image.BufferedImage;
+
+import engine.application.Ressources;
 
 public class Sprite {
 	/**

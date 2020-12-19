@@ -1,12 +1,5 @@
 package engine.scene;
 
-import engine.scene.entity.Component;
-import engine.scene.entity.Drawable;
-
-import engine.scene.image.Sprite;
-import sandbox.TestRectangle;
-import sandbox.TestSprite;
-
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
@@ -14,6 +7,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.awt.Graphics2D;
+
+import engine.scene.entity.Component;
+import engine.scene.entity.Drawable;
+
+import engine.scene.image.Sprite;
+import sandbox.TestRectangle;
+import sandbox.TestSprite;
 
 public class Scene extends Canvas implements Drawable {
     private Camera camera;

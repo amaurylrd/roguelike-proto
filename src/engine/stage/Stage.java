@@ -1,8 +1,5 @@
 package engine.stage;
 
-import engine.application.Plateform;
-import engine.scene.Scene;
-
 import java.util.Map;
 import java.util.Hashtable;
 import java.io.File;
@@ -11,6 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import engine.application.Plateform;
+import engine.scene.Scene;
 
 /**
  * The class {@code Stage} is the top level container of the application.

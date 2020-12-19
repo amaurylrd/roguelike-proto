@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.Hashtable;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -23,7 +22,7 @@ public final class Ressources {
      * Preloads and maps all the assets in the ressource directory.
      */
     protected static void preload() {
-        final String ressourceRoot = Properties.property("ressource.path");
+        final String ressourceRoot = Properties.property("textures.path");
         File ressourceFolder = new File(ressourceRoot);
         String[] ressourceFiles = ressourceFolder.list();
         if (ressourceFiles != null) {

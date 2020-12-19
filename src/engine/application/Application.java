@@ -1,9 +1,9 @@
 package engine.application;
 
-import engine.stage.Stage;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import engine.stage.Stage;
 
 @SuppressWarnings("unchecked")
 public abstract class Application implements Launchable {

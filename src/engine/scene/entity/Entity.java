@@ -1,20 +1,33 @@
 package engine.scene.entity;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import engine.physics2d.Vector;
+import engine.scene.image.Sprite;
 
 public abstract class Entity extends Component implements Collidable {
     protected Vector veclocity;
     private boolean grounded = false;
     private boolean solid = false;
 
+    private Map<String, Sprite> sprites;
+    private String currentSprite;
+
     public Entity(double x, double y, double width, double height, int layer) {
         super(x, y, width, height, layer);
-        veclocity = new Vector(0, 0);
+        init();
     }
 
     public Entity(double x, double y, double width, double height) {
         super(x, y, width, height, 0);
+        init();
+    }
+
+    private void int() {
         veclocity = new Vector(0, 0);
+        sprites = new HashMap<String, Sprite>();
+        currentSprite = null;
     }
 
     /**

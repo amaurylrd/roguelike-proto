@@ -1,8 +1,9 @@
 package engine.geom.shape;
 
+import java.awt.geom.Point2D;
+
 import engine.geom.Dimension;
 
-import java.awt.geom.Point2D;
 
 /**
  * The class {@code Rectangle} specifies an area in space.
