@@ -11,16 +11,16 @@
 		</fileset>
     </path>
 
+	<path id="java.classpath">
+		<fileset id="dependencies" dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement path="${dst.dir}"/>
+	</path>
+
 	<target name="default" depends="fclean,run,javadoc"></target>
 
 	<target name="compile" description="build">
-		<path id="java.classpath">
-			<fileset id="dependencies" dir="${lib.dir}">
-				<include name="**/*.jar"/>
-			</fileset>
-			<pathelement path= "${dst.dir}"/>
-		</path>
-
 		<pathconvert pathsep="&#xA;" property="includes" refid="dependencies">
     		<mapper type="flatten"/>
 		</pathconvert>
@@ -43,7 +43,12 @@
 	</target>
 
 	<target name="run" depends="compile">
-		<java classpath="${dst.dir}" classpathref="scala.classpath" classname="Launcher" fork="true" failonerror="false"/>
+		<java classpathref="scala.classpath" classname="Launcher" fork="true" failonerror="false">
+			<classpath>
+        		<pathelement location="${dst.dir}" />
+        		<path refid="java.classpath" />
+      		</classpath>
+		  </java>
 	</target>
 
 	<target name="clean">
