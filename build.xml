@@ -45,10 +45,10 @@
 	<target name="run" depends="compile">
 		<java classpathref="scala.classpath" classname="Launcher" fork="true" failonerror="false">
 			<classpath>
-        		<pathelement location="${dst.dir}" />
-        		<path refid="java.classpath" />
+        		<pathelement location="${dst.dir}"/>
+        		<path refid="java.classpath"/>
       		</classpath>
-		  </java>
+		</java>
 	</target>
 
 	<target name="clean">
