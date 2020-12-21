@@ -34,7 +34,6 @@
     		<include name="**/*.scala"/>
   		</scalac>
 
-		<echo>${java.classpath}</echo>
 		<echo message="JDK version: ${java.version}"/>
 		<javac srcdir="${src.dir}" destdir="${dst.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
 			<compilerarg value="-Xlint:-serial"/>

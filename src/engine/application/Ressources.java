@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import com.aspose.psd.Image;
 import com.aspose.psd.fileformats.psd.PsdImage;
 import com.aspose.psd.fileformats.psd.layers.LayerGroup;
+import com.aspose.psd.fileformats.psd.layers.LayerResource;
 import com.aspose.psd.fileformats.psd.layers.Layer;
 import com.aspose.psd.imageoptions.PngOptions;
 
@@ -51,14 +52,38 @@ public final class Ressources {
         File framedataFolder = new File(framedataRoot);
         String[] framedataFiles = framedataFolder.list();
         if (framedataFiles != null) {
+            //debug message loading frame data
             for (String framedataFile : framedataFiles) {
                 if (framedataFile.substring(Math.max(framedataFile.length() - 4, 0)).equals(".psd")) {
                     String framedataPath = framedataRoot + "/" + framedataFile;
                     PsdImage psd = (PsdImage) Image.load(framedataPath);
-                    Layer[] layers = psd.getLayers();
-                    for (int i = 0; i < layers.length; i++)
-                        System.out.println(layers[i]);
-                    psd.dispose();
+                    if (psd != null) {
+                        Layer[] layers = psd.getLayers();
+                        try {
+                            for (Layer layer : layers) {
+                                if (layer instanceof LayerGroup) {
+                                    Layer[] subLayers = ((LayerGroup) layer).getLayers();
+                                    //nouveau Layer frame
+                                    //nouveau cercle[] hitboxes
+                                    //nouveau Polygon hurtbox
+                                    //get spriteType
+                                    for (Layer subLayer : subLayers) {
+                                        String subLayerName = subLayer.getDisplayName();
+                                        if (subLayerName.equals("hitboxes")) {
+
+                                        } else if (subLayerName.equals("hurtbox")) {
+
+                                        } else {
+                                            //on merge tout le reste
+                                        }
+                                    }
+                                    //nouveau if tout != null sprite (layer, hurtbox, hitboxes)
+                                }
+                            }
+                        } finally {
+                            psd.dispose();
+                        }
+                    }
                 }
             }
         }
