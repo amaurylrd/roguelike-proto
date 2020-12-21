@@ -7,6 +7,12 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
 
+import com.aspose.psd.Image;
+import com.aspose.psd.fileformats.psd.PsdImage;
+import com.aspose.psd.fileformats.psd.layers.LayerGroup;
+import com.aspose.psd.fileformats.psd.layers.Layer;
+import com.aspose.psd.imageoptions.PngOptions;
+
 /**
  * The class {@code Ressources} stores all the assets .
  */
@@ -22,24 +28,41 @@ public final class Ressources {
      * Preloads and maps all the assets in the ressource directory.
      */
     protected static void preload() {
-        final String ressourceRoot = Properties.property("textures.path");
-        File ressourceFolder = new File(ressourceRoot);
-        String[] ressourceFiles = ressourceFolder.list();
-        if (ressourceFiles != null) {
-            Plateform.trace("Debug: " + Ressources.class.getName() + " preloads assets from " + ressourceRoot + ".");
+        final String textureRoot = Properties.property("textures.path");
+        File textureFolder = new File(textureRoot);
+        String[] textureFiles = textureFolder.list();
+        if (textureFiles != null) {
+            Plateform.trace("Debug: " + Ressources.class.getName() + " preloads assets from " + textureRoot + ".");
             assets = new Hashtable<String, BufferedImage>();
-            for (String ressourceFile : ressourceFiles) {
-                String ressourcePath = ressourceRoot + "/" + ressourceFile;
+            for (String textureFile : textureFiles) {
+                String texturePath = textureRoot + "/" + textureFile;
                 try {
-                    BufferedImage ressource = ImageIO.read(new File(ressourcePath));
-                    String ressourceName = ressourceFile.substring(0, ressourceFile.lastIndexOf('.'));
-                    if (assets.put(ressourceName, ressource) != null)
-                        throw new RuntimeException("Warning: Duplicated occurrences of asset " + ressourceName + " .");
+                    BufferedImage texture = ImageIO.read(new File(texturePath));
+                    String textureName = textureFile.substring(0, textureFile.lastIndexOf('.'));
+                    if (assets.put(textureName, texture) != null)
+                        throw new RuntimeException("Warning: Duplicated occurrences of asset " + textureName + " .");
                 } catch (IOException exception) {
-                    throw new RuntimeException("Error: Fails to load asset " + ressourceFile + " .", exception);
+                    throw new RuntimeException("Error: Fails to load asset " + textureFile + " .", exception);
                 }
             }
         }
+
+        final String framedataRoot = Properties.property("sprites.path");
+        File framedataFolder = new File(framedataRoot);
+        String[] framedataFiles = framedataFolder.list();
+        if (framedataFiles != null) {
+            for (String framedataFile : framedataFiles) {
+                if (framedataFile.substring(Math.max(framedataFile.length() - 4, 0)).equals(".psd")) {
+                    String framedataPath = framedataRoot + "/" + framedataFile;
+                    PsdImage psd = (PsdImage) Image.load(framedataPath);
+                    Layer[] layers = psd.getLayers();
+                    for (int i = 0; i < layers.length; i++)
+                        System.out.println(layers[i]);
+                    psd.dispose();
+                }
+            }
+        }
+        //PsdImage psdImage = null;
     }
 
     /**

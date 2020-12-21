@@ -3,9 +3,10 @@
 	<property name="src.dir" value="./src"/>
 	<property name="dst.dir" value="./bin"/>
 	<property name="doc.dir" value="./javadoc"/>
+	<property name="lib.dir" value="./lib"/>
 
 	<path id="scala.classpath">
-    	<fileset dir="./include/runtime">
+    	<fileset dir="${lib.dir}/runtime">
 			<include name="*.jar"/>
 		</fileset>
     </path>
@@ -13,11 +14,14 @@
 	<target name="default" depends="fclean,run,javadoc"></target>
 
 	<target name="compile" description="build">
-		<fileset id="include.fileset" dir="./include/">
-			<include name="**/*.jar"/>
-		</fileset>
-		
-		<pathconvert pathsep="&#xA;" property="includes" refid="include.fileset">
+		<path id="java.classpath">
+			<fileset id="dependencies" dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<pathelement path= "${dst.dir}"/>
+		</path>
+
+		<pathconvert pathsep="&#xA;" property="includes" refid="dependencies">
     		<mapper type="flatten"/>
 		</pathconvert>
 		<echo>${includes}</echo>
@@ -28,12 +32,13 @@
 
 		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath" logging="none">
     		<include name="**/*.scala"/>
-			<include name="**/*.java"/>
   		</scalac>
 
+		<echo>${java.classpath}</echo>
 		<echo message="JDK version: ${java.version}"/>
 		<javac srcdir="${src.dir}" destdir="${dst.dir}" includeantruntime="last" debug="true" verbose="false" optimize="on">
 			<compilerarg value="-Xlint:-serial"/>
+			<classpath  refid="java.classpath"/>
 		</javac>
 	</target>
 
@@ -42,9 +47,11 @@
 	</target>
 
 	<target name="clean">
-		<delete failonerror="false">
+		<delete failonerror="false" >
   			<fileset dir="." includes="**/*.class"/>
 		</delete>
+		<delete dir="${dst.dir}"/>
+    	<mkdir dir="${dst.dir}"/>
 	</target>
 
 	<target name="fclean" depends="clean">
@@ -54,8 +61,23 @@
 	<target name="javadoc" depends="compile">
 		<delete dir="${doc.dir}"/>
 		<mkdir dir="${doc.dir}"/>
+		<classpath  refid="java.classpath"/>
 		<javadoc destdir="${doc.dir}" version="true" deprecation="yes" unchecked="yes">
 			<fileset dir="${src.dir}"/>
 		</javadoc>
 	</target>
+
+	<!-- <target name="jar" depends="compile">
+        <jar destfile="${dist.dir}\${ant.project.name}.jar" basedir="${dst.dir}">
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="vml.coding.test.Test" />
+                <attribute name="Build-Path" value="${java.classpath}"/>
+            </manifest>
+        </jar>
+    </target> -->
 </project>
+
+<!-- 
+	
+ -->

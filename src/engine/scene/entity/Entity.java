@@ -24,7 +24,7 @@ public abstract class Entity extends Component implements Collidable {
         init();
     }
 
-    private void int() {
+    private void init() {
         veclocity = new Vector(0, 0);
         sprites = new HashMap<String, Sprite>();
         currentSprite = null;
