@@ -23,71 +23,97 @@ public final class Ressources {
      */
     private static Hashtable<String, BufferedImage> assets;
 
-    private Ressources() {}
+    private Ressources() {
+    }
 
     /**
      * Preloads and maps all the assets in the ressource directory.
      */
     protected static void preload() {
-        final String textureRoot = Properties.property("textures.path");
-        File textureFolder = new File(textureRoot);
-        String[] textureFiles = textureFolder.list();
-        if (textureFiles != null) {
-            Plateform.trace("Debug: " + Ressources.class.getName() + " preloads assets from " + textureRoot + ".");
-            assets = new Hashtable<String, BufferedImage>();
-            for (String textureFile : textureFiles) {
-                String texturePath = textureRoot + "/" + textureFile;
-                try {
-                    BufferedImage texture = ImageIO.read(new File(texturePath));
-                    String textureName = textureFile.substring(0, textureFile.lastIndexOf('.'));
-                    if (assets.put(textureName, texture) != null)
-                        throw new RuntimeException("Warning: Duplicated occurrences of asset " + textureName + " .");
-                } catch (IOException exception) {
-                    throw new RuntimeException("Error: Fails to load asset " + textureFile + " .", exception);
-                }
-            }
-        }
+        Thread[] threads = new Thread[2];
+        threads[0] = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final String textureRoot = Properties.property("textures.path");
+                File textureFolder = new File(textureRoot);
+                String[] textureFiles = textureFolder.list();
 
-        final String framedataRoot = Properties.property("sprites.path");
-        File framedataFolder = new File(framedataRoot);
-        String[] framedataFiles = framedataFolder.list();
-        if (framedataFiles != null) {
-            //debug message loading frame data
-            for (String framedataFile : framedataFiles) {
-                if (framedataFile.substring(Math.max(framedataFile.length() - 4, 0)).equals(".psd")) {
-                    String framedataPath = framedataRoot + "/" + framedataFile;
-                    PsdImage psd = (PsdImage) Image.load(framedataPath);
-                    if (psd != null) {
-                        Layer[] layers = psd.getLayers();
+                if (textureFiles != null) {
+                    Plateform.trace(
+                            "Debug: " + Ressources.class.getName() + " preloads assets from " + textureRoot + ".");
+                    assets = new Hashtable<String, BufferedImage>();
+
+                    for (String textureFile : textureFiles) {
+                        String texturePath = textureRoot + "/" + textureFile;
                         try {
-                            for (Layer layer : layers) {
-                                if (layer instanceof LayerGroup) {
-                                    Layer[] subLayers = ((LayerGroup) layer).getLayers();
-                                    //nouveau Layer frame
-                                    //nouveau cercle[] hitboxes
-                                    //nouveau Polygon hurtbox
-                                    //get spriteType
-                                    for (Layer subLayer : subLayers) {
-                                        String subLayerName = subLayer.getDisplayName();
-                                        if (subLayerName.equals("hitboxes")) {
-
-                                        } else if (subLayerName.equals("hurtbox")) {
-
-                                        } else {
-                                            //on merge tout le reste
-                                        }
-                                    }
-                                    //nouveau if tout != null sprite (layer, hurtbox, hitboxes)
-                                }
-                            }
-                        } finally {
-                            psd.dispose();
+                            BufferedImage texture = ImageIO.read(new File(texturePath));
+                            String textureName = textureFile.substring(0, textureFile.lastIndexOf('.'));
+                            if (assets.put(textureName, texture) != null)
+                                throw new RuntimeException(
+                                        "Warning: Duplicated occurrences of asset " + textureName + " .");
+                        } catch (IOException exception) {
+                            throw new RuntimeException("Error: Fails to load asset " + textureFile + " .", exception);
                         }
                     }
                 }
+                Plateform.trace("Debug: The thread preloading assets died after work done.");
             }
+        }, "statics_preloading");
+
+        threads[1] = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final String framedataRoot = Properties.property("sprites.path");
+                File framedataFolder = new File(framedataRoot);
+                String[] framedataFiles = framedataFolder.list();
+
+                if (framedataFiles != null) {
+                    // debug message loading frame data
+
+                    for (String framedataFile : framedataFiles) {
+                        if (framedataFile.substring(Math.max(framedataFile.length() - 4, 0)).equals(".psd")) {
+                            String framedataPath = framedataRoot + "/" + framedataFile;
+                            PsdImage psd = (PsdImage) Image.load(framedataPath);
+                            if (psd != null) {
+                                Layer[] layers = psd.getLayers();
+                                try {
+                                    for (Layer layer : layers) {
+                                        if (layer instanceof LayerGroup) {
+                                            Layer[] subLayers = ((LayerGroup) layer).getLayers();
+                                            // nouveau Layer frame
+                                            // nouveau cercle[] hitboxes
+                                            // nouveau Polygon hurtbox
+                                            // get spriteType
+                                            for (Layer subLayer : subLayers) {
+                                                String subLayerName = subLayer.getDisplayName();
+                                                if (subLayerName.equals("hitboxes")) {
+
+                                                } else if (subLayerName.equals("hurtbox")) {
+
+                                                } else {
+                                                    // on merge tout le reste
+                                                }
+                                            }
+                                            // nouveau if tout != null sprite (layer, hurtbox, hitboxes)
+                                        }
+                                    }
+                                } finally {
+                                    psd.dispose();
+                                }
+                            }
+                        }
+                    }
+                }
+                Plateform.trace("Debug: The thread preloading and preprocessing .psd files died after work done.");
+            }
+        }, "psd_preprocessing");
+
+        for (Thread thread : threads) {
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException exception) {}
         }
-        //PsdImage psdImage = null;
     }
 
     /**
