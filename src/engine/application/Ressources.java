@@ -39,8 +39,7 @@ public final class Ressources {
                 String[] textureFiles = textureFolder.list();
 
                 if (textureFiles != null) {
-                    Plateform.trace(
-                            "Debug: " + Ressources.class.getName() + " preloads assets from " + textureRoot + ".");
+                    Plateform.trace("Debug: " + Ressources.class.getName() + " starts preloading assets from " + textureRoot + "...");
                     assets = new Hashtable<String, BufferedImage>();
 
                     for (String textureFile : textureFiles) {
@@ -68,8 +67,8 @@ public final class Ressources {
                 String[] framedataFiles = framedataFolder.list();
 
                 if (framedataFiles != null) {
-                    // debug message loading frame data
-
+                    Plateform.trace("Debug: " + Ressources.class.getName() + " starts preloading frames data from " + framedataFolder + "...");
+                    
                     for (String framedataFile : framedataFiles) {
                         if (framedataFile.substring(Math.max(framedataFile.length() - 4, 0)).equals(".psd")) {
                             String framedataPath = framedataRoot + "/" + framedataFile;
