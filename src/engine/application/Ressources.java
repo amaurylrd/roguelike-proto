@@ -23,8 +23,7 @@ public final class Ressources {
      */
     private static Hashtable<String, BufferedImage> assets;
 
-    private Ressources() {
-    }
+    private Ressources() {}
 
     /**
      * Preloads and maps all the assets in the ressource directory.
