@@ -17,6 +17,9 @@ public abstract class Component implements Drawable {
      */
     private boolean opaque = true;
 
+    /**
+     * The bounding box of this {Component}.
+     */
     protected Rectangle bounds;
 
     /**
@@ -34,7 +37,7 @@ public abstract class Component implements Drawable {
     }
 
     /**
-     * The render method is called to draw
+     * The render method is called to draw this {@code Component}.
      * 
      * @param graphics 
      * @see draw
@@ -42,7 +45,7 @@ public abstract class Component implements Drawable {
      */
     @Override
     public final void render(Graphics2D graphics) {
-        if (!isRemovable()) {
+        if (!isRemovable() && isOpaque()) {
             Color penColor = graphics.getColor();
             draw(graphics);
             graphics.setColor(penColor);
@@ -69,9 +72,9 @@ public abstract class Component implements Drawable {
     }
 
     /**
-     * Checks whether or not this component is opaque.
+     * Checks whether or not this {@code Component} is opaque.
      * 
-     * @return <i>true</i> if this component is completely opaque, <i>false</i> otherwise
+     * @return <i>true</i> if this {@code Component} is completely opaque, <i>false</i> otherwise
      * @see setOpaque(boolean isOpaque)
      */
     public boolean isOpaque() {
@@ -79,20 +82,44 @@ public abstract class Component implements Drawable {
     }
 
     /**
-     * Gets the z-index of this component.
+     * Gets the z-index of this {@code Component}.
      * 
      * @return the z-index
+     * @see setLayer(int zindex)
      */
     public int getLayer() {
         return layer;
     }
 
     /**
-     * Sets the z-index of this component.
+     * Sets the z-index of this {@code Component}.
      * 
      * @param zindex the stack level of the generated box in the current stacking context
+     * @see getLayer()
      */
     public void setLayer(int zindex) {
         layer = zindex;
+    }
+
+    /**
+     * Returns the bouding box of this {@code Component}.
+     * 
+     * @return the bounds
+     */
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    /**
+     * Draws the bounds of this {@code Component}.
+     * 
+     * @param graphics the graphics context
+     * @param color the color of the bounds
+     */
+    protected void drawBounds(Graphics2D graphics, Color color) {
+        Color penColor = graphics.getColor();
+        graphics.setColor(color);
+        graphics.draw(bounds.stroke());
+        graphics.setColor(penColor);
     }
 }
