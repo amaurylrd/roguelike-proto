@@ -16,7 +16,7 @@ import engine.scene.Scene;
  * The class {@code Stage} is the top level container of the application.
  */
 @SuppressWarnings("serial")
-public class Stage extends Window {
+public final class Stage extends Window {
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
     private String currentScene = "";
     private String deepcopy = "";

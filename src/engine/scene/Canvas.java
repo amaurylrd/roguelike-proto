@@ -32,6 +32,7 @@ public abstract class Canvas {
         offscreen.addRenderingHints(hints);
 
         offscreen.fillRect(width, height, 1, 1);
+        contentPane.requestFocus();
     }
 
     public void show() {

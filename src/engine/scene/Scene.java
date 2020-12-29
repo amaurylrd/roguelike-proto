@@ -8,27 +8,42 @@ import java.util.Iterator;
 import java.util.Map;
 import java.awt.Graphics2D;
 
+import engine.scene.entity.Collidable;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
-
+import engine.scene.entity.Entity;
+import engine.scene.entity.Player;
 import engine.scene.image.Sprite;
 import sandbox.TestRectangle;
 import sandbox.TestSprite;
+import sandbox.collission.BoxTest;
+import sandbox.collission.PlayerTest;
+import sandbox.map.Background;
 
 public class Scene extends Canvas implements Drawable {
     private Camera camera;
     private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
+    private Player player;
 
     public Scene() {
-        add(new TestRectangle(0));
-        TestSprite test = new TestSprite(50, 50, 100, 200, 0);
-        test.sprite = new Sprite("spritetest", 400, 500, 6);
-        add(test);
+        // add(new TestRectangle(0));
+        // TestSprite test = new TestSprite(50, 50, 100, 200, 0);
+        // test.sprite = new Sprite("spritetest", 400, 500, 6);
+        // add(test);
+        
+        Entity[] entites = new Entity[4];
+        entites[0] = new PlayerTest(10, 500, 100, 100);
+        for (int i = 1; i < 4; i++)
+            entites[i] = new BoxTest(i*150 + 10, 500, 100, 100);
+        add(entites);
+        add(new Background(0, 0, 1, 1, -2));
     }
 
     public void add(Component... components) {
         for (Component component : components) {
             if (component != null) {
+                if (component instanceof Player)
+                    player = (Player) component;
                 Collection<Component> layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new ArrayList<Component>());
                 layer.add(component);
             }
@@ -54,6 +69,21 @@ public class Scene extends Canvas implements Drawable {
 
     @Override
     public void update(float dt) {
+        if (player != null) {
+            Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
+            Iterator<Component> iterator = layer.iterator();
+            while (iterator.hasNext()) {
+                Component component = iterator.next();
+                if (component instanceof Collidable && !component.equals(player)) {
+                    boolean b = player.collides(component);
+                    if (b) {
+                        System.out.println(component);
+                    }
+                }
+            }
+            
+        }
+
         for (Collection<Component> layer : gameObjects.values()) {
             Iterator<Component> iterator = layer.iterator();
             while (iterator.hasNext()) {

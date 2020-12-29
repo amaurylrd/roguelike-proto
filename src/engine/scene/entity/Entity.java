@@ -1,6 +1,7 @@
 package engine.scene.entity;
 
 import java.util.Map;
+import java.awt.Graphics2D;
 import java.util.HashMap;
 
 import engine.physics2d.Vector;
@@ -37,7 +38,7 @@ public abstract class Entity extends Component implements Collidable {
      * @see isGrounded()
      */
     public void setGrounded(boolean isGrounded) {
-    	grounded = isGrounded;
+        grounded = isGrounded;
     }
 
     /**
@@ -47,7 +48,7 @@ public abstract class Entity extends Component implements Collidable {
      * @see setGrounded(boolean isGrounded)
      */
     public boolean isGrounded() {
-    	return grounded;
+        return grounded;
     }
 
     /**
@@ -56,8 +57,9 @@ public abstract class Entity extends Component implements Collidable {
      * @param isSolid <i>true</i> if this component should be solid
      * @see isSolid()
      */
+    @Override
     public void setSolid(boolean isSolid) {
-    	solid = isSolid;
+        solid = isSolid;
     }
 
     /**
@@ -66,7 +68,18 @@ public abstract class Entity extends Component implements Collidable {
      * @return <i>true</i> if this component is solid, <i>false</i> otherwise
      * @see setSolid(boolean isSolid)
      */
+    @Override
     public boolean isSolid() {
-    	return solid;
+        return solid;
     }
+
+    @Override
+    public boolean collides(Collidable component) {
+        // TODO Auto-generated method stub
+        //mes hitbox touchent sa hurtbox
+        //ses hitbox touchent ma hurtbox
+        return false;
+    }
+
+    //si collides true dans scene, player.apply(comp) comp.apply(player)
 }

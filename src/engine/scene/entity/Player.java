@@ -2,7 +2,7 @@ package engine.scene.entity;
 
 public abstract class Player extends Entity {
 	private int totalLife;
-	private int currentLife;
+	private int currentLife; //TODO: add component LifeCounter
 	//weapon : wield
 	//item : hold/use
 

@@ -1,0 +1,12 @@
+rgb to int
+int to rgb
+
+    public static int[] fromPixelInt(int pixelColor) //Color à la palce de int[]
+    {
+        int[] rgba = new int[4];
+        rgba[3] = (pixelColor >> 24) & 0xFF;
+        rgba[0] = (pixelColor >> 16) & 0xFF;
+        rgba[1] = (pixelColor >> 8) & 0xFF;
+        rgba[2] = pixelColor & 0xFF;
+        return rgba;
+    }
