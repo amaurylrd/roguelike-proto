@@ -7,11 +7,15 @@ import engine.scene.entity.Player;
 public class PlayerTest extends Player {
 	public PlayerTest(double x, double y, double width, double height) {
 		super(x, y, width, height);
+		velocity.set(0, 0);
 	}
 
 	@Override
 	public void update(float dt) {
-		bounds.translateX(2);
+		System.out.println(dt);
+		double acc = 2;
+		velocity.translateX(2 * dt);
+		bounds.translateX(velocity.getX() * dt);
 	}
 
 	@Override

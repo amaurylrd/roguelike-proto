@@ -16,6 +16,10 @@ class Vector(var x: Double, var y: Double) {
         this.y = y
     }
 
+    def translateX(x: Double) : Unit = this.x += x
+
+     def translateY(y: Double) : Unit = this.y += y
+
     def getMagnitude() : Double = {
         sqrt(x*x + y*y)
     }

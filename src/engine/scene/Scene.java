@@ -30,7 +30,7 @@ public class Scene extends Canvas implements Drawable {
         // TestSprite test = new TestSprite(50, 50, 100, 200, 0);
         // test.sprite = new Sprite("spritetest", 400, 500, 6);
         // add(test);
-        
+
         Entity[] entites = new Entity[4];
         entites[0] = new PlayerTest(10, 500, 100, 100);
         for (int i = 1; i < 4; i++)
@@ -75,7 +75,7 @@ public class Scene extends Canvas implements Drawable {
             while (iterator.hasNext()) {
                 Component component = iterator.next();
                 if (component instanceof Collidable && !component.equals(player)) {
-                    boolean b = player.collides(component);
+                    boolean b = player.collides((Collidable) component);
                     if (b) {
                         System.out.println(component);
                     }

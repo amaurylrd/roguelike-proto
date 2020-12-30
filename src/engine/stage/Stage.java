@@ -60,7 +60,7 @@ public final class Stage extends Window {
      * @return whether the name is contained in the layout of scene
      * @see getScene()
      */
-    public boolean setScene(String name) { // changer dans le timer
+    public boolean setScene(String name) {
         if (!scenes.containsKey(name))
             return false;
         currentScene = name;

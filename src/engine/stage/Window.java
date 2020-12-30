@@ -26,7 +26,6 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
         setFocusable(true);
         setResizable(false);
         setUndecorated(true);
-        setIgnoreRepaint(false);
 
         setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
