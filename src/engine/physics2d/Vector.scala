@@ -16,6 +16,8 @@ class Vector(var x: Double, var y: Double) {
         this.y = y
     }
 
+    def set(vector: Vector) : Unit = set(vector.x, vector.y)
+
     def translateX(x: Double) : Unit = this.x += x
 
      def translateY(y: Double) : Unit = this.y += y
@@ -37,13 +39,16 @@ class Vector(var x: Double, var y: Double) {
         y = -y
     }
 
-    def scale(factor: Float) : Unit = {
-        x *= factor
-        y *= factor
+    def scale(factor: Double) : Vector = {
+        new Vector(x * factor, y * factor)
     }
 
-    def dot(vector : Vector) : Double = {
+    def dot(vector: Vector) : Double = {
 		x*vector.x + y*vector.y
+    }
+
+    def sub(vector: Vector) : Vector = {
+        new Vector(x - vector.x, y - vector.y) 
     }
 
     override def toString: String = s"($x, $y)"

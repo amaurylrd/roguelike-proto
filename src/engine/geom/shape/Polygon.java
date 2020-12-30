@@ -2,6 +2,7 @@ package engine.geom.shape;
 
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import engine.physics2d.Vector;
 
 /**
  * This class represents a polygon (should be convex and closed).
@@ -168,6 +169,17 @@ public class Polygon implements Shape {
 		return 0.5*Math.abs(area);
 	}
 
+	//TODO:
+	public void translate(double dx, double dy) {
+		translateX(dx);
+		translateY(dy);
+	}
+
+	//TODO:
+	public void translate(Vector vector) {
+		translate(vector.getX(), vector.getY());
+	}
+
 	/**
      * Translates this point, at location (x, y) by {@code dx} along the X axis.
 	 * Post-translation the point (x, y) becomes (x+dx, y)
@@ -277,5 +289,18 @@ public class Polygon implements Shape {
             path.lineTo(points[i].x, points[i].y);
         path.closePath();
         return path;
+	}
+
+	/**
+	 * Returns the representation of this {@code Shape} as {@code String}.
+	 * 
+	 * @return the {@code String} representing this object
+	 */
+	@Override
+	public String toString() {
+		String out = this.getClass().getName() + "[";
+		for (int i = 0; i < vertices; ++i)
+			out += points[i];
+		return out + "]";
 	}
 }

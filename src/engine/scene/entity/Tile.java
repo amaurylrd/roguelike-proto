@@ -4,13 +4,18 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import engine.application.Ressources;
 
+import engine.physics2d.Vector;
+
 public abstract class Tile extends Component implements Collidable {
 	private BufferedImage texture;
-	private boolean solid = false;
+	protected boolean solid = false;
+
+
+	
 
 	public Tile(String ressourceName, double x, double y, double width, double height, int layer) {
 		super(x, y, width, height, layer);
-		texture = Ressources.ressource(ressourceName);
+		//texture = Ressources.ressource(ressourceName);
 	}
 
 	@Override
@@ -18,7 +23,7 @@ public abstract class Tile extends Component implements Collidable {
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null);
+		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null);
 	}
 
 	@Override
@@ -50,6 +55,6 @@ public abstract class Tile extends Component implements Collidable {
 
 	@Override
 	public boolean collides(Collidable component) {
-		return isSolid() && component.isSolid() ? bounds.intersects(((Component) component).bounds) : false;
+		return isSolid() && component.isSolid() && bounds.intersects(((Component) component).bounds);
 	}
 }

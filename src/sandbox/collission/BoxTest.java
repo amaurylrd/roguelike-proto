@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import engine.scene.entity.Collidable;
-import engine.scene.entity.Entity;
+import engine.scene.entity.Tile;
 
-public class BoxTest extends Entity {
+public class BoxTest extends Tile {
 
-	public BoxTest(double x, double y, double width, double height) {
-		super(x, y, width, height, 0);
-		setSolid(true);
+	public BoxTest(double x, double y, double width, double height, int layer) {
+		super(null, x, y, width, height, layer);
+		solid = true;
 	}
 
 	@Override
@@ -19,8 +19,9 @@ public class BoxTest extends Entity {
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		graphics.setColor(Color.RED);
-		graphics.draw(bounds.stroke());
+		drawBounds(graphics, Color.RED);
+		if (TEST)
+			graphics.fill(bounds.stroke());
 	}
 
 	@Override

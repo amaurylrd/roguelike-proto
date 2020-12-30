@@ -12,7 +12,7 @@ public abstract class Particle extends Entity {
 
     public Particle(int x, int y, double size, int layer) {
         super(x, y, size, size, layer);
-        veclocity.set(Random.random(-1, 1), Random.random(-1, 1));
+        velocity.set(Random.random(-1, 1), Random.random(-1, 1));
     }
 
     public void setColor(int r, int g, int b) {
@@ -26,8 +26,8 @@ public abstract class Particle extends Entity {
 
     @Override
     public void update(float dt) {
-        bounds.setX(bounds.getX() + veclocity.getX()*dt);
-        bounds.setY(bounds.getY() + veclocity.getY()*dt);
+        bounds.setX(bounds.getX() + velocity.getX()*dt);
+        bounds.setY(bounds.getY() + velocity.getY()*dt);
         alpha -= 1; //fade
     }
 

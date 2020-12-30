@@ -6,11 +6,12 @@ import java.util.HashMap;
 
 import engine.physics2d.Vector;
 import engine.scene.image.Sprite;
+import java.awt.geom.Point2D;
 
 public abstract class Entity extends Component implements Collidable {
-    protected Vector velocity;
-    private boolean grounded = false;
-    private boolean solid = false;
+    public Vector velocity;
+    protected boolean grounded = false;
+    protected boolean solid = false;
 
     private Map<String, Sprite> sprites;
     private String currentSprite;
@@ -76,9 +77,27 @@ public abstract class Entity extends Component implements Collidable {
     @Override
     public boolean collides(Collidable component) {
         // TODO Auto-generated method stub
+
         //mes hitbox touchent sa hurtbox
         //ses hitbox touchent ma hurtbox
-        return false;
+        return isSolid() && component.isSolid() && bounds.intersects(((Component) component).bounds);
+    }
+
+    public Vector getNormal(Component component) {
+        Point2D.Double center = bounds.center();
+        Point2D.Double center2 = component.bounds.center();
+
+        int a = center.x < center2.x ? 1 : 0;
+        int bb = center.y < center2.y ? 1 : 0;
+        
+        center.setLocation(bounds.getX() + a* bounds.getWidth(), bounds.getY() + bb* bounds.getHeight());
+        
+
+        
+
+        boolean b = Math.abs(center.x - center2.x) * component.bounds.getHeight() < 
+        Math.abs(center.y - center2.y) * component.bounds.getWidth();
+        return b ? new Vector(0, 1) : new Vector(1, 0);
     }
 
     //si collides true dans scene, player.apply(comp) comp.apply(player)

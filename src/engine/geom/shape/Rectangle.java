@@ -212,4 +212,12 @@ public class Rectangle extends Polygon {
     public void setSize(Dimension dimension) {
         setSize(dimension.width, dimension.height);
     }
+
+    //TODO
+    @Override
+    public Point2D.Double center() {
+        double centerX = getX() + getWidth() / 2;
+        double centerY = getY() + getHeight() / 2;
+        return new Point2D.Double(centerX, centerY);
+    }
 }

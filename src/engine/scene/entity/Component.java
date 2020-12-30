@@ -122,4 +122,11 @@ public abstract class Component implements Drawable {
         graphics.draw(bounds.stroke());
         graphics.setColor(penColor);
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + " [" + bounds.getX() + ", " + bounds.getY() + "]";
+    }
+
+    public boolean TEST = false;
 }
