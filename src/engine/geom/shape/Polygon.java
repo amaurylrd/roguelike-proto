@@ -169,13 +169,22 @@ public class Polygon implements Shape {
 		return 0.5*Math.abs(area);
 	}
 
-	//TODO:
+	/**
+	 * Translate the {@code Polygon} by {@code dx} along the X axis and by {@code dy} along the Y axis.
+	 * 
+	 * @param dx the x coordinate to be added
+	 * @param dy the y coordinate to be added
+	 */
 	public void translate(double dx, double dy) {
 		translateX(dx);
 		translateY(dy);
 	}
 
-	//TODO:
+	/**
+	 * Translates the {@code Polygon} by this {@code vector}.
+	 * 
+	 * @param vector the vector to be added
+	 */
 	public void translate(Vector vector) {
 		translate(vector.getX(), vector.getY());
 	}
