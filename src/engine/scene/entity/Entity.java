@@ -87,8 +87,8 @@ public abstract class Entity extends Component implements Collidable {
         Point2D.Double center = bounds.center();
         Point2D.Double center2 = component.bounds.center();
 
-        int a = center.x < center2.x ? 1 : 0;
-        int bb = center.y < center2.y ? 1 : 0;
+        double a = center.x < center2.x ? 1.0 : 0.0;
+        double bb = center.y < center2.y ? 1.0 : 0.0;
         
         center.setLocation(bounds.getX() + a* bounds.getWidth(), bounds.getY() + bb* bounds.getHeight());
         
