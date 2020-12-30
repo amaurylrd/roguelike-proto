@@ -35,7 +35,7 @@ public class Scene extends Canvas implements Drawable {
 
 		Component[] entites = new Component[4];
 		entites[0] = new Player(10, 500, 100, 100);
-		for (int i = 1; i < 4; i++)
+		for (int i = 1; i < 2; i++)
 			entites[i] = new BoxTest(i*150 + 10, 700, 100, 100, 0);
 		add(entites);
 		add(new BoxTest(10, 850, 900, 100, 0));
@@ -70,6 +70,8 @@ public class Scene extends Canvas implements Drawable {
 		}
 	}
 
+	public Player p2 = null;
+
 	@Override
 	public void update(float dt) {
 		if (player != null) {
@@ -82,11 +84,12 @@ public class Scene extends Canvas implements Drawable {
 			player.velocity.translateY(-1 * y);
 
 			//gravity
-			final double grav = 1.1;
+			final double grav = 1.3;
 			player.velocity.translateY(grav * dt);
 
-			Player p2 = (Player) player.clone();
+			p2 = (Player) player.clone();
 			p2.update(dt);
+			
 			
 			Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
 			Iterator<Component> iterator = layer.iterator();
@@ -98,6 +101,7 @@ public class Scene extends Canvas implements Drawable {
 					//else if c'est une entity
 					
 					component.TEST = p2.collides((Collidable) component);
+					//System.out.println(component.TEST);
 					if (component.TEST) {
 						// final Vector normalW = new Vector(0, 1); //SOL
 						// final Vector normalH = new Vector(1, 0); //MUR
@@ -123,11 +127,21 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void render(Graphics2D graphics) {
+		
+		
+
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
 				if (component.isOpaque())
 					component.render(graphics);
 			}
+		}
+
+		if (p2 != null) {
+			java.awt.Color c = graphics.getColor();
+			graphics.setColor(java.awt.Color.BLUE);
+			graphics.draw(p2.getBounds().stroke());
+			graphics.setColor(c);
 		}
 	}
 }
