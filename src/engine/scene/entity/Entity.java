@@ -91,12 +91,9 @@ public abstract class Entity extends Component implements Collidable {
         double bb = center.y < center2.y ? 1.0 : 0.0;
         
         center.setLocation(bounds.getX() + a* bounds.getWidth(), bounds.getY() + bb* bounds.getHeight());
-        
 
-        
-
-        boolean b = Math.abs(center.x - center2.x) * component.bounds.getHeight() <= 
-        Math.abs(center.y - center2.y) * component.bounds.getWidth();
+        boolean b = Math.abs(center.x - center2.x) * component.bounds.getHeight() < 
+        Math.abs(center.y - center2.y) * component.bounds.getWidth(); //+5
         return b ? new Vector(0, 1) : new Vector(1, 0);
     }
 
