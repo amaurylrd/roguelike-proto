@@ -93,7 +93,7 @@ public final class Screen {
      * 
      * @return The resolution of the primary screen
      */
-    public static double getScale() {
+    public static float getScale() {
         Rectangle bounds = Screen.getBounds();
         return bounds.height/bounds.width;
     } 

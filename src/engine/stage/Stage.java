@@ -141,7 +141,7 @@ public final class Stage extends Window {
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
 
-                double elapsed = updateTime/(double) RENDER_TIME;
+                float elapsed = updateTime/(float) RENDER_TIME;
                 scene.update((float) elapsed);
                 lastUpdateTime = currentTime;
 

@@ -10,7 +10,7 @@ public abstract class Particle extends Entity {
     private int rgb = 0xffffffff;
     private int alpha = 255;
 
-    public Particle(int x, int y, double size, int layer) {
+    public Particle(int x, int y, float size, int layer) {
         super(x, y, size, size, layer);
         velocity.set(Random.random(-1, 1), Random.random(-1, 1));
     }
@@ -34,8 +34,8 @@ public abstract class Particle extends Entity {
     @Override
     public void draw(Graphics2D graphics) {
         graphics.setColor(getColor());
-        double size = bounds.getSize().width;
-        graphics.fill(new java.awt.geom.Ellipse2D.Double(bounds.getX(), bounds.getY(), size, size));
+        float size = bounds.getSize().width;
+        graphics.fill(new java.awt.geom.Ellipse2D.Float(bounds.getX(), bounds.getY(), size, size));
     }
 
     @Override

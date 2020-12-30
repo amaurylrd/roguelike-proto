@@ -13,7 +13,7 @@ public abstract class Tile extends Component implements Collidable {
 
 	
 
-	public Tile(String ressourceName, double x, double y, double width, double height, int layer) {
+	public Tile(String ressourceName, float x, float y, float width, float height, int layer) {
 		super(x, y, width, height, layer);
 		//texture = Ressources.ressource(ressourceName);
 	}

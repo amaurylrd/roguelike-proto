@@ -83,11 +83,10 @@ public class Scene extends Canvas implements Drawable {
 			int y = Input.isPressed(Input.JUMP) ? 1 : 0;
 			player.velocity.translateY(-1 * y);
 
-			player.velocity.translateY(Force.GRAVITY * (double) dt);
+			player.velocity.translateY(Force.GRAVITY * (float) dt);
 
 			p2 = (Player) player.clone();
 			p2.update(dt);
-			
 			
 			Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
 			Iterator<Component> iterator = layer.iterator();

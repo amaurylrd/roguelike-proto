@@ -1,4 +1,5 @@
 package engine.geom;
+
 /**
  * The {@code Dimension} class encapsulates the width and height of a component.
  * Negative width and height can't be used.
@@ -7,12 +8,12 @@ public class Dimension {
     /**
      * The width (negative values can't be used).
      */
-    public double width;
+    public float width;
 
     /**
      * The height (negative values can't be used).
      */
-    public double height;
+    public float height;
 
     /**
      * Constructs a {@code Dimension} and initializes it to the specified {@code width} and {@code height}.
@@ -21,7 +22,7 @@ public class Dimension {
      * @param height the specified height
      * @see setSize
      */
-    public Dimension(double width, double height) {
+    public Dimension(float width, float height) {
         setSize(width, height);
     }
 
@@ -33,13 +34,13 @@ public class Dimension {
      * @throws IllegalArgumentException if {@code value} is negative
      * @throws ArithmeticException if {@code value} is either NaN or infinite
      */
-    private void validate(double value, String name) {
-        if (Double.isNaN(value))
-            throw new ArithmeticException("Illegal double value : " + name + " is NaN.");
-        if (Double.isInfinite(value))
-            throw new ArithmeticException("Illegal double value : " + name + " is infinite.");
+    private void validate(float value, String name) {
+        if (Float.isNaN(value))
+            throw new ArithmeticException("Illegal float value : " + name + " is NaN.");
+        if (Float.isInfinite(value))
+            throw new ArithmeticException("Illegal float value : " + name + " is infinite.");
         if (value < 0.0)
-            throw new IllegalArgumentException("Illegal double value : " + name + " is negative.");
+            throw new IllegalArgumentException("Illegal float value : " + name + " is negative.");
     }
 
     /**
@@ -48,7 +49,7 @@ public class Dimension {
      * @return the width of the dimension
      * @see setWidth
      */
-    public double getWidth() {
+    public float getWidth() {
         return width;
     }
 
@@ -58,7 +59,7 @@ public class Dimension {
      * @return the height of the dimension
      * @see setHeight
      */
-    public double getHeight() {
+    public float getHeight() {
         return height;
     }
 
@@ -71,7 +72,7 @@ public class Dimension {
      * @see getWidth
      * @see validate
      */
-    public void setWidth(double width) {
+    public void setWidth(float width) {
         validate(width, "width");
         this.width = width;
     }
@@ -85,7 +86,7 @@ public class Dimension {
      * @see getHeight
      * @see validate
      */
-    public void setHeight(double height) {
+    public void setHeight(float height) {
         validate(height, "height");
         this.height = height;
     }
@@ -99,7 +100,7 @@ public class Dimension {
      * @see setWidth
      * @see setHeight
      */
-    public void setSize(double width, double height) {
+    public void setSize(float width, float height) {
         setWidth(width);
         setHeight(height);
     }

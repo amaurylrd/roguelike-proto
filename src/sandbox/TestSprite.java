@@ -8,7 +8,7 @@ import engine.scene.image.Sprite;
 public class TestSprite extends Entity {
 	public Sprite sprite;
 	
-	public TestSprite(double x, double y, double width, double height, int layer) {
+	public TestSprite(float x, float y, float width, float height, int layer) {
 		super(x, y, width, height, layer);
 		//sprite = new Sprite();
 	}

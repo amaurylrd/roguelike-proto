@@ -31,7 +31,7 @@ public abstract class Component implements Drawable {
      * @param height the height of the bounding {@code Rectangle}
      * @param layer the z-index of this {@code Component}
      */
-    public Component(double x, double y, double width, double height, int layer) {
+    public Component(float x, float y, float width, float height, int layer) {
         bounds = new Rectangle(x, y, width, height);
         this.layer = layer;
     }

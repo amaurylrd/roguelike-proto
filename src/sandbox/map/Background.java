@@ -8,7 +8,7 @@ import engine.application.Ressources;
 
 public class Background extends Component {
 
-	public Background(double x, double y, double width, double height, int layer) {
+	public Background(float x, float y, float width, float height, int layer) {
 		super(x, y, width, height, layer);
 	}
 

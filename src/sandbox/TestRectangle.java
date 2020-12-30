@@ -11,7 +11,7 @@ public class TestRectangle extends Entity {
 
     @Override
     public void update(float dt) {
-        //double x = bounds.getX() + 20 * dt;
+        //float x = bounds.getX() + 20 * dt;
         //bounds.setX(x);
     }
 

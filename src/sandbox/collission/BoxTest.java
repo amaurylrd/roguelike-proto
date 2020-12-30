@@ -8,7 +8,7 @@ import engine.scene.entity.Tile;
 
 public class BoxTest extends Tile {
 
-	public BoxTest(double x, double y, double width, double height, int layer) {
+	public BoxTest(float x, float y, float width, float height, int layer) {
 		super(null, x, y, width, height, layer);
 		solid = true;
 	}
