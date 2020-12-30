@@ -8,7 +8,7 @@ import engine.physics2d.Vector;
 import engine.scene.image.Sprite;
 
 public abstract class Entity extends Component implements Collidable {
-    protected Vector veclocity;
+    protected Vector velocity;
     private boolean grounded = false;
     private boolean solid = false;
 
@@ -26,7 +26,7 @@ public abstract class Entity extends Component implements Collidable {
     }
 
     private void init() {
-        veclocity = new Vector(0, 0);
+        velocity = new Vector(0, 0);
         sprites = new HashMap<String, Sprite>();
         currentSprite = null;
     }
