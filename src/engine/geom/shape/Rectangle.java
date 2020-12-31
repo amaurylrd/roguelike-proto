@@ -224,4 +224,15 @@ public class Rectangle extends Polygon {
         double centerY = getY() + getHeight() / 2;
         return new Point2D.Double(centerX, centerY);
     }
+
+    @Override
+    public boolean intersects(Polygon polygon) {
+        Rectangle rectangle = (Rectangle) polygon;
+        double dx = Math.abs(this.center().x - rectangle.center().x);
+        double dy = Math.abs(this.center().y - rectangle.center().y);
+        if (dx < (this.getWidth() + rectangle.getWidth())/2 && dy < (this.getHeight() + rectangle.getHeight())/2)   {
+            return true;
+        }
+        return false;
+    }
 }
