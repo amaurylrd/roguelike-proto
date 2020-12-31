@@ -25,9 +25,11 @@ import sandbox.Input;
 public class Scene extends Canvas implements Drawable {
 	private Camera camera;
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
-	private Player player;
+	protected Player player;
 
 	public Scene() {
+		//player avant
+		
 		// add(new TestRectangle(0));
 		// TestSprite test = new TestSprite(50, 50, 100, 200, 0);
 		// test.sprite = new Sprite("spritetest", 400, 500, 6);
@@ -39,6 +41,7 @@ public class Scene extends Canvas implements Drawable {
 			entites[i] = new BoxTest(i*150 + 10, 700, 100, 100, 0);
 		add(entites);
 		add(new BoxTest(10, 850, 900, 100, 0));
+		camera = new Camera(player);
 		//add(new Background(0, 0, 1, 1, -2));
 	}
 
@@ -126,18 +129,25 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void render(Graphics2D graphics) {
+
+		
+		//graphics.translate(-player.getBounds().getX(), -player.getBounds().getY());
+		
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
 				if (component.isOpaque())
 					component.render(graphics);
 			}
 		}
+		
+		//graphics.translate(player.getBounds().getX(), player.getBounds().getY());
+		
 
-		if (p2 != null) {
-			java.awt.Color c = graphics.getColor();
-			graphics.setColor(java.awt.Color.BLUE);
-			graphics.draw(p2.getBounds().stroke());
-			graphics.setColor(c);
-		}
+		// if (p2 != null) {
+		// 	java.awt.Color c = graphics.getColor();
+		// 	graphics.setColor(java.awt.Color.BLUE);
+		// 	graphics.draw(p2.getBounds().stroke());
+		// 	graphics.setColor(c);
+		// }
 	}
 }

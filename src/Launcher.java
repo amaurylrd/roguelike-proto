@@ -11,7 +11,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         primaryStage.addScene("test", new Scene());
         primaryStage.setScene("test");
-        primaryStage.thread.start();
+        primaryStage.thread.start(); //mettre dans application primaryStage.start()
     }
 
     @Override
