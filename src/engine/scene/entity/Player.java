@@ -17,14 +17,14 @@ public class Player extends Entity {
 	 * @param width  the width of the bounding {@code Rectangle}
 	 * @param height the height of the bounding {@code Rectangle}
 	 */
-	public Player(float x, float y, float width, float height) {
+	public Player(double x, double y, double width, double height) {
 		super(x, y, width, height, 0);
 		solid = true;
 	}
 
 	@Override
 	public void update(float dt) {
-		bounds.translate(velocity.scale((float) dt));
+		bounds.translate(velocity.scale((double) dt));
 	}
 
 	@Override

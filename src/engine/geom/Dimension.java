@@ -8,12 +8,12 @@ public class Dimension {
     /**
      * The width (negative values can't be used).
      */
-    public float width;
+    public double width;
 
     /**
      * The height (negative values can't be used).
      */
-    public float height;
+    public double height;
 
     /**
      * Constructs a {@code Dimension} and initializes it to the specified {@code width} and {@code height}.
@@ -22,8 +22,12 @@ public class Dimension {
      * @param height the specified height
      * @see setSize
      */
-    public Dimension(float width, float height) {
+    public Dimension(double width, double height) {
         setSize(width, height);
+    }
+
+    public Dimension(java.awt.Dimension size) {
+        setSize((double) size.width, (double) size.height);
     }
 
     /**
@@ -34,13 +38,13 @@ public class Dimension {
      * @throws IllegalArgumentException if {@code value} is negative
      * @throws ArithmeticException if {@code value} is either NaN or infinite
      */
-    private void validate(float value, String name) {
-        if (Float.isNaN(value))
-            throw new ArithmeticException("Illegal float value : " + name + " is NaN.");
-        if (Float.isInfinite(value))
-            throw new ArithmeticException("Illegal float value : " + name + " is infinite.");
+    private void validate(double value, String name) {
+        if (Double.isNaN(value))
+            throw new ArithmeticException("Illegal double value : " + name + " is NaN.");
+        if (Double.isInfinite(value))
+            throw new ArithmeticException("Illegal double value : " + name + " is infinite.");
         if (value < 0.0)
-            throw new IllegalArgumentException("Illegal float value : " + name + " is negative.");
+            throw new IllegalArgumentException("Illegal double value : " + name + " is negative.");
     }
 
     /**
@@ -49,7 +53,7 @@ public class Dimension {
      * @return the width of the dimension
      * @see setWidth
      */
-    public float getWidth() {
+    public double getWidth() {
         return width;
     }
 
@@ -59,7 +63,7 @@ public class Dimension {
      * @return the height of the dimension
      * @see setHeight
      */
-    public float getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -72,7 +76,7 @@ public class Dimension {
      * @see getWidth
      * @see validate
      */
-    public void setWidth(float width) {
+    public void setWidth(double width) {
         validate(width, "width");
         this.width = width;
     }
@@ -86,7 +90,7 @@ public class Dimension {
      * @see getHeight
      * @see validate
      */
-    public void setHeight(float height) {
+    public void setHeight(double height) {
         validate(height, "height");
         this.height = height;
     }
@@ -100,7 +104,7 @@ public class Dimension {
      * @see setWidth
      * @see setHeight
      */
-    public void setSize(float width, float height) {
+    public void setSize(double width, double height) {
         setWidth(width);
         setHeight(height);
     }

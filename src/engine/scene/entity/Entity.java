@@ -16,12 +16,12 @@ public abstract class Entity extends Component implements Collidable {
     private Map<String, Sprite> sprites;
     private String currentSprite;
 
-    public Entity(float x, float y, float width, float height, int layer) {
+    public Entity(double x, double y, double width, double height, int layer) {
         super(x, y, width, height, layer);
         init();
     }
 
-    public Entity(float x, float y, float width, float height) {
+    public Entity(double x, double y, double width, double height) {
         super(x, y, width, height, 0);
         init();
     }
@@ -84,16 +84,16 @@ public abstract class Entity extends Component implements Collidable {
     }
 
     public Vector getNormal(Component component) {
-        Point2D.Float center = bounds.center();
-        Point2D.Float center2 = component.bounds.center();
+        Point2D.Double center = bounds.center();
+        Point2D.Double center2 = component.bounds.center();
 
-        float a = center.x < center2.x ? 1f : 0f;
-        float bb = center.y < center2.y ? 1f : 0f;
+        double a = center.x < center2.x ? 1f : 0f;
+        double bb = center.y < center2.y ? 1f : 0f;
         
         center.setLocation(bounds.getX() + a*bounds.getWidth(), bounds.getY() + bb*bounds.getHeight());
 
         boolean b = Math.abs(center.x - center2.x) * component.bounds.getHeight() < 
-        Math.abs(center.y - center2.y) * component.bounds.getWidth(); //+5
+            Math.abs(center.y - center2.y) * component.bounds.getWidth(); //+5
         return b ? new Vector(0f, 1f) : new Vector(1f, 0f);
     }
 

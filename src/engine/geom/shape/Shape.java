@@ -32,14 +32,14 @@ public abstract class Shape {
 	 * 
 	 * @return the area
 	 */
-    abstract float area();
+    abstract double area();
 
     /**
      * Returns the graphical center of this {@code Shape}.
      * 
      * @return the center coordonates
      */
-    abstract Point2D.Float center();
+    abstract Point2D.Double center();
     
     /**
      * Checks whether or not this {@code Shape} contains the point at the specified location (x, y).
@@ -48,7 +48,7 @@ public abstract class Shape {
      * @param y the specified y coordinate
      * @return <i>true</i> if the point (x, y) is inside this {@code Shape}, <i>false</i> otherwise
      */
-    abstract boolean contains(float x, float y);
+    abstract boolean contains(double x, double y);
 
     /**
 	 * Translate the {@code Shape} by {@code dx} along the X axis and by {@code dy} along the Y axis.
@@ -56,7 +56,7 @@ public abstract class Shape {
 	 * @param dx the x coordinate to be added
 	 * @param dy the y coordinate to be added
 	 */
-    public void translate(float dx, float dy) {
+    public void translate(double dx, double dy) {
         translateX(dx);
         translateY(dy);
     }
@@ -77,7 +77,7 @@ public abstract class Shape {
      * @param dx the x coordinate to be added
 	 * @throws ArithmeticException if {@code dx} is either <i>NaN</i> or infinite
      */
-    abstract void translateX(float dx);
+    abstract void translateX(double dx);
 
     /**
      * Translates this point, at location (x, y) by {@code dy} along the Y axis.
@@ -86,7 +86,7 @@ public abstract class Shape {
      * @param dy the y coordinate to be added
 	 * @throws ArithmeticException if {@code dy} is either <i>NaN</i> or infinite
      */
-    abstract void translateY(float dy);
+    abstract void translateY(double dy);
 
     /**
 	 * Returns the path of this {@code Shape} for draw calls.

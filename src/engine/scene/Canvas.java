@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
 import java.awt.Color;
 import javax.swing.JLabel;
+
+import engine.geom.Dimension;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -50,5 +53,13 @@ public abstract class Canvas {
 
     public Graphics2D getContext() {
         return offscreen;
+    }
+
+    public double getWidth() {
+        return (double) rootPane.getWidth();
+    }
+
+    public double getHeight() {
+        return (double) rootPane.getHeight();
     }
 }

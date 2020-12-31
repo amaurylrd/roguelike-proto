@@ -18,12 +18,13 @@ import sandbox.TestRectangle;
 import sandbox.TestSprite;
 import sandbox.collission.BoxTest;
 import sandbox.map.Background;
+import engine.geom.shape.Rectangle;
 import engine.physics2d.Force;
 import engine.physics2d.Vector;
 
 import sandbox.Input;
 public class Scene extends Canvas implements Drawable {
-	private Camera camera;
+	private Camera camera = new Camera(this);
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
 	protected Player player;
 
@@ -38,10 +39,9 @@ public class Scene extends Canvas implements Drawable {
 		Component[] entites = new Component[4];
 		entites[0] = new Player(10, 500, 100, 100);
 		for (int i = 1; i < 2; i++)
-			entites[i] = new BoxTest(i*150 + 10, 700, 100, 100, 0);
+			entites[i] = new BoxTest(i*150 + 100, 700, 100, 100, 0);
 		add(entites);
 		add(new BoxTest(10, 850, 900, 100, 0));
-		camera = new Camera(player);
 		//add(new Background(0, 0, 1, 1, -2));
 	}
 
@@ -103,8 +103,17 @@ public class Scene extends Canvas implements Drawable {
 					//else if c'est une entity
 					
 					// component.TEST = p2.collides((Collidable) component);
-					// //System.out.println(component.TEST);
+
+					// Rectangle bounds = p2.getBounds();
+					// 	Rectangle cbounds = component.getBounds();
+					// 	if (cbounds.contains(bounds.getX(), bounds.getY()) {
+
+					// 	}
+
 					if (component.TEST) {
+						
+
+
 						// final Vector normalW = new Vector(0, 1); //SOL
 						// final Vector normalH = new Vector(1, 0); //MUR
 						final Vector normal = player.getNormal(component);
@@ -115,6 +124,7 @@ public class Scene extends Canvas implements Drawable {
 			}
 		}
 
+		camera.update(dt);
 		for (Collection<Component> layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.iterator();
 			while (iterator.hasNext()) {
@@ -129,19 +139,14 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void render(Graphics2D graphics) {
-
-		
-		//graphics.translate(-player.getBounds().getX(), -player.getBounds().getY());
-		
+		graphics.translate(-camera.getX(), -camera.getY());
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
 				if (component.isOpaque())
 					component.render(graphics);
 			}
 		}
-		
-		//graphics.translate(player.getBounds().getX(), player.getBounds().getY());
-		
+		graphics.translate(camera.getX(), camera.getY());
 
 		// if (p2 != null) {
 		// 	java.awt.Color c = graphics.getColor();

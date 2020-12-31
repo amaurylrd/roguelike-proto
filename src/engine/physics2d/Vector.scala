@@ -2,30 +2,30 @@ package engine.physics2d
 
 import scala.math.sqrt
 
-class Vector(var x: Float, var y: Float) {
-    def getX() : Float = x
+class Vector(var x: Double, var y: Double) {
+    def getX() : Double = x
     
-    def getY() : Float = y
+    def getY() : Double = y
     
-    def setX(x: Float) : Unit = this.x = x
+    def setX(x: Double) : Unit = this.x = x
 
-    def setY(y: Float) : Unit = this.y = y
+    def setY(y: Double) : Unit = this.y = y
     
-    def set(x: Float, y: Float) : Unit = {
+    def set(x: Double, y: Double) : Unit = {
         this.x = x
         this.y = y
     }
 
     def set(vector: Vector) : Unit = set(vector.x, vector.y)
 
-    def translateX(x: Float) : Unit = this.x += x
+    def translateX(x: Double) : Unit = this.x += x
 
-     def translateY(y: Float) : Unit = this.y += y
+     def translateY(y: Double) : Unit = this.y += y
 
-    def getMagnitude() : Float = sqrt(x*x + y*y).asInstanceOf[Float]
+    def getMagnitude() : Double = sqrt(x*x + y*y)
 
     def normalize() : Unit = {
-        val magnitude : Float = getMagnitude()
+        val magnitude : Double = getMagnitude()
         if (magnitude > 0) {
             x /= magnitude
             y /= magnitude
@@ -37,11 +37,11 @@ class Vector(var x: Float, var y: Float) {
         y = -y
     }
 
-    def scale(factor: Float) : Vector = {
+    def scale(factor: Double) : Vector = {
         new Vector(x * factor, y * factor)
     }
 
-    def dot(vector: Vector) : Float = {
+    def dot(vector: Vector) : Double = {
 		x*vector.x + y*vector.y
     }
 
