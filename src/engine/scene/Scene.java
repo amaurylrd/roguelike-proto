@@ -73,8 +73,6 @@ public class Scene extends Canvas implements Drawable {
 		}
 	}
 
-	public Player p2 = null;
-
 	@Override
 	public void update(float dt) {
 		if (player != null) {
@@ -83,15 +81,11 @@ public class Scene extends Canvas implements Drawable {
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
 			player.velocity.setX(x * -10 + x2 * 10);
 			
-
-			if (Input.isPressed(Input.JUMP))    {
+			if (Input.isPressed(Input.JUMP))
                 player.velocity.setY(-10);
-            }
-
             player.velocity.translateY(Force.GRAVITY * dt);
 
-
-			p2 = (Player) player.clone();
+			Player p2 = (Player) player.clone();
 			p2.update(dt);
 			
 			Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
@@ -150,12 +144,5 @@ public class Scene extends Canvas implements Drawable {
 			}
 		}
 		graphics.translate(camera.getX(), camera.getY());
-
-		// if (p2 != null) {
-		// 	java.awt.Color c = graphics.getColor();
-		// 	graphics.setColor(java.awt.Color.BLUE);
-		// 	graphics.draw(p2.getBounds().stroke());
-		// 	graphics.setColor(c);
-		// }
 	}
 }

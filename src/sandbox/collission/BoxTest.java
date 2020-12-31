@@ -9,7 +9,7 @@ import engine.scene.entity.Tile;
 public class BoxTest extends Tile {
 
 	public BoxTest(double x, double y, double width, double height, int layer) {
-		super(null, x, y, width, height, layer);
+		super("banana", x, y, width, height, layer);
 		solid = true;
 	}
 
@@ -20,6 +20,8 @@ public class BoxTest extends Tile {
 	@Override
 	protected void draw(Graphics2D graphics) {
 		drawBounds(graphics, Color.RED);
+		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null);
+		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight(), null);
 		if (TEST)
 			graphics.fill(bounds.stroke());
 	}

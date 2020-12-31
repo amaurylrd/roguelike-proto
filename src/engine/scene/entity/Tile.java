@@ -7,7 +7,7 @@ import engine.application.Ressources;
 import engine.physics2d.Vector;
 
 public abstract class Tile extends Component implements Collidable {
-	private BufferedImage texture;
+	protected BufferedImage texture;
 	protected boolean solid = false;
 
 
@@ -15,16 +15,16 @@ public abstract class Tile extends Component implements Collidable {
 
 	public Tile(String ressourceName, double x, double y, double width, double height, int layer) {
 		super(x, y, width, height, layer);
-		//texture = Ressources.ressource(ressourceName);
+		texture = Ressources.ressource(ressourceName);
 	}
 
-	@Override
-	public void update(float dt) {}
+	// @Override
+	// public void update(float dt) {}
 
-	@Override
-	protected void draw(Graphics2D graphics) {
-		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null);
-	}
+	// @Override
+	// protected void draw(Graphics2D graphics) {
+		
+	// }
 
 	@Override
 	public boolean isRemovable() {
