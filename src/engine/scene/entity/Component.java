@@ -44,7 +44,7 @@ public abstract class Component implements Drawable {
      * @see isRemovable
      */
     @Override
-    public final void render(Graphics2D graphics) {
+    public void render(Graphics2D graphics) {
         if (!isRemovable() && isOpaque()) {
             Color penColor = graphics.getColor();
             draw(graphics);

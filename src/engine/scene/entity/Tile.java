@@ -2,29 +2,23 @@ package engine.scene.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
 import engine.application.Ressources;
 
-import engine.physics2d.Vector;
-
 public abstract class Tile extends Component implements Collidable {
-	protected BufferedImage texture;
+	private BufferedImage texture;
 	protected boolean solid = false;
-
-
-	
 
 	public Tile(String ressourceName, double x, double y, double width, double height, int layer) {
 		super(x, y, width, height, layer);
 		texture = Ressources.ressource(ressourceName);
 	}
 
-	// @Override
-	// public void update(float dt) {}
-
-	// @Override
-	// protected void draw(Graphics2D graphics) {
-		
-	// }
+	@Override
+	public void render(Graphics2D graphics) {
+		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight(), null);
+		super.render(graphics);
+	}
 
 	@Override
 	public boolean isRemovable() {

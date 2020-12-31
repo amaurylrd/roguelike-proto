@@ -21,7 +21,7 @@ public class BoxTest extends Tile {
 	protected void draw(Graphics2D graphics) {
 		drawBounds(graphics, Color.RED);
 		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null);
-		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight(), null);
+		
 		if (TEST)
 			graphics.fill(bounds.stroke());
 	}
