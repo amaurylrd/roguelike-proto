@@ -87,14 +87,16 @@ public abstract class Entity extends Component implements Collidable {
         Point2D.Double center = bounds.center();
         Point2D.Double center2 = component.bounds.center();
 
-        double a = center.x < center2.x ? 1f : 0f;
-        double bb = center.y < center2.y ? 1f : 0f;
-        
-        center.setLocation(bounds.getX() + a*bounds.getWidth(), bounds.getY() + bb*bounds.getHeight());
+        if (Math.abs(center.x - center2.x) < component.bounds.getWidth()/2)
+            return new Vector(0, 1);
+        if (Math.abs(center.y - center2.y) < component.bounds.getHeight()/2)
+            return new Vector(1, 0);
 
-        boolean b = Math.abs(center.x - center2.x) * component.bounds.getHeight() < 
-            Math.abs(center.y - center2.y) * component.bounds.getWidth(); //+5
-        return b ? new Vector(0f, 1f) : new Vector(1f, 0f);
+        center.setLocation(center.x + (center.x < center2.x ? 1 : -1)*component.bounds.getWidth()/2,
+            center.y + (center.y < center2.y ? 1 : -1)*component.bounds.getHeight()/2);
+        if (Math.abs(center.x - center2.x)*bounds.getHeight() < Math.abs(center.y - center2.y)*bounds.getWidth())
+            return new Vector(0, 1);
+        return new Vector(1, 0);
     }
 
     //si collides true dans scene, player.apply(comp) comp.apply(player)
