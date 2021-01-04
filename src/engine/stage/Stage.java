@@ -133,6 +133,7 @@ public final class Stage extends Window {
             final long RENDER_TIME = 1000000000 / TARGET_FPS;
 
             long lastUpdateTime = System.nanoTime();
+            long lastRenderTime = System.nanoTime();
             Plateform.trace("Debug: The stage is now running the game loop.");
             running = true;
             while (running) {
@@ -146,6 +147,10 @@ public final class Stage extends Window {
                 lastUpdateTime = currentTime;
 
                 scene.clear();
+                long renderTime = currentTime - lastRenderTime;
+                scene.getContext().drawString(""+renderTime/100000, 50, 50);
+                scene.getContext().drawString(""+updateTime/100000, 50, 100);
+                lastRenderTime = System.nanoTime();
                 scene.render(scene.getContext());
                 scene.show();
             }

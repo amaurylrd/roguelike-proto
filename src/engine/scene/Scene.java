@@ -82,7 +82,7 @@ public class Scene extends Canvas implements Drawable {
 			player.velocity.setX(x * -10 + x2 * 10);
 			
 			if (Input.isPressed(Input.JUMP))
-                player.velocity.setY(-10);
+                player.velocity.setY(-20);
             player.velocity.translateY(Force.GRAVITY * dt);
 
 			Player p2 = (Player) player.clone();
