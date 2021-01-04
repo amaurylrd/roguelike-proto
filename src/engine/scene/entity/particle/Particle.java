@@ -12,7 +12,7 @@ public abstract class Particle extends Entity {
 
     public Particle(double x, double y, double size, int layer) {
         super(x, y, size, size, layer);
-        velocity.set(Random.random(-1, 1), Random.random(-1, 1));
+        velocity.set(Random.nextDouble(-1, 1), Random.nextDouble(-1, 1));
     }
 
     public void setColor(int r, int g, int b) {
