@@ -41,7 +41,7 @@ public class Player extends Entity {
 	@Override
 	public Player clone() {
 		Player p = new Player(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-		p.velocity.set(velocity);
+		p.velocity = velocity.clone();
 		return p;
 	}
 }

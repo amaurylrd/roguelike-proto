@@ -35,12 +35,13 @@ public final class Ressources {
             public void run() {
                 final String textureRoot = Properties.property("textures.path");
                 File textureFolder = new File(textureRoot);
+                //TODO test pas dossier
                 String[] textureFiles = textureFolder.list();
 
                 if (textureFiles != null) {
-                    Plateform.trace("Debug: " + Ressources.class.getName() + " starts preloading assets from " + textureRoot + "...");
+                    Plateform.trace("Debug: " + Ressources.class.getName() + " starts preloading assets from " + textureFolder + "...");
                     assets = new Hashtable<String, BufferedImage>();
-
+                    
                     for (String textureFile : textureFiles) {
                         String texturePath = textureRoot + "/" + textureFile;
                         try {
@@ -106,8 +107,10 @@ public final class Ressources {
             }
         }, "psd_preprocessing");
 
-        for (Thread thread : threads) {
+        for (Thread thread : threads)
             thread.start();
+
+        for (Thread thread : threads) {
             try {
                 thread.join();
             } catch (InterruptedException exception) {}

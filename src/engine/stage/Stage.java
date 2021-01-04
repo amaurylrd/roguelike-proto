@@ -74,7 +74,7 @@ public final class Stage extends Window {
      * @see setScene(String name)
      */
     public Scene getScene() {
-        return currentScene == "" || !scenes.containsKey(currentScene) ? null : scenes.get(currentScene);
+        return !scenes.containsKey(currentScene) ? null : scenes.get(currentScene);
     }
 
     public void save() {

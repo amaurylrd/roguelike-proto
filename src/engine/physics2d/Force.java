@@ -1,5 +1,6 @@
 package engine.physics2d; 
 
-public class Force {
-	public final static double GRAVITY = 4.0;
+public final class Force {
+	public static double GRAVITY = 4.0;
+	public static double EPSILON = 1000;
 }

@@ -29,6 +29,7 @@ public class Scene extends Canvas implements Drawable {
 	protected Player player;
 
 	public Scene() {
+		
 		//player avant
 		
 		// add(new TestRectangle(0));
@@ -36,12 +37,8 @@ public class Scene extends Canvas implements Drawable {
 		// test.sprite = new Sprite("spritetest", 400, 500, 6);
 		// add(test);
 
-		Component[] entites = new Component[4];
-		entites[0] = new Player(10, 500, 100, 100);
-		for (int i = 1; i < 2; i++)
-			entites[i] = new BoxTest(i*150 + 100, 700, 100, 100, 0);
-		add(entites);
-		add(new BoxTest(10, 850, 900, 100, 0));
+		
+		// add(new BoxTest(10, 850, 900, 100, 0));
 		//add(new Background(0, 0, 1, 1, -2));
 	}
 

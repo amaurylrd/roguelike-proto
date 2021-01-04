@@ -4,6 +4,7 @@ import java.util.Map;
 import java.awt.Graphics2D;
 import java.util.HashMap;
 
+import engine.physics2d.Force;
 import engine.physics2d.Vector;
 import engine.scene.image.Sprite;
 import java.awt.geom.Point2D;
@@ -78,8 +79,8 @@ public abstract class Entity extends Component implements Collidable {
     public boolean collides(Collidable component) {
         // TODO Auto-generated method stub
 
-        //mes hitbox touchent sa hurtbox
-        //ses hitbox touchent ma hurtbox
+        // mes hitbox touchent sa hurtbox
+        // ses hitbox touchent ma hurtbox
         return isSolid() && component.isSolid() && bounds.intersects(((Component) component).bounds);
     }
 
@@ -87,14 +88,25 @@ public abstract class Entity extends Component implements Collidable {
         Point2D.Double center = bounds.center();
         Point2D.Double center2 = component.bounds.center();
 
-        if (Math.abs(center.x - center2.x) < component.bounds.getWidth()/2)
+        double x = (bounds.getWidth() + component.bounds.getWidth()) / 2;
+        double y = (bounds.getHeight() + component.bounds.getHeight()) / 2;
+
+        if (Math.abs(center.x - center2.x) < x)
             return new Vector(0, 1);
-        if (Math.abs(center.y - center2.y) < component.bounds.getHeight()/2)
+        if (Math.abs(center.y - center2.y) < y)
             return new Vector(1, 0);
 
-        center.setLocation(center.x + (center.x < center2.x ? 1 : -1)*component.bounds.getWidth()/2,
-            center.y + (center.y < center2.y ? 1 : -1)*component.bounds.getHeight()/2);
-        if (Math.abs(center.x - center2.x)*bounds.getHeight() < Math.abs(center.y - center2.y)*bounds.getWidth())
+        Vector centVector = new Vector(center.x, center.y);
+        Vector cent2Vector = new Vector(center2.x, center2.y);
+        double d = Math.sqrt(x * x  + y * y);
+        double e = 0.1;
+        if (centVector.sub(cent2Vector).getMagnitude() > d - e)
+           return new Vector(0, 0);
+
+        center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
+                center.y + (center.y < center2.y ? 1 : -1) * component.bounds.getHeight() / 2);
+
+        if (Math.abs(center.x - center2.x) * bounds.getHeight() - Math.abs(center.y - center2.y) * bounds.getWidth() < 0)
             return new Vector(0, 1);
         return new Vector(1, 0);
     }
