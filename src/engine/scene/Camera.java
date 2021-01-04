@@ -6,8 +6,6 @@ import engine.scene.entity.Player;
 
 public class Camera {
     private Scene scene;
-
-    //offset transform
     private Vector position = new Vector(0, 0);
 
     public Camera(Scene scene) {
@@ -19,10 +17,7 @@ public class Camera {
             Rectangle playerBox = scene.player.getBounds();
             double targetX = playerBox.getX() + playerBox.getWidth()/2 - scene.getWidth()/2.2;
             double targetY = playerBox.getY() + playerBox.getHeight()/2 - scene.getHeight()/2.2;
-            position.translateX((targetX - position.getX()) * 0.1);
-            position.translateY((targetY - position.getY()) * 0.02);
-            //offset.translate(xoff, yoff);
-            //offset.set(lerp(offset.getX(), xoff, dt), lerp(offset.getY(), yoff, dt));
+            position.translate((targetX - position.getX()) * 0.1, (targetY - position.getY()) * 0.02);
         }
     }
 
