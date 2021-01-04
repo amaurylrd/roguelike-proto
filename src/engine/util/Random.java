@@ -11,15 +11,28 @@ public class Random {
     private Random() {}
 
     /**
-     * Returns a float value between {@code min} and {@code max}.
+     * Returns a double value between {@code min} and {@code max}.
      * 
      * @param min the lower bound
      * @param max the higher bound
      * @return a pseudo-random between {@code min} and {@code max}
      */
-    public static float random(float min, float max) {
+    public static double nextDouble(double min, double max) {
         if (min > max)
             throw new IllegalArgumentException("boundaries must be like min <= max");
-        return min + (max - min)*rand.nextFloat();
+        return min + (max - min)*rand.nextDouble();
+    }
+
+    /**
+     * Returns an integer between {@code min} and {@code max}.
+     * 
+     * @param min the lower bound
+     * @param max the higher bound
+     * @return a pseudo-random between {@code min} and {@code max}
+     */
+    public static int nextInt(int min, int max) {
+        if (min > max)
+            throw new IllegalArgumentException("boundaries must be like min <= max");
+        return min + (max - min)*rand.nextInt();
     }
 }
