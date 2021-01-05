@@ -15,8 +15,8 @@ public class Camera {
     protected void update(float dt) {
         if (scene.player != null) {
             Rectangle playerBox = scene.player.getBounds();
-            double targetX = playerBox.getX() + playerBox.getWidth()/2 - scene.getWidth()/2.2;
-            double targetY = playerBox.getY() + playerBox.getHeight()/2 - scene.getHeight()/2.2;
+            double targetX = playerBox.getX() + playerBox.getWidth() / 2 - scene.getWidth() / 2.2;
+            double targetY = playerBox.getY() + playerBox.getHeight() / 2 - scene.getHeight() / 2.2;
             position.translate((targetX - position.getX()) * 0.1, (targetY - position.getY()) * 0.02);
         }
     }

@@ -24,10 +24,17 @@ public class LTest extends Level {
 				if (grid[i][j] != EMPTY) {
 					String str = grid[i][j] + "";
 					str = "0".repeat(4 - str.length()) + grid[i][j];
-					//add(new TileTest(str, (double) j*blockSize, (double) i*blockSize, blockSize, blockSize, 0));
+					add(new TileTest(str, (double) j*blockSize, (double) i*blockSize, blockSize, blockSize, -5));
 				}
 			}
 		}
+		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 4; j++) {
+				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3));
+			}
+		}
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 4; j++) {
 				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, 0));

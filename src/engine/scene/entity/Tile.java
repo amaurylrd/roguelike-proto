@@ -25,6 +25,10 @@ public abstract class Tile extends Component implements Collidable {
 		return false;
 	}
 
+	@Override
+	public void update(float dt) {
+	}
+
 	/**
      * Specifies whether this component is solid or not.
      * 

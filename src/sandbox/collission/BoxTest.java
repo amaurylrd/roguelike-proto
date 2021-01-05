@@ -15,6 +15,8 @@ public class BoxTest extends Tile {
 
 	@Override
 	public void update(float dt) {
+		
+		
 	}
 
 	@Override

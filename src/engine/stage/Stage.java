@@ -129,35 +129,64 @@ public final class Stage extends Window {
     public Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
-            final int TARGET_FPS = 60;
-            final long RENDER_TIME = 1000000000 / TARGET_FPS;
+            /*final int TARGET_FPS = 60;
+            final long RENDER_SPEED = 1000000000 / TARGET_FPS;
 
-            long lastUpdateTime = System.nanoTime();
-            long lastRenderTime = System.nanoTime();
+            //long lastRenderTime = System.nanoTime();
             Plateform.trace("Debug: The stage is now running the game loop.");
             running = true;
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {}
+            long lastUpdateTime = System.nanoTime();
+            
             while (running) {
                 //TODO: if  (!paused)
                 Scene scene = getScene();
+                // System.out.println("chatte" + scene.player.getBounds().getLocation());
                 long currentTime = System.nanoTime();
                 long updateTime = currentTime - lastUpdateTime;
+                float elapsed = updateTime/(float) RENDER_SPEED;
+                System.out.println(elapsed);
+                scene.update(elapsed);
 
-                float elapsed = updateTime/(float) RENDER_TIME;
-                scene.update((float) elapsed);
-                lastUpdateTime = currentTime;
 
                 scene.clear();
-                long renderTime = currentTime - lastRenderTime;
-                scene.getContext().drawString(""+renderTime/100000, 50, 50);
-                scene.getContext().drawString(""+updateTime/100000, 50, 100);
-                lastRenderTime = System.nanoTime();
+                // long renderTime = currentTime - lastRenderTime;
+                // scene.getContext().drawString(""+renderTime/100000, 50, 50);
+                // scene.getContext().drawString(""+updateTime/100000, 50, 100);
+                // lastRenderTime = System.nanoTime();
                 scene.render(scene.getContext());
                 scene.show();
+                lastUpdateTime = currentTime;
             }
             try {
                 thread.join();
             } catch (InterruptedException exception) {
                 throw new RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread.", exception);
+            }
+
+
+            */
+            final int TARGET_FPS = 60;
+            final float RENDER_SPEED = 1000000000/60;
+            final float displayPeriod = 1000000000 /TARGET_FPS;
+            long now = System.nanoTime();
+            boolean running = true;
+            while (running) {
+                Scene scene = getScene();
+                long elapsed, lastFrameTime = System.nanoTime();
+                long lastUpdateTime = System.nanoTime();
+                do 
+                {
+                    now = System.nanoTime();
+                    scene.update((float) (now - lastUpdateTime) / RENDER_SPEED);
+                    lastUpdateTime = now;
+                    elapsed = now - lastFrameTime;
+                } while (elapsed < displayPeriod);
+                scene.clear();
+                scene.render(scene.getContext());
+                scene.show();
             }
         }
 

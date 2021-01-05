@@ -26,7 +26,7 @@ import sandbox.Input;
 public class Scene extends Canvas implements Drawable {
 	private Camera camera = new Camera(this);
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
-	protected Player player;
+	public Player player;
 
 	public Scene() {
 		
@@ -119,27 +119,35 @@ public class Scene extends Canvas implements Drawable {
 		}
 
 		camera.update(dt);
-		for (Collection<Component> layer : gameObjects.values()) {
+		for (Collection<Component> layer : gameObjects.values()) {			
 			Iterator<Component> iterator = layer.iterator();
 			while (iterator.hasNext()) {
 				Component component = iterator.next();
 				if (component.isRemovable())
 					iterator.remove();
-				else
+				else {
 					component.update(dt);
+				}
 			}
 		}
 	}
 
 	@Override
-	public void render(Graphics2D graphics) { //si bounds intersect les bounds du canvas
-		graphics.translate(-camera.getX(), -camera.getY());
+	public void render(Graphics2D graphics) {
+		//graphics.translate(-camera.getX(), -camera.getY());
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
-				if (component.isOpaque())
+				if (component.isOpaque())  //TODO: si bounds intersect && contains les bounds du canvas 
+				{
+					//if (component.getLayer() == -5 || component.getLayer() == -3)
+					int layer2 = component.getLayer();
+					component.getBounds().translate((1 + 0.05 * layer2) * -camera.getX(), (1 + 0.05 * layer2) * -camera.getY());
 					component.render(graphics);
+					//if (component.getLayer() == -5 || component.getLayer() == -3)
+					component.getBounds().translate((1 + 0.05 * layer2) * camera.getX(), (1 + 0.05 * layer2) * camera.getY());
+				}
 			}
 		}
-		graphics.translate(camera.getX(), camera.getY());
+		//graphics.translate(camera.getX(), camera.getY());
 	}
 }
