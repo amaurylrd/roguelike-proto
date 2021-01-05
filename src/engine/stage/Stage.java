@@ -169,7 +169,7 @@ public final class Stage extends Window {
 
             */
             final int TARGET_FPS = 60;
-            final float RENDER_SPEED = 120 / 1000000000;
+            final float RENDER_SPEED = 120f / 1000000000f;
             final float displayPeriod = 1000000000 / TARGET_FPS;
             long now = System.nanoTime();
             boolean running = true;
