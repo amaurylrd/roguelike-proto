@@ -40,7 +40,7 @@ public abstract class Canvas {
 
     public void show() {
         onscreen.drawImage(offscreenImage, 0, 0, null);
-        rootPane.getContentPane().repaint();
+        rootPane.getContentPane().repaint(0, 0, rootPane.getWidth(), rootPane.getHeight());
         rootPane.revalidate();
     }
 

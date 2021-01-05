@@ -132,7 +132,7 @@ public class Scene extends Canvas implements Drawable {
 	}
 
 	@Override
-	public void render(Graphics2D graphics) {
+	public void render(Graphics2D graphics) { //si bounds intersect les bounds du canvas
 		graphics.translate(-camera.getX(), -camera.getY());
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
