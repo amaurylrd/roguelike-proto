@@ -169,8 +169,8 @@ public final class Stage extends Window {
 
             */
             final int TARGET_FPS = 60;
-            final float RENDER_SPEED = 1000000000/60;
-            final float displayPeriod = 1000000000 /TARGET_FPS;
+            final float RENDER_SPEED = 120 / 1000000000;
+            final float displayPeriod = 1000000000 / TARGET_FPS;
             long now = System.nanoTime();
             boolean running = true;
             while (running) {
@@ -180,7 +180,7 @@ public final class Stage extends Window {
                 do 
                 {
                     now = System.nanoTime();
-                    scene.update((float) (now - lastUpdateTime) / RENDER_SPEED);
+                    scene.update((float) (now - lastUpdateTime) * RENDER_SPEED);
                     lastUpdateTime = now;
                     elapsed = now - lastFrameTime;
                 } while (elapsed < displayPeriod);
