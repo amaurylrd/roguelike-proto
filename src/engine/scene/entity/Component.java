@@ -22,6 +22,8 @@ public abstract class Component implements Drawable {
      */
     protected Rectangle bounds;
 
+    public boolean TESTBAS = false;
+
     /**
      * Constructs a {@code Component} with a specified size, location and layer.
      * 

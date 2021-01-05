@@ -31,17 +31,13 @@ public class LTest extends Level {
 		
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3));
-			}
-		}
-
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, 0));
+				add(new BoxTest(i*100, 250, 100, 100, 0, true)); //plafond banane
+				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3)); //background -3
+				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, 0)); //sol banane test
 			}
 		}
 			
-		add(new Player(150, 300, 100, 100));
+		add(new Player(150, 350, 100, 100));
 	}
 
 	public int[][] initialize(int width, int height) {
