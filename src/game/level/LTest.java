@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import engine.scene.entity.Player;
 import engine.util.Random;
 import sandbox.collission.BoxTest;
+import sandbox.collission.PhyEntity;
 
 public class LTest extends Level {
 	private final static int EMPTY = 0000;
@@ -38,6 +39,7 @@ public class LTest extends Level {
 		}
 			
 		add(new Player(150, 350, 100, 100));
+		add(new PhyEntity(200, 0, 100, 100));
 	}
 
 	public int[][] initialize(int width, int height) {

@@ -20,7 +20,7 @@ public abstract class Component implements Drawable {
     /**
      * The bounding box of this {Component}.
      */
-    protected Rectangle bounds;
+    public Rectangle bounds; //TODO protected
 
     /**
      * Constructs a {@code Component} with a specified size, location and layer.

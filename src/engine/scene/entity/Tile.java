@@ -29,10 +29,4 @@ public abstract class Tile extends Collider {
 	public boolean isRemovable() {
 		return false;
 	}
-
-	@Override
-	public boolean collides(Collider collider) {
-		//TODO
-		return true; //isSolid() && component.isSolid() && bounds.intersects(((Component) component).bounds);
-	}
 }

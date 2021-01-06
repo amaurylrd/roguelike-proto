@@ -73,7 +73,8 @@ public class Rectangle extends Polygon {
      *
      * @return the bounds of the rectangle
      */
-    public Rectangle getBounds() {
+    @Override
+    public Rectangle clone() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 

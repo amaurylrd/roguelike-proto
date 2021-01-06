@@ -8,10 +8,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.awt.Graphics2D;
 
-import engine.scene.entity.Collidable;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 import engine.scene.entity.Entity;
+import engine.scene.entity.Tile;
 import engine.scene.entity.Player;
 import engine.scene.image.Sprite;
 import sandbox.TestRectangle;
@@ -77,21 +77,58 @@ public class Scene extends Canvas implements Drawable {
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
 			player.velocity.setX(x * -10 + x2 * 10);
-			
-			if (Input.isPressed(Input.JUMP))
-                player.velocity.setY(-20);
-            player.velocity.translateY(Force.GRAVITY * dt);
 
-			Player p2 = (Player) player.clone();
-			p2.update(dt);
+			if (Input.isPressed(Input.JUMP))
+				player.velocity.setY(-20);
 			
 			Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
-			Iterator<Component> iterator = layer.iterator();
-			while (iterator.hasNext()) {
-				Component component = iterator.next();
-				if (component instanceof Collidable && !component.equals(player)) {
+			Collection<Entity> entities = new ArrayList<Entity>();
 
-					component.TEST = p2.getBounds().intersects(component.getBounds());
+			for (Component component : layer) {
+				if (component instanceof Entity) {
+            		Entity entity = (Entity) component;
+					entity.velocity.translateY(Force.GRAVITY * dt);
+					entity.pre(dt);
+					entities.add(entity);
+				}
+			}
+
+			for (Entity entity : entities) {
+				for (Component component : layer) {
+					if (entity != component) {
+						if (component instanceof Entity) {
+							if (entity.collides(((Entity) component).FUTUR)) {
+								final Vector normal = entity.getNormal((Entity) component);
+								entity.velocity = entity.velocity.sub(normal.scale(entity.velocity.dot(normal)));
+							}
+						} else if (component instanceof Tile) {
+							if (entity.collides(component.bounds)) {
+								final Vector normal = entity.getNormal((Tile) component);
+								entity.velocity = entity.velocity.sub(normal.scale(entity.velocity.dot(normal)));
+							}
+						}
+					}
+				}
+			}
+			
+			//Iterator<java.awt.Component> iterator = layer.iterator();
+			//while (iterator.hasNext()) {
+				// Component component = iterator.next();
+				// if (component instanceof Entity) {
+				// 	Entity entity = (Entity) component;
+				// 	//update la borne future
+				// 	Iterator<java.awt.Component> it = layer.iterator();
+				// 	while (it.hasNext()) {
+				// 		Collider collider = (Collider) it.next();
+				// 		if (!entity.equals(collider)) { //TODO equals
+				// 			if (collider instanceof Tile && entity.collides()) {
+
+				// 			}
+				// 		}
+				// 	}
+
+
+					//component.TEST = p2.getBounds().intersects(component.getBounds());
 
 					//if c'est un tile
 					//else if c'est une entity
@@ -104,18 +141,18 @@ public class Scene extends Canvas implements Drawable {
 
 					// 	}
 
-					if (component.TEST) {
+					//if (component.TEST) {
 						
 
 
 						// final Vector normalW = new Vector(0, 1); //SOL
 						// final Vector normalH = new Vector(1, 0); //MUR
-						final Vector normal = player.getNormal(component);
-						player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normal)));
-						//player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normalH)));
-					}
-				}
-			}
+			// 			final Vector normal = player.getNormal(component);
+			// 			player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normal)));
+			// 			//player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normalH)));
+			// 		}
+			// 	}
+			// }
 		}
 
 		camera.update(dt);
@@ -139,12 +176,10 @@ public class Scene extends Canvas implements Drawable {
 			for (Component component : layer) {
 				if (component.isOpaque())  //TODO: si bounds intersect && contains les bounds du canvas 
 				{
-					//if (component.getLayer() == -5 || component.getLayer() == -3)
-					int layer2 = component.getLayer();
-					component.getBounds().translate((1 + 0.05 * layer2) * -camera.getX(), (1 + 0.05 * layer2) * -camera.getY());
+					int zindex = component.getLayer();
+					component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
 					component.render(graphics);
-					//if (component.getLayer() == -5 || component.getLayer() == -3)
-					component.getBounds().translate((1 + 0.05 * layer2) * camera.getX(), (1 + 0.05 * layer2) * camera.getY());
+					component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
 				}
 			}
 		}
