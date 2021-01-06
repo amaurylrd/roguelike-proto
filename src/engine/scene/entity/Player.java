@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class Player extends Entity {
-	private int totalLife;
-	private int currentLife; // TODO: add component LifeCounter
+	//private int totalLife;
+	//private int currentLife; TODO: add component LifeCounter
 	// weapon : wield
 	// item : hold/use
 
@@ -19,7 +19,6 @@ public class Player extends Entity {
 	 */
 	public Player(double x, double y, double width, double height) {
 		super(x, y, width, height, 0);
-		solid = true;
 	}
 
 	@Override

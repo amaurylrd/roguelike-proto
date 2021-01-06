@@ -10,19 +10,17 @@ public abstract class Component implements Drawable {
      * The z-index of this {@code Component}.
      * This index can take negativ value.
      */
-    private int layer;
+    protected int layer;
 
     /**
      * This {@code Component} opacity.
      */
-    private boolean opaque = true;
+    protected boolean opaque = true;
 
     /**
      * The bounding box of this {Component}.
      */
     protected Rectangle bounds;
-
-    public boolean TESTBAS = false;
 
     /**
      * Constructs a {@code Component} with a specified size, location and layer.
@@ -127,8 +125,6 @@ public abstract class Component implements Drawable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " [" + bounds.getX() + ", " + bounds.getY() + "]";
+        return this.getClass().getSimpleName() + " [" + bounds.getX() + ", " + bounds.getY() + ", " + bounds.getWidth() + ", " + bounds.getHeight() + "]";
     }
-
-    public boolean TEST = false;
 }
