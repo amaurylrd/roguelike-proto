@@ -53,7 +53,7 @@ public class Vector {
 		return new Vector(x, y);
 	}
 
-	public double getMagnitude() {
+	public double magnitude() {
 		return Math.sqrt(x * x + y * y);
 	}
 
@@ -63,10 +63,10 @@ public class Vector {
 	
 	public Vector normalize() {
 		Vector normalized = this.clone();
-		double magnitude = normalized.getMagnitude();
-        if (magnitude > 0) {
-            normalized.x /= magnitude;
-            normalized.y /= magnitude;
+		double length = normalized.magnitude();
+        if (length > 0) {
+            normalized.x /= length;
+            normalized.y /= length;
 		}
 		return normalized;
 	}

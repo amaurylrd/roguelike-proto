@@ -78,7 +78,7 @@ public abstract class Entity extends Collider {
         Vector cent2Vector = new Vector(center2.x, center2.y);
         double d = Math.sqrt(x * x  + y * y);
         double e = 0.1;
-        if (centVector.sub(cent2Vector).getMagnitude() > d - e)
+        if (centVector.sub(cent2Vector).magnitude() > d - e)
            return new Vector(0, 0);
 
         center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
@@ -108,7 +108,7 @@ public abstract class Entity extends Collider {
         Vector cent2Vector = new Vector(center2.x, center2.y);
         double d = Math.sqrt(x * x  + y * y);
         double e = 0.1;
-        if (centVector.sub(cent2Vector).getMagnitude() > d - e)
+        if (centVector.sub(cent2Vector).magnitude() > d - e)
            return new Vector(0, 0);
 
         center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
