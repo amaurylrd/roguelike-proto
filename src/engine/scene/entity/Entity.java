@@ -10,7 +10,7 @@ public abstract class Entity extends Collider {
     //private boolean grounded = false;
     
     
-    public double mass; //TODO: protected
+    public double mass; //TODO: protected density
     public Rectangle FUTUR; //TODO: protected
 
     //private Map<String, Sprite> sprites;
