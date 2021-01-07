@@ -22,7 +22,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(float dt) {
+	public void update(double dt) {
 		bounds.translate(velocity.scale((double) dt));
 	}
 

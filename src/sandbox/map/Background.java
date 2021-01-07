@@ -13,7 +13,7 @@ public class Background extends Component {
 	}
 
 	@Override
-	public void update(float dt) {}
+	public void update(double dt) {}
 
 	@Override
 	protected void draw(Graphics2D graphics) {

@@ -71,7 +71,7 @@ public class Scene extends Canvas implements Drawable {
 	}
 
 	@Override
-	public void update(float dt) {
+	public void update(double dt) {
 		if (player != null) {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;

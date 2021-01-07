@@ -83,10 +83,10 @@ public abstract class Application implements Launchable {
 		});
 		start(primaryStage);
 		primaryStage.pack();
-		primaryStage.setVisible(true);
 		primaryStage.requestFocusInWindow();
 		primaryStage.requestFocus();
 		primaryStage.toFront();
+		primaryStage.setVisible(true);
 		Plateform.trace("Debug: The frame is now visible.");
 	}
 

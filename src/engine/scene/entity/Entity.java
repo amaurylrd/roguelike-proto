@@ -25,7 +25,7 @@ public abstract class Entity extends Collider {
     }
 
     @Override
-	public void update(float dt) {
+	public void  dt) {
 		bounds.translate(velocity.scale((double) dt));
     }
 

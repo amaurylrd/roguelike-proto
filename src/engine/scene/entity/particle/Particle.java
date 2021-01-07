@@ -25,7 +25,7 @@ public abstract class Particle extends Entity {
     }
 
     @Override
-    public void update(float dt) {
+    public void update(double dt) {
         bounds.setX(bounds.getX() + velocity.getX()*dt);
         bounds.setY(bounds.getY() + velocity.getY()*dt);
         alpha -= 1; //fade

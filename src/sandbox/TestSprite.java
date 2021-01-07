@@ -15,7 +15,7 @@ public class TestSprite extends Entity {
 	
 	
 	@Override
-	public void update(float dt) {
+	public void update(double dt) {
 		// TODO Auto-generated method stub
 	}
 

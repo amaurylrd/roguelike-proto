@@ -11,7 +11,7 @@ public interface Drawable {
      * 
      * @param dt the delta time between updates
      */
-    public abstract void update(float dt);
+    public abstract void update(double dt);
 
     /**
      * Called to render a game object into the scene.

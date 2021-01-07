@@ -12,7 +12,7 @@ public class Camera {
         this.scene = scene;
     }
 
-    protected void update(float dt) {
+    protected void update(double dt) {
         if (scene.player != null) {
             Rectangle playerBox = scene.player.getBounds();
             double targetX = playerBox.getX() + playerBox.getWidth() / 2 - scene.getWidth() / 2.2;
