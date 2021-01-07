@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
 
@@ -76,13 +77,16 @@ public class Scene extends Canvas implements Drawable {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			player.velocity.setX(x * -10 + x2 * 10);
+			double targetvelocity = x * -10 + x2 * 10;
+			//player.velocity.setX(targetvelocity);
+			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
 			if (Input.isPressed(Input.JUMP))
-				player.velocity.setY(-20);
+				player.velocity.setY(-30);
+			
 			
 			Collection<Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
-			Collection<Entity> entities = new ArrayList<Entity>();
+			List<Entity> entities = new ArrayList<Entity>();
 
 			for (Component component : layer) {
 				if (component instanceof Entity) {
@@ -93,23 +97,48 @@ public class Scene extends Canvas implements Drawable {
 				}
 			}
 
-			for (Entity entity : entities) {
-				for (Component component : layer) {
-					if (entity != component) {
-						if (component instanceof Entity) {
-							if (entity.collides(((Entity) component).FUTUR)) {
-								final Vector normal = entity.getNormal((Entity) component);
-								entity.velocity = entity.velocity.sub(normal.scale(entity.velocity.dot(normal)));
-							}
-						} else if (component instanceof Tile) {
-							if (entity.collides(component.bounds)) {
-								final Vector normal = entity.getNormal((Tile) component);
-								entity.velocity = entity.velocity.sub(normal.scale(entity.velocity.dot(normal)));
-							}
-						}
+			for (int i = 0; i < entities.size(); ++i) {
+				Entity entity = entities.get(i);
+				for (int j = i + 1; j < entities.size(); ++j) {
+					Entity component_ = entities.get(j);					
+					
+					if (entity.collides(component_.bounds)) {
+						final Vector normal = entity.getNormal(component_);
+						double v1 = entity.velocity.dot(normal);
+						double v2 = component_.velocity.dot(normal);
+						double m1 = entity.mass;
+						double m2 = component_.mass;
+						double vf = (entity.restitution+component_.restitution) * (2*m2*v2 +  (m1-m2)*v1)/(m1+m2);
+						double vf2 = (entity.restitution+component_.restitution) * (2*m1*v1 +  (m2-m1)*v2)/(m1+m2);
+						if (entity == player)
+							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));
+						entity.velocity = entity.velocity.sub(normal.scale(v1 - vf));
+						component_.velocity = component_.velocity.sub(normal.scale(v2-vf2));
 					}
 				}
 			}
+			for (Entity entity : entities) {
+				entity.pre(dt);
+			}
+			for (Entity entity : entities) {
+				//entity.VUTUR = entity.velocity.clone();
+				//entity.pre(dt);
+				for (Component component : layer) {
+					if (component instanceof Tile && entity.collides(component.bounds)) {
+						Tile component_ = (Tile) component;
+						final Vector normal = entity.getNormal(component_);
+						final Vector tangeante = new Vector(-normal.getY(), normal.getX());
+						double bounce = (1 + 0*Math.max(entity.restitution, component_.restitution)) * entity.velocity.dot(normal);
+						double frict = 50/entity.mass * Math.min(entity.friction, component_.friction) * entity.velocity.dot(tangeante);
+						entity.velocity = entity.velocity.sub(normal.scale(bounce));
+						entity.velocity = entity.velocity.sub(tangeante.scale(frict));
+                                 
+					}
+				}
+									
+			}
+
+
 			
 			//Iterator<java.awt.Component> iterator = layer.iterator();
 			//while (iterator.hasNext()) {

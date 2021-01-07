@@ -105,6 +105,6 @@ public class Vector {
 
 	@Override
 	public String toString() {
-		return this.getClass().getName() + "[" + x + "," + y + "]";
+		return this.getClass().getName() + "[" + x + ", " + y + "]";
 	}
 }

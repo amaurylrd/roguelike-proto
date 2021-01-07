@@ -2,8 +2,9 @@ package engine.scene.entity;
 
 //collidable object
 public abstract class Collider extends Component {
-	protected double bounciness;
-	protected double friction;
+    public double restitution; //TODO: protected
+    //bounciness coefficient of restitution elasticity
+	public double friction; //TODO: protected
 	protected boolean solid = true;
 	
 	public Collider(double x, double y, double width, double height, int layer) {

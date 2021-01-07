@@ -10,7 +10,7 @@ public abstract class Entity extends Collider {
     //private boolean grounded = false;
     
     
-    protected double mass;
+    public double mass; //TODO: protected
     public Rectangle FUTUR; //TODO: protected
 
     //private Map<String, Sprite> sprites;
@@ -25,13 +25,13 @@ public abstract class Entity extends Collider {
     }
 
     @Override
-	public void  dt) {
-		bounds.translate(velocity.scale((double) dt));
+	public void update(double dt) {
+		bounds.translate(velocity.scale(dt));
     }
 
-    public void pre(float dt) {
+    public void pre(double dt) {
         FUTUR = bounds.clone();
-        FUTUR.translate(velocity.scale((double) dt));
+        FUTUR.translate(velocity.scale(dt));
     }
 
     //sprites = new HashMap<String, Sprite>();

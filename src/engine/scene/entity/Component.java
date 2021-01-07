@@ -116,7 +116,7 @@ public abstract class Component implements Drawable {
      * @param graphics the graphics context
      * @param color the color of the bounds
      */
-    protected void drawBounds(Graphics2D graphics, Color color) {
+    protected void drawBounds(Graphics2D graphics, Color color) { //TODO dans une classe Graphics2d
         Color penColor = graphics.getColor();
         graphics.setColor(color);
         graphics.draw(bounds.stroke());

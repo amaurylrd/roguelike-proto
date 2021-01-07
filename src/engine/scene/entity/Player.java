@@ -19,11 +19,8 @@ public class Player extends Entity {
 	 */
 	public Player(double x, double y, double width, double height) {
 		super(x, y, width, height, 0);
-	}
-
-	@Override
-	public void update(double dt) {
-		bounds.translate(velocity.scale((double) dt));
+		restitution = 0.0;
+		friction = 0.0;
 	}
 
 	@Override
