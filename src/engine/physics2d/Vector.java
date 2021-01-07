@@ -53,8 +53,20 @@ public class Vector {
 		return new Vector(x, y);
 	}
 
+	public static double magnitude(Vector vector) {
+		return vector.magnitude();
+	}
+
 	public double magnitude() {
-		return Math.sqrt(x * x + y * y);
+		return Math.sqrt(length());
+	}
+
+	public static double length(Vector vector) {
+		return vector.length();
+	}
+
+	public double length() {
+		return x * x + y * y;
 	}
 
 	public static Vector normalize(Vector vector) {
@@ -64,11 +76,7 @@ public class Vector {
 	public Vector normalize() {
 		Vector normalized = this.clone();
 		double length = normalized.magnitude();
-        if (length > 0) {
-            normalized.x /= length;
-            normalized.y /= length;
-		}
-		return normalized;
+        return length > 0 ? normalized.scale(1/length) : normalized;
 	}
 
 	public static Vector scale(Vector vector, double factor) {
