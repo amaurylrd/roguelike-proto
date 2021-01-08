@@ -5,9 +5,6 @@ import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
 import java.awt.Color;
 import javax.swing.JLabel;
-
-import engine.geom.Dimension;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
