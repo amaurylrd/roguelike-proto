@@ -1,6 +1,7 @@
 package engine.scene.entity;
 
 //collidable object
+//rigib body
 public abstract class Collider extends Component {
     public double restitution; //TODO: protected
     //bounciness coefficient of restitution elasticity

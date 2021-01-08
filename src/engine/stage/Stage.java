@@ -196,6 +196,33 @@ public final class Stage extends Window {
                 scene.render(scene.getContext());
                 scene.show();
             }
+
+            // double fps = 100;
+            // double dt = 1 / fps;
+            // double accumulator = 0;
+ 
+            // // In units of seconds
+            // long frameStart = System.nanoTime();
+            // Scene scene = getScene();
+            // while(true) {
+            //     long currentTime = System.nanoTime();
+            //     accumulator += currentTime - frameStart;
+            //     frameStart = currentTime;
+                
+            //     if (accumulator > 0.2)
+            //         accumulator = 0.2;
+                    
+            //     while(accumulator > dt) {
+            //         scene.update(dt);
+            //         accumulator -= dt;
+            //     }
+            
+            //     const float alpha = accumulator / dt;
+            //     System.out.println("render");
+            //     scene.clear();
+            //     scene.render(scene.getContext());
+            //     scene.show();
+            // }
         }
 
 

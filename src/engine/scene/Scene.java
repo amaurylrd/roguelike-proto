@@ -73,6 +73,7 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
+		System.out.println("update "+ dt);
 		if (player != null) {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
@@ -81,8 +82,10 @@ public class Scene extends Canvas implements Drawable {
 			//player.velocity.setX(targetvelocity);
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
-			if (Input.isPressed(Input.JUMP))
+			if (Input.isPressed(Input.JUMP)) {
+				//camera.shake(300);
 				player.velocity.setY(-30);
+			}
 			
 			
 				
@@ -104,7 +107,7 @@ public class Scene extends Canvas implements Drawable {
 				Entity entity = entities.get(i);
 				for (int j = i + 1; j < entities.size(); ++j) {
 					Entity entity_ = entities.get(j);
-					if (entity.collides(entity_.bounds)) {
+					if (entity.collides(entity_.getBounds())) {
 						final Vector normal = entity.getNormal(entity_);
 						double v1 = entity.velocity.dot(normal);
 						double v2 = entity_.velocity.dot(normal);
@@ -126,7 +129,7 @@ public class Scene extends Canvas implements Drawable {
 
 			for (Entity entity : entities) {
 				for (Tile tile : tiles) {
-					if (entity.collides(tile.bounds)) {
+					if (entity.collides(tile.getBounds())) {
 						final Vector normal = entity.getNormal(tile);
 						final Vector tangeante = new Vector(-normal.getY(), normal.getX());
 						double bounce = (1 + 0*Math.max(entity.restitution, tile.restitution)) * entity.velocity.dot(normal);
@@ -199,11 +202,9 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void render(Graphics2D graphics) {
-		//graphics.translate(-camera.getX(), -camera.getY());
 		for (Collection<Component> layer : gameObjects.values()) {
 			for (Component component : layer) {
-				if (component.isOpaque())  //TODO: si bounds intersect && contains les bounds du canvas 
-				{
+				if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
 					int zindex = component.getLayer();
 					component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
 					component.render(graphics);
@@ -211,6 +212,5 @@ public class Scene extends Canvas implements Drawable {
 				}
 			}
 		}
-		//graphics.translate(camera.getX(), camera.getY());
 	}
 }
