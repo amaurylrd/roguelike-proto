@@ -48,6 +48,10 @@ public class Vector {
 		set(x + dx, y + dy);
 	}
 
+	public void translate(Vector vector) {
+		translate(vector.x, vector.y);
+	}
+
 	@Override
 	public Vector clone() {
 		return new Vector(x, y);
