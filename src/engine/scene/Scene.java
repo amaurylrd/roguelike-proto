@@ -94,7 +94,7 @@ public class Scene extends Canvas implements Drawable {
 			List<Entity> entities = new ArrayList<Entity>();
 			for (Component component : layer) {
 				if (component instanceof Entity) {
-            		Entity entity = (Entity) component;
+					Entity entity = (Entity) component;
 					entity.velocity.translateY(Force.GRAVITY * dt);
 					entity.pre(dt);
 					entities.add(entity);
@@ -103,6 +103,7 @@ public class Scene extends Canvas implements Drawable {
 				}
 			}
 
+			//check isSolid pour les collisions
 			for (int i = 0; i < entities.size(); ++i) {
 				Entity entity = entities.get(i);
 				for (int j = i + 1; j < entities.size(); ++j) {
@@ -113,8 +114,8 @@ public class Scene extends Canvas implements Drawable {
 						double v2 = entity_.velocity.dot(normal);
 						double m1 = entity.mass;
 						double m2 = entity_.mass;
-						double vf = (entity.restitution+entity_.restitution) * (2*m2*v2 +  (m1-m2)*v1)/(m1+m2);
-						double vf2 = (entity.restitution+entity_.restitution) * (2*m1*v1 +  (m2-m1)*v2)/(m1+m2);
+						double vf = (entity.restitution + entity_.restitution) * (2 * m2 * v2 +  (m1 -m 2) * v1) / (m1 + m2);
+						double vf2 = (entity.restitution + entity_.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
 						if (entity == player)
 							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));
 						entity.velocity = entity.velocity.sub(normal.scale(v1 - vf));
