@@ -29,11 +29,11 @@ public class Vector {
 	}
 
 	public void setX(double x) {
-		set(x, y);
+		this.x = x;
 	}
 
 	public void setY(double y) {
-		set(x, y);
+		this.y = y;
 	}
 
 	public void translateX(double dx) {
@@ -74,21 +74,23 @@ public class Vector {
 	}
 
 	public static Vector normalize(Vector vector) {
-		return vector.normalize();
+		Vector normalized = vector.clone();
+		normalized.normalize();
+		return normalized;
 	}
 	
-	public Vector normalize() {
-		Vector normalized = this.clone();
-		double length = normalized.magnitude();
-        return length > 0 ? normalized.scale(1/length) : normalized;
+	public void normalize() {
+		double length = magnitude();
+		if (length > 0)
+		   scale(1/length);
 	}
 
 	public static Vector scale(Vector vector, double factor) {
-		return vector.scale(factor);
+		return new Vector(vector.x * factor, vector.y * factor);
 	}
 
-	public Vector scale(double factor) {
-		return new Vector(x * factor, y * factor);
+	public void scale(double factor) {
+		set(x * factor, y * factor);
 	}
 
 	public static double dot(Vector v1, Vector v2) {
@@ -99,20 +101,12 @@ public class Vector {
 		return x * vector.x + y * vector.y;
 	}
 
-	public static Vector sub(Vector v1, Vector v2) {
-		return v1.sub(v2);
+	public static Vector sub(Vector a, Vector b) {
+		return new Vector(a.x - b.x, a.y - b.y);
 	}
 
-	public Vector sub(Vector vector) {
-		return new Vector(x - vector.x, y - vector.y);
-	}
-
-	public static Vector negate(Vector vector) {
-		return vector.negate();
-	}
-
-	public Vector negate() {
-		return scale(-1);
+	public void sub(Vector vector) {
+		set(x - vector.x, y - vector.y);
 	}
 
 	@Override

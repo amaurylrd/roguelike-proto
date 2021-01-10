@@ -13,6 +13,7 @@ import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 import engine.scene.entity.Entity;
 import engine.scene.entity.Tile;
+import engine.scene.entity.Entity.Collision;
 import engine.scene.entity.Player;
 import engine.scene.image.Sprite;
 import sandbox.TestRectangle;
@@ -108,18 +109,22 @@ public class Scene extends Canvas implements Drawable {
 				Entity entity = entities.get(i);
 				for (int j = i + 1; j < entities.size(); ++j) {
 					Entity entity_ = entities.get(j);
-					if (entity.collides(entity_.getBounds())) {
-						final Vector normal = entity.getNormal(entity_);
+					Collision collision = entity.collides(entity_);
+					if (collision.collides) {
+						final Vector normal = collision.normal;
+						//final double coldepth = collision.depth;
+
 						double v1 = entity.velocity.dot(normal);
 						double v2 = entity_.velocity.dot(normal);
 						double m1 = entity.mass;
 						double m2 = entity_.mass;
 						double vf = (entity.restitution + entity_.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
 						double vf2 = (entity.restitution + entity_.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
-						if (entity == player)
-							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));
-						entity.velocity = entity.velocity.sub(normal.scale(v1 - vf));
-						entity_.velocity = entity_.velocity.sub(normal.scale(v2-vf2));
+						/*if (entity == player)
+							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));*/
+						
+						entity.velocity.translate(Vector.scale(normal, vf - v1));
+						entity_.velocity.translate(Vector.scale(normal, vf2 - v2));
 					}
 				}
 			}
@@ -130,61 +135,19 @@ public class Scene extends Canvas implements Drawable {
 
 			for (Entity entity : entities) {
 				for (Tile tile : tiles) {
-					if (entity.collides(tile.getBounds())) {
-						final Vector normal = entity.getNormal(tile);
+					Collision collision = entity.collides(tile);
+					if (collision.collides) {
+						final Vector normal = collision.normal;
 						final Vector tangeante = new Vector(-normal.getY(), normal.getX());
+						final double coldepth = collision.depth;
+						
 						double bounce = (1 + 0*Math.max(entity.restitution, tile.restitution)) * entity.velocity.dot(normal);
 						double frict = 50/entity.mass * Math.min(entity.friction, tile.friction) * entity.velocity.dot(tangeante);
-						entity.velocity = entity.velocity.sub(normal.scale(bounce));
-						entity.velocity = entity.velocity.sub(tangeante.scale(frict));
+						entity.velocity.translate(Vector.scale(normal, -bounce));
+						entity.velocity.translate(Vector.scale(tangeante, -frict));
 					}
 				}
 			}
-
-
-			
-			//Iterator<java.awt.Component> iterator = layer.iterator();
-			//while (iterator.hasNext()) {
-				// Component component = iterator.next();
-				// if (component instanceof Entity) {
-				// 	Entity entity = (Entity) component;
-				// 	//update la borne future
-				// 	Iterator<java.awt.Component> it = layer.iterator();
-				// 	while (it.hasNext()) {
-				// 		Collider collider = (Collider) it.next();
-				// 		if (!entity.equals(collider)) { //TODO equals
-				// 			if (collider instanceof Tile && entity.collides()) {
-
-				// 			}
-				// 		}
-				// 	}
-
-
-					//component.TEST = p2.getBounds().intersects(component.getBounds());
-
-					//if c'est un tile
-					//else if c'est une entity
-					
-					// component.TEST = p2.collides((Collidable) component);
-
-					// Rectangle bounds = p2.getBounds();
-					// 	Rectangle cbounds = component.getBounds();
-					// 	if (cbounds.contains(bounds.getX(), bounds.getY()) {
-
-					// 	}
-
-					//if (component.TEST) {
-						
-
-
-						// final Vector normalW = new Vector(0, 1); //SOL
-						// final Vector normalH = new Vector(1, 0); //MUR
-			// 			final Vector normal = player.getNormal(component);
-			// 			player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normal)));
-			// 			//player.velocity = player.velocity.sub(normal.scale(player.velocity.dot(normalH)));
-			// 		}
-			// 	}
-			// }
 		}
 
 		camera.update(dt);

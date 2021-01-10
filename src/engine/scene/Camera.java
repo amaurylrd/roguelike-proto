@@ -58,6 +58,14 @@ public class Camera {
         return position.getY();
     }
     
+    /**
+	 * Gives the linear interpolation between two known points.
+	 * 
+	 * @param a the minimum value to evaluate
+	 * @param b the maximum value to evaluate
+	 * @param f the interpolation value between the two previous values
+	 * @return the linear interpolation
+	 */
     public static double lerp(double a, double b, double f) {
 		return a + f*(b - a);
 	}

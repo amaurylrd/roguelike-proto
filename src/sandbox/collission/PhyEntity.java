@@ -1,7 +1,8 @@
-package sandbox.collission; 
+package sandbox.collission;
 
 import java.awt.Graphics2D;
 
+import engine.physics2d.Vector;
 import engine.scene.entity.Entity;
 
 public class PhyEntity extends Entity {
@@ -19,7 +20,7 @@ public class PhyEntity extends Entity {
 
 	@Override
 	public void update(double dt) {
-		bounds.translate(velocity.scale((double) dt));
+		bounds.translate(Vector.scale(velocity, dt));
 	}
 
 	@Override
