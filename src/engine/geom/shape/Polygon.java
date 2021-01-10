@@ -3,6 +3,8 @@ package engine.geom.shape;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+import engine.physics2d.Vector;
+
 /**
  * This class represents a polygon (should be convex and closed).
  */
@@ -198,7 +200,7 @@ public class Polygon extends Shape {
      * 
      * @return the center coordonates
      */
-	public Point2D.Double centroid() {
+	public Vector centroid() {
 		double tmp, determinant = 0.0;
 		double centroidX = 0.0, centroidY = 0.0;
 		for (int i = 0; i < vertices; i++) {
@@ -211,7 +213,7 @@ public class Polygon extends Shape {
 		}
 		centroidX /= 3*determinant;
 		centroidY /= 3*determinant;
-		return new Point2D.Double(centroidX, centroidY);
+		return new Vector(centroidX, centroidY);
 		
 	}
 
@@ -221,7 +223,7 @@ public class Polygon extends Shape {
      * @return the center coordonates
      */
 	@Override
-	public Point2D.Double center() {
+	public Vector center() {
 		double centerX = 0.0, centerY = 0.0;
 		for (int i = 0; i < vertices; ++i) {
 			centerX += points[i].x;
@@ -229,8 +231,14 @@ public class Polygon extends Shape {
 		}
 		centerX /= vertices;
 		centerY /= vertices;
-		return new Point2D.Double(centerX, centerY);
+		return new Vector(centerX, centerY);
+		//TODO simplification vector
 	}
+
+	// public Vector center() {
+	// 	Point2D.Double center = center();
+	// 	return new Vector(center.x, center.y);
+	// }
 
 	/**
      * Rotates the Z axis of this {@code Polygon} in counter-clockwise direction.
@@ -241,15 +249,13 @@ public class Polygon extends Shape {
 	@Override
 	public void rotate(float theta) {
 		rotation -= theta;
-		Point2D.Double massCenter = centroid();
-		for (int i = 0; i < vertices; i++) {
-			double centerX = massCenter.x, centerY = massCenter.y;
+		Vector massCenter = centroid();
+		for (int i = 0; i < vertices; ++i) {
+			double centerX = massCenter.getX(), centerY = massCenter.getY();
 			points[i].x -= centerX;
 			points[i].y -= centerY;
-			double deltaX = points[i].x*Math.cos(rotation) - points[i].y*Math.sin(rotation);
-			double deltaY = points[i].x*Math.sin(rotation) + points[i].y*Math.cos(rotation);
-			points[i].x = deltaX + centerX;
-            points[i].y = deltaY + centerY;
+			points[i].x = points[i].x * Math.cos(rotation) - points[i].y * Math.sin(rotation) + centerX;
+            points[i].y = points[i].x * Math.sin(rotation) + points[i].y * Math.cos(rotation) + centerY;
 		}
 	}
 

@@ -2,7 +2,6 @@ package engine.scene.entity;
 
 import engine.physics2d.Vector;
 
-import java.awt.geom.Point2D;
 import engine.geom.shape.Rectangle;
 
 public abstract class Entity extends Collider {
@@ -63,58 +62,58 @@ public abstract class Entity extends Collider {
     }
     
     public Vector getNormal(Entity component) {
-        Point2D.Double center = bounds.center();
-        Point2D.Double center2 = component.bounds.center();
+        Vector center = bounds.center();
+        Vector center2 = component.bounds.center();
 
-        double x = (bounds.getWidth() + component.bounds.getWidth()) / 2;
-        double y = (bounds.getHeight() + component.bounds.getHeight()) / 2;
+        // double x = (bounds.getWidth() + component.bounds.getWidth()) / 2;
+        // double y = (bounds.getHeight() + component.bounds.getHeight()) / 2;
 
-        if (Math.abs(center.x - center2.x) < x)
-            return new Vector(0, 1);
-        if (Math.abs(center.y - center2.y) < y)
-            return new Vector(1, 0);
+        // if (Math.abs(center.x - center2.x) < x)
+        //     return new Vector(0, 1);
+        // if (Math.abs(center.y - center2.y) < y)
+        //     return new Vector(1, 0);
 
-        Vector centVector = new Vector(center.x, center.y);
-        Vector cent2Vector = new Vector(center2.x, center2.y);
-        double d = Math.sqrt(x * x  + y * y);
-        double e = 0.1;
-        if (centVector.sub(cent2Vector).magnitude() > d - e)
-           return new Vector(0, 0);
+        // Vector centVector = new Vector(center.x, center.y);
+        // Vector cent2Vector = new Vector(center2.x, center2.y);
+        // double d = Math.sqrt(x * x  + y * y);
+        // double e = 0.1;
+        // if (centVector.sub(cent2Vector).magnitude() > d - e)
+        //    return new Vector(0, 0);
 
-        center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
-                center.y + (center.y < center2.y ? 1 : -1) * component.bounds.getHeight() / 2);
+        // center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
+        //         center.y + (center.y < center2.y ? 1 : -1) * component.bounds.getHeight() / 2);
 
-        if (Math.abs(center.x - center2.x) * bounds.getHeight() - Math.abs(center.y - center2.y) * bounds.getWidth() < 0)
-            return new Vector(0, 1);
+        // if (Math.abs(center.x - center2.x) * bounds.getHeight() - Math.abs(center.y - center2.y) * bounds.getWidth() < 0)
+        //     return new Vector(0, 1);
         return new Vector(1, 0);
     }
 
     public Vector getNormal(Tile component) {
-        Point2D.Double center = bounds.center();
-        Point2D.Double center2 = component.bounds.center();
+        Vector center = bounds.center();
+        Vector center2 = component.bounds.center();
 
         double x = (bounds.getWidth() + component.bounds.getWidth()) / 2;
         double y = (bounds.getHeight() + component.bounds.getHeight()) / 2;
 
         if (component.traversable)
-            return center2.y - center.y > y ? new Vector(0, 1) : new Vector(0, 0);
+            return center2.getY() - center.getY() > y ? new Vector(0, 1) : new Vector(0, 0);
 
-        if (Math.abs(center.x - center2.x) < x)
+        if (Math.abs(center.getX() - center2.getX()) < x)
             return new Vector(0, 1);
-        if (Math.abs(center.y - center2.y) < y)
+        if (Math.abs(center.getY() - center2.getX()) < y)
             return new Vector(1, 0);
 
-        Vector centVector = new Vector(center.x, center.y);
-        Vector cent2Vector = new Vector(center2.x, center2.y);
-        double d = Math.sqrt(x * x  + y * y);
-        double e = 0.1;
-        if (centVector.sub(cent2Vector).magnitude() > d - e)
+        Vector centVector = new Vector(center.getX(), center.getY());
+        Vector cent2Vector = new Vector(center2.getX(), center2.getY());
+        double distance = Math.sqrt(x * x  + y * y);
+        double epsilon = 0.1;
+        if (centVector.sub(cent2Vector).magnitude() > distance - epsilon)
            return new Vector(0, 0);
 
-        center.setLocation(center.x + (center.x < center2.x ? 1 : -1) * component.bounds.getWidth() / 2,
-                center.y + (center.y < center2.y ? 1 : -1) * component.bounds.getHeight() / 2);
+        center.translate((center.getX() < center2.getX() ? 1 : -1) * component.bounds.getWidth() / 2,
+            (center.getY() < center2.getY() ? 1 : -1) * component.bounds.getHeight() / 2);
 
-        if (Math.abs(center.x - center2.x) * bounds.getHeight() - Math.abs(center.y - center2.y) * bounds.getWidth() < 0)
+        if (Math.abs(center.getX() - center2.getX()) * bounds.getHeight() - Math.abs(center.getY() - center2.getY()) * bounds.getWidth() < 0)
             return new Vector(0, 1);
         return new Vector(1, 0);
     }

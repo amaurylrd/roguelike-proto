@@ -78,13 +78,13 @@ public class Scene extends Canvas implements Drawable {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = x * -10 + x2 * 10;
+			double targetvelocity = x * -0.5 + x2 * 0.5;
 			//player.velocity.setX(targetvelocity);
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
 			if (Input.isPressed(Input.JUMP)) {
 				//camera.shake(300);
-				player.velocity.setY(-30);
+				player.velocity.setY(-1.5);
 			}
 			
 			
@@ -114,7 +114,7 @@ public class Scene extends Canvas implements Drawable {
 						double v2 = entity_.velocity.dot(normal);
 						double m1 = entity.mass;
 						double m2 = entity_.mass;
-						double vf = (entity.restitution + entity_.restitution) * (2 * m2 * v2 +  (m1 -m 2) * v1) / (m1 + m2);
+						double vf = (entity.restitution + entity_.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
 						double vf2 = (entity.restitution + entity_.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
 						if (entity == player)
 							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));

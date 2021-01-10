@@ -180,49 +180,47 @@ public final class Stage extends Window {
             // }
 
             
-            final double RENDER_SPEED = 30f / 1000000000f;
+            // final double RENDER_SPEED = 30f / 1000000000f;
 
-            Scene scene = getScene();
-
-            long now = System.nanoTime();
-            boolean running = true;
-            long lastUpdateTime = System.nanoTime();
-            while (running) {
-                now = System.nanoTime();
-                scene.update((double)(now - lastUpdateTime) * RENDER_SPEED);
-                lastUpdateTime = now;
-                // scene.update((float) ((now - lastUpdateTime) * RENDER_SPEED));
-                scene.clear();
-                scene.render(scene.getContext());
-                scene.show();
-            }
-
-            // double fps = 100;
-            // double dt = 1 / fps;
-            // double accumulator = 0;
- 
-            // // In units of seconds
-            // long frameStart = System.nanoTime();
             // Scene scene = getScene();
-            // while(true) {
-            //     long currentTime = System.nanoTime();
-            //     accumulator += currentTime - frameStart;
-            //     frameStart = currentTime;
-                
-            //     if (accumulator > 0.2)
-            //         accumulator = 0.2;
-                    
-            //     while(accumulator > dt) {
-            //         scene.update(dt);
-            //         accumulator -= dt;
-            //     }
-            
-            //     const float alpha = accumulator / dt;
-            //     System.out.println("render");
+
+            // long now = System.nanoTime();
+            // boolean running = true;
+            // long lastUpdateTime = System.nanoTime();
+            // while (running) {
+            //     now = System.nanoTime();
+            //     scene.update((double)(now - lastUpdateTime) * RENDER_SPEED);
+            //     lastUpdateTime = now;
+            //     // scene.update((float) ((now - lastUpdateTime) * RENDER_SPEED));
             //     scene.clear();
             //     scene.render(scene.getContext());
             //     scene.show();
             // }
+
+            final double TARGET_UPS = 60;
+            final double DELTA_TIME = 1000 / TARGET_UPS;
+            double alpha, accumulator = 0;
+
+            long frameStart = System.nanoTime();
+            Scene scene = getScene();
+            while (true) {
+                long currentTime = System.nanoTime();
+                accumulator += (currentTime - frameStart) / 1000000;
+                frameStart = currentTime;
+                
+                // if (accumulator > 0.2)
+                //     accumulator = 0.2;
+                    
+                while (accumulator > DELTA_TIME) {
+                    scene.update(DELTA_TIME);
+                    accumulator -= DELTA_TIME;
+                }
+            
+                alpha = accumulator / DELTA_TIME;
+                scene.clear();
+                scene.render(scene.getContext());
+                scene.show();
+            }
         }
 
 
