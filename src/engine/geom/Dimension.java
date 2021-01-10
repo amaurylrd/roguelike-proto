@@ -146,6 +146,6 @@ public class Dimension {
      */
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "[width:" + getWidth() + ", height:" + getHeight() + "]";
+        return this.getClass().getSimpleName() + "[width: " + getWidth() + ", height: " + getHeight() + "]";
     }
 }
