@@ -137,8 +137,8 @@ public class Dimension {
             return false;
         if (!(object instanceof Dimension))
             return false;
-        Dimension downcast = (Dimension) object;
-        return getWidth() == downcast.getWidth() && getHeight() == downcast.getHeight();
+        Dimension dimension = (Dimension) object;
+        return getWidth() == dimension.getWidth() && getHeight() == dimension.getHeight();
     }
 
     /**
