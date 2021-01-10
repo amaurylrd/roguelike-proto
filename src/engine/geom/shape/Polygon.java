@@ -136,20 +136,6 @@ public class Polygon extends Shape {
 		}
 		return false;
 	}
-
-	/**
-	 * Checks if {@code x} is inside {@code a} and {@code b}.
-	 * 
-	 * @param x the specicifed value to verify
-	 * @param a the first number
-	 * @param b the second number
-	 * @return <i>true</i> if {@code x} is inside the first and second number, <i>false</i> otherwise
-	 */
-	private boolean inside(double x, double a, double b) {
-		if (a < b)
-			return a <= x && x <= b;
-		return b < a ? a >= x && x >= b : a == x;
-	}
 	
 	/**
 	 * Gives the area of this {@code Polygon}.

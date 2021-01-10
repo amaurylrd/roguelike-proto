@@ -48,9 +48,22 @@ public class Circle extends Shape {
 
 	@Override
 	public boolean contains(double x, double y) {
-		// TODO Auto-generated method stub
-		return false;
+		double dx = origin.getX() - x * origin.getX() - x;
+		double dy = origin.getY() - y * origin.getY() - y;
+   		return dx + dy <= radius * radius;
 	}
 
-	
+	/**
+	 * Checks if {@code x} is inside {@code a} and {@code b}.
+	 * 
+	 * @param x the specicifed value to verify
+	 * @param a the first number
+	 * @param b the second number
+	 * @return <i>true</i> if {@code x} is inside the first and second number, <i>false</i> otherwise
+	 */
+	protected boolean inside(double x, double a, double b) {
+		if (a < b)
+			return a <= x && x <= b;
+		return b < a ? a >= x && x >= b : a == x;
+	}
 }
