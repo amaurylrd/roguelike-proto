@@ -20,6 +20,10 @@ public class Vector {
 		this.y = y;
 	}
 
+	public void set(Vector vector) {
+		set(vector.x, vector.y);
+	}
+
 	public double getX() {
 		return x;
 	}
