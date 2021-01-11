@@ -74,8 +74,8 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
-		System.out.println("update "+ dt);
-		if (player != null) {
+		dt /= 10;
+		//if (player != null) {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
@@ -87,72 +87,82 @@ public class Scene extends Canvas implements Drawable {
 				//camera.shake(300);
 				player.velocity.setY(-1.5);
 			}
-			
-			
-				
+
 			Collection<? extends Component> layer = gameObjects.get(Integer.valueOf(player.getLayer()));
-			Collection<Tile> tiles = new ArrayList<Tile>();
 			List<Entity> entities = new ArrayList<Entity>();
+			Collection<Tile> tiles = new ArrayList<Tile>();
 			for (Component component : layer) {
 				if (component instanceof Entity) {
 					Entity entity = (Entity) component;
 					entity.velocity.translateY(Force.GRAVITY * dt);
-					entity.pre(dt);
 					entities.add(entity);
-				} else if (component instanceof Tile) {
+				} 
+				else if (component instanceof Tile) {
 					tiles.add((Tile) component);
 				}
 			}
 
-			//check isSolid pour les collisions
+			Collection<Collision> contacts = new ArrayList<Collision>();
 			for (int i = 0; i < entities.size(); ++i) {
 				Entity entity = entities.get(i);
 				for (int j = i + 1; j < entities.size(); ++j) {
 					Entity entity_ = entities.get(j);
 					Collision collision = entity.collides(entity_);
-					if (collision.collides) {
-						final Vector normal = collision.normal;
+					if (collision.collides)
+						contacts.add(collision);
+				}
+
+				for (Tile tile : tiles) {
+					Collision collision = entity.collides(tile);
+					if (collision.collides)
+						contacts.add(collision);
+				}
+			}
+			
+			//TODO changer list
+			for (Collision contact : contacts) {
+				Entity entity = contact.A;
+
+				if (contact.B instanceof Entity) {
+					final Vector normal = contact.normal;
 						//final double coldepth = collision.depth;
+						Entity colldier = (Entity) contact.B;
 
 						double v1 = entity.velocity.dot(normal);
-						double v2 = entity_.velocity.dot(normal);
+						double v2 = colldier.velocity.dot(normal);
 						double m1 = entity.mass;
-						double m2 = entity_.mass;
-						double vf = (entity.restitution + entity_.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
-						double vf2 = (entity.restitution + entity_.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
+						double m2 = colldier.mass;
+						double vf = (entity.restitution + colldier.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
+						double vf2 = (entity.restitution + colldier.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
 						/*if (entity == player)
 							System.out.println(v2 +" "+v1 +" "+vf + " "+ (v1 - vf));*/
 						
-						entity.velocity.translate(Vector.scale(normal, vf - v1));
-						entity_.velocity.translate(Vector.scale(normal, vf2 - v2));
-					}
-				}
-			}
-
-			for (Entity entity : entities) {
-				entity.pre(dt);
-			}
-
-			for (Entity entity : entities) {
-				for (Tile tile : tiles) {
-					Collision collision = entity.collides(tile);
-					if (collision.collides) {
-						final Vector normal = collision.normal;
+						entity.impulse.translate(Vector.scale(normal, vf - v1));
+						colldier.impulse.translate(Vector.scale(normal, vf2 - v2));
+				} else if (contact.B instanceof Tile) {
+					Tile colldier = (Tile) contact.B;
+					System.out.println(contact.normal);
+					final Vector normal = contact.normal;
 						final Vector tangeante = new Vector(-normal.getY(), normal.getX());
-						final double coldepth = collision.depth;
+						final double coldepth = contact.depth;
 						
-						double bounce = (1 + 0*Math.max(entity.restitution, tile.restitution)) * entity.velocity.dot(normal);
-						double frict = 50/entity.mass * Math.min(entity.friction, tile.friction) * entity.velocity.dot(tangeante);
-						entity.velocity.translate(Vector.scale(normal, -bounce));
-						entity.velocity.translate(Vector.scale(tangeante, -frict));
-					}
+						double bounce = (1 + 0*Math.max(entity.restitution, colldier.restitution)) * entity.velocity.dot(normal);
+						double frict = 50/entity.mass * Math.min(entity.friction, colldier.friction) * entity.velocity.dot(tangeante);
+						entity.impulse.translate(Vector.scale(normal, -bounce));
+						entity.impulse.translate(Vector.scale(tangeante, -frict));
 				}
 			}
-		}
+
+			
+			for (Entity entity : entities) {
+				entity.applyImpulse();
+			}
+
+		
 
 		camera.update(dt);
-		for (Collection<Component> layer : gameObjects.values()) {			
-			Iterator<Component> iterator = layer.iterator();
+		for (Collection<Component> layer2 : gameObjects.values()) {			
+			Iterator<Component> iterator = layer2.iterator();
 			while (iterator.hasNext()) {
 				Component component = iterator.next();
 				if (component.isRemovable())
@@ -161,6 +171,13 @@ public class Scene extends Canvas implements Drawable {
 					component.update(dt);
 				}
 			}
+		}
+
+		for (Collision contact : contacts) {
+			
+			contact.A.getBounds().translate(Vector.scale(contact.normal, 0.1 *contact.depth));
+			if (contact.B instanceof Entity)
+				((Entity) contact.B).getBounds().translate(Vector.scale(contact.normal, -0.1 *contact.depth));
 		}
 	}
 

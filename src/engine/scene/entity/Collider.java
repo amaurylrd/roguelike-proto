@@ -1,5 +1,7 @@
 package engine.scene.entity;
 
+import engine.physics2d.Vector;
+
 //collidable object
 //rigib body
 public abstract class Collider extends Component {

@@ -46,7 +46,7 @@ public class LTest extends Level {
 		e.mass = 150;
 		e.restitution = 0.8;
 		e.friction = 1;
-		add(e);
+		//add(e);
 	}
 
 	public int[][] initialize(int width, int height) {

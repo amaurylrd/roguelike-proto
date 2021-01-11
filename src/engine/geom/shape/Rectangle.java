@@ -222,9 +222,7 @@ public class Rectangle extends Polygon {
      */
     @Override
     public Vector center() {
-        double centerX = getX() + getWidth() / 2;
-        double centerY = getY() + getHeight() / 2;
-        return new Vector(centerX, centerY);
+        return new Vector(getX() + getWidth() / 2, getY() + getHeight() / 2);
     }
 
     @Override
