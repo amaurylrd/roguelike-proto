@@ -38,7 +38,7 @@ public class LTest extends Level {
 			}
 		}
 		
-		Player p = new Player(150, 350, 100, 100);
+		Player p = new Player(150, 300, 100, 100);
 		p.mass = 150;
 		add(p);
 
