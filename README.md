@@ -1,1 +1,1 @@
-
+Un document README.md qui permet à tout visiteur du projet de comprendre rapidement le but du projet, les fonctionnalités supportées, les fonctionnalités à développer dans le futur, ainsi que la licence du projet, les technologies utilisées, les participants et le contexte du projet, etc. Un pointeur vers un “screencast” ou un “screenshot” est également à inclure dans README.md
