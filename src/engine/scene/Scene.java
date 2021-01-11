@@ -118,7 +118,7 @@ public class Scene extends Canvas implements Drawable {
 						contacts.add(collision);
 				}
 			}
-			System.out.println(contacts);
+			
 			//TODO changer list
 			for (Collision contact : contacts) {
 				Entity entity = contact.A;
@@ -152,9 +152,6 @@ public class Scene extends Canvas implements Drawable {
 
 			
 			for (Entity entity : entities) {
-				double e = entity.impulse.getY();
-				if (e != 0)
-					System.out.println(e + " " + entity.velocity.getY());
 				entity.applyImpulse();
 			}
 

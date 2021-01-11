@@ -48,7 +48,7 @@ public class Vector {
 		translate(0, dy);
 	}
 
-    public void translate(double dx, double dy) {
+	public void translate(double dx, double dy) {
 		set(x + dx, y + dy);
 	}
 
