@@ -65,6 +65,10 @@ public abstract class Entity extends Collider {
         public Vector normal;
         public double depth; //penetration
         
+        @Override
+        public String toString() {
+            return this.getClass().getName() + "[A:" + A + ", B:" + B + ", normal:" + normal + ", penetration:" + depth + "]";
+        }
     }
 
     public Collision collides(Collider collider) {

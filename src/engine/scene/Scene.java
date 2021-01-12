@@ -138,6 +138,7 @@ public class Scene extends Canvas implements Drawable {
 					entity.impulse.translate(Vector.scale(normal, vf - v1));
 					colldier.impulse.translate(Vector.scale(normal, vf2 - v2));
 				} else if (contact.B instanceof Tile) {
+					System.out.println(contact);
 					Tile colldier = (Tile) contact.B;
 					
 					final Vector normal = contact.normal;
