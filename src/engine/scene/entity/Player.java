@@ -3,7 +3,7 @@ package engine.scene.entity;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
-public class Player extends Entity {
+public class Player extends Entity { //abstract player à check instance of extends
 	//private int totalLife;
 	//private int currentLife; TODO: add component LifeCounter
 	// weapon : wield
@@ -21,6 +21,7 @@ public class Player extends Entity {
 		super(x, y, width, height, 0);
 		restitution = 0.0;
 		friction = 0.0;
+		//TODO masss
 	}
 
 	@Override

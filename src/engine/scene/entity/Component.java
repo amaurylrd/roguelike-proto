@@ -1,6 +1,7 @@
 package engine.scene.entity;
 
 import engine.geom.shape.Rectangle;
+import engine.physics2d.Vector;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

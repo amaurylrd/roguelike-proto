@@ -12,8 +12,6 @@ public abstract class Tile extends Collider {
 	public Tile(String ressourceName, double x, double y, double width, double height, int layer) {
 		super(x, y, width, height, layer);
 		texture = Ressources.ressource(ressourceName);
-		restitution = 0.5;
-		friction = 0.01;
 	}
 
 	@Override

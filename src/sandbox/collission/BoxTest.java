@@ -9,11 +9,15 @@ public class BoxTest extends Tile {
 
 	public BoxTest(double x, double y, double width, double height, int layer) {
 		super("banana", x, y, width, height, layer);
+		restitution = 0.5;
+		friction = 0.01;
 	}
 
 	public BoxTest(double x, double y, double width, double height, int layer, boolean test) {
 		super("banana", x, y, width, height, layer);
 		traversable = test;
+		restitution = 0.5;
+		friction = 0.01;
 	}
 
 	@Override

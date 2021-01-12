@@ -58,12 +58,13 @@ public abstract class Entity extends Collider {
         impulse.set(0, 0);
     }
     
-    public class Collision {
-        public boolean collides;
-        public Vector normal;
-        public double depth;
+    public class Collision { //Manifold 
         public Entity A;
         public Collider B;
+        public boolean collides;
+        public Vector normal;
+        public double depth; //penetration
+        
     }
 
     public Collision collides(Collider collider) {
