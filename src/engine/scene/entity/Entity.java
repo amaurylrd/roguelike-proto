@@ -2,10 +2,6 @@ package engine.scene.entity;
 
 import engine.physics2d.Vector;
 
-import com.aspose.psd.internal.C.A;
-
-import engine.geom.shape.Rectangle;
-
 public abstract class Entity extends Collider {
     public Vector velocity = new Vector(0, 0); //TODO: protected
     public Vector impulse = new Vector(0, 0);

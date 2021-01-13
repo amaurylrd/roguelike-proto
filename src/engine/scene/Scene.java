@@ -15,12 +15,6 @@ import engine.scene.entity.Entity;
 import engine.scene.entity.Tile;
 import engine.scene.entity.Entity.Collision;
 import engine.scene.entity.Player;
-import engine.scene.image.Sprite;
-import sandbox.TestRectangle;
-import sandbox.TestSprite;
-import sandbox.collission.BoxTest;
-import sandbox.map.Background;
-import engine.geom.shape.Rectangle;
 import engine.physics2d.Force;
 import engine.physics2d.Vector;
 
@@ -221,7 +215,7 @@ public class Scene extends Canvas implements Drawable {
 		//entre 6 830 049 et 31 565 553 avec threads
 	}
 
-	//batches
+	//TODO: class List
 	public static <T> List<List<T>> chunk(List<T> list, int sublength) {
 		List<List<T>> partitions = new ArrayList<>();
     	for (int length = list.size(), i = 0; i < list.size(); i += sublength)
