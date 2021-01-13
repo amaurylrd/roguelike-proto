@@ -25,8 +25,7 @@ public class PhyEntity extends Entity {
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		graphics.setColor(java.awt.Color.MAGENTA);
-		graphics.draw(bounds.stroke());
+		drawBounds(graphics, java.awt.Color.MAGENTA);
 	}
 
 	@Override

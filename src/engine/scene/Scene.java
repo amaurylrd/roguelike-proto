@@ -172,6 +172,7 @@ public class Scene extends Canvas implements Drawable {
 		}
 	}
 
+	//clipping setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
 		final int nthread = Runtime.getRuntime().availableProcessors();
@@ -185,7 +186,7 @@ public class Scene extends Canvas implements Drawable {
 					public void run() {
 						for (Component component : batche) {
 							if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
-								int zindex = component.getLayer();
+								int zindex = component.getLayer(); //TODO depth by layer
 								component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
 								component.render(graphics);
 								component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
