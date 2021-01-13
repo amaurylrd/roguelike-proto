@@ -33,7 +33,10 @@ public abstract class Canvas {
 
         offscreen.fillRect(width, height, 1, 1);
         contentPane.requestFocus();
+        start();
     }
+
+    public abstract void start();
 
     public void show() {
         onscreen.drawImage(offscreenImage, 0, 0, null);
@@ -53,10 +56,10 @@ public abstract class Canvas {
     }
 
     public double getWidth() {
-        return (double) rootPane.getWidth();
+        return rootPane == null ? 0.0 : (double) rootPane.getWidth();
     }
 
     public double getHeight() {
-        return (double) rootPane.getHeight();
+        return rootPane == null ? 0.0 : (double) rootPane.getHeight();
     }
 }

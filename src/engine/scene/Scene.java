@@ -1,5 +1,16 @@
 package engine.scene;
 
+import engine.scene.entity.Component;
+import engine.scene.entity.Drawable;
+import engine.scene.entity.Entity;
+import engine.scene.entity.Tile;
+import engine.scene.entity.Entity.Collision;
+import engine.stage.Stage;
+import engine.scene.entity.Player;
+import engine.physics2d.Force;
+import engine.physics2d.Vector;
+import engine.util.collection.Lists;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
@@ -9,34 +20,17 @@ import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
 
-import engine.scene.entity.Component;
-import engine.scene.entity.Drawable;
-import engine.scene.entity.Entity;
-import engine.scene.entity.Tile;
-import engine.scene.entity.Entity.Collision;
-import engine.scene.entity.Player;
-import engine.physics2d.Force;
-import engine.physics2d.Vector;
+
 
 import sandbox.Input;
 
 public class Scene extends Canvas implements Drawable {
-	private Camera camera = new Camera(this);
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
-	public Player player;
-
-	public Scene() {
-		
-		//player avant
-		
-		// add(new TestRectangle(0));
-		// TestSprite test = new TestSprite(50, 50, 100, 200, 0);
-		// test.sprite = new Sprite("spritetest", 400, 500, 6);
-		// add(test);
-
-		
-		// add(new BoxTest(10, 850, 900, 100, 0));
-		//add(new Background(0, 0, 1, 1, -2));
+	protected Player player;
+	private Camera camera;
+	
+	public void start() {
+		camera = new Camera(this);
 	}
 
 	public void add(Component... components) {
@@ -74,7 +68,7 @@ public class Scene extends Canvas implements Drawable {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = x * -0.5 + x2 * 0.5;
+			double targetvelocity = x * -0.5 + x2 * 2;
 			
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
@@ -177,15 +171,15 @@ public class Scene extends Canvas implements Drawable {
 	public void render(Graphics2D graphics) {
 		final int nthread = Runtime.getRuntime().availableProcessors();
 		for (Collection<Component> layer : gameObjects.values()) {
-			List<List<Component>> batches = chunk(new ArrayList<Component>(layer), (int) Math.ceil(layer.size() / nthread));
+			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer), (int) Math.ceil(layer.size() / nthread));
 			Thread threads[] = new Thread[batches.size()];
 			for (int i = 0; i < batches.size(); ++i) {
-				List<Component> batche = batches.get(i);
+				List<Component> batch = batches.get(i);
 				threads[i] = new Thread() {
 					@Override
 					public void run() {
-						for (Component component : batche) {
-							if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
+						for (Component component : batch) {
+							if (component.isOpaque() && camera.focuses(component)) {
 								int zindex = component.getLayer(); //TODO depth by layer
 								component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
 								component.render(graphics);
@@ -204,7 +198,7 @@ public class Scene extends Canvas implements Drawable {
 			}
 			
 			// for (Component component : layer) {
-			// 	if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
+			// 	if (component.isOpaque()) {
 			// 		int zindex = component.getLayer();
 			// 		component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
 			// 		component.render(graphics);
@@ -212,15 +206,5 @@ public class Scene extends Canvas implements Drawable {
 			// 	}
 			// }
 		}
-		//		23 519 404 fixe sans threads
-		//entre 6 830 049 et 31 565 553 avec threads
 	}
-
-	//TODO: class List
-	public static <T> List<List<T>> chunk(List<T> list, int sublength) {
-		List<List<T>> partitions = new ArrayList<>();
-    	for (int length = list.size(), i = 0; i < list.size(); i += sublength)
-			partitions.add(list.subList(i, Math.min(i + sublength, length)));
-    	return partitions;
-    }
 }
