@@ -125,6 +125,6 @@ public abstract class Component implements Drawable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " [" + bounds.getX() + ", " + bounds.getY() + ", " + bounds.getWidth() + ", " + bounds.getHeight() + "]";
+        return this.getClass().getSimpleName() + " [x:" + bounds.getX() + ", y:" + bounds.getY() + ", width:" + bounds.getWidth() + ", height:" + bounds.getHeight() + "]";
     }
 }
