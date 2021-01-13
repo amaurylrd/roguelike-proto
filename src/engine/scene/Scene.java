@@ -68,7 +68,7 @@ public class Scene extends Canvas implements Drawable {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = x * -0.5 + x2 * 2;
+			double targetvelocity = x * -2 + x2 * 2;
 			
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
@@ -148,7 +148,7 @@ public class Scene extends Canvas implements Drawable {
 		
 
 		camera.update(dt);
-		for (Collection<Component> layer2 : gameObjects.values()) {			
+		for (Collection<Component> layer2 : gameObjects.values()) {
 			Iterator<Component> iterator = layer2.iterator();
 			while (iterator.hasNext()) {
 				Component component = iterator.next();
@@ -166,7 +166,7 @@ public class Scene extends Canvas implements Drawable {
 		}
 	}
 
-	//clipping setColor setFont
+	//flickering setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
 		final int nthread = Runtime.getRuntime().availableProcessors();
@@ -196,15 +196,6 @@ public class Scene extends Canvas implements Drawable {
 					thread.join();
 				} catch (InterruptedException exception) {}
 			}
-			
-			// for (Component component : layer) {
-			// 	if (component.isOpaque()) {
-			// 		int zindex = component.getLayer();
-			// 		component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
-			// 		component.render(graphics);
-			// 		component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
-			// 	}
-			// }
 		}
 	}
 }
