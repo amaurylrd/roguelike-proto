@@ -62,6 +62,8 @@ public class Camera extends Rectangle {
 	}
 
 	public boolean focuses(Component component) {
-		return intersects(component.getBounds());
+		Rectangle bounds = component.getBounds().clone();
+		bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
+		return intersects(bounds);
 	}
 }
