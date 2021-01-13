@@ -25,6 +25,7 @@ import engine.physics2d.Force;
 import engine.physics2d.Vector;
 
 import sandbox.Input;
+
 public class Scene extends Canvas implements Drawable {
 	private Camera camera = new Camera(this);
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
@@ -179,15 +180,52 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void render(Graphics2D graphics) {
+		final int nthread = Runtime.getRuntime().availableProcessors();
 		for (Collection<Component> layer : gameObjects.values()) {
-			for (Component component : layer) {
-				if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
-					int zindex = component.getLayer();
-					component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
-					component.render(graphics);
-					component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
-				}
+			List<List<Component>> batches = chunk(new ArrayList<Component>(layer), (int) Math.ceil(layer.size() / nthread));
+			Thread threads[] = new Thread[batches.size()];
+			for (int i = 0; i < batches.size(); ++i) {
+				List<Component> batche = batches.get(i);
+				threads[i] = new Thread() {
+					@Override
+					public void run() {
+						for (Component component : batche) {
+							if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
+								int zindex = component.getLayer();
+								component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
+								component.render(graphics);
+								component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
+							}
+						}
+					}
+				};
+				threads[i].start();
 			}
+
+			for (Thread thread : threads) {
+				try {
+					thread.join();
+				} catch (InterruptedException exception) {}
+			}
+			
+			// for (Component component : layer) {
+			// 	if (component.isOpaque()) { //TODO: si bounds intersect && contains les bounds du canvas 
+			// 		int zindex = component.getLayer();
+			// 		component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
+			// 		component.render(graphics);
+			// 		component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
+			// 	}
+			// }
 		}
+		//		23 519 404 fixe sans threads
+		//entre 6 830 049 et 31 565 553 avec threads
 	}
+
+	//batches
+	public static <T> List<List<T>> chunk(List<T> list, int sublength) {
+		List<List<T>> partitions = new ArrayList<>();
+    	for (int length = list.size(), i = 0; i < list.size(); i += sublength)
+			partitions.add(list.subList(i, Math.min(i + sublength, length)));
+    	return partitions;
+    }
 }

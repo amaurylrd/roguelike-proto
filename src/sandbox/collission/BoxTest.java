@@ -28,7 +28,8 @@ public class BoxTest extends Tile {
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		drawBounds(graphics, Color.RED);
+		//drawBounds(graphics, Color.RED);
+		
 		
 		if (getLayer() ==  -3) { //TODO TEST
 			
@@ -36,6 +37,11 @@ public class BoxTest extends Tile {
 			graphics.setColor(Color.BLUE);
 			graphics.fill(bounds.stroke());
 			graphics.setColor(p);
+		} else {
+			Color penColor = graphics.getColor();
+        	graphics.setColor(Color.RED);
+        	graphics.draw(bounds.stroke());
+			graphics.setColor(penColor);
 		}
 		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null)
 	}
