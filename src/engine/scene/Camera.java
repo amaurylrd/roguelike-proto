@@ -6,10 +6,12 @@ import engine.util.Random;
 
 public class Camera extends Rectangle {
 	private Scene scene;
+	private Rectangle viewport;
 
 	public Camera(Scene scene) {
 		super(0, 0, scene.getWidth(), scene.getHeight());
 		this.scene = scene;
+		viewport = new Rectangle(0, 0, scene.getWidth(), scene.getHeight());
 	}
 
 	public double shakeDuration = 0.0;
@@ -62,19 +64,7 @@ public class Camera extends Rectangle {
 		return a + f*(b - a);
 	}
 
-	//TODO: à modifier
 	public boolean focuses(Component component) {
-		Rectangle bounds = component.getBounds().clone();
-		//bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
-		//scene.getContext().draw(bounds.stroke());
-		
-		if (component.getLayer() != 0)
-			bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
-
-		if (intersects(component.getBounds()))
-			scene.getContext().draw(bounds.stroke());
-
-		//scene.getContext().draw(this.stroke());
-		return intersects(bounds);
+		return viewport.intersects(component.getBounds());
 	}
 }

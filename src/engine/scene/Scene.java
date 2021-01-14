@@ -270,10 +270,11 @@ public class Scene extends Canvas implements Drawable {
 					@Override
 					public void run() {
 						for (Component component : batch) {
-							if (component.isOpaque() && camera.focuses(component)) {
+							if (component.isOpaque()) {
 								int zindex = component.getLayer(); //TODO depth by layer
 								component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
-								component.render(graphics);
+								if (camera.focuses(component))
+									component.render(graphics);
 								component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
 							}
 						}
