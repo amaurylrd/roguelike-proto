@@ -228,9 +228,6 @@ public class Rectangle extends Polygon {
         Rectangle rectangle = (Rectangle) polygon;
         double dx = Math.abs(center().getX() - rectangle.center().getX());
         double dy = Math.abs(center().getY() - rectangle.center().getY());
-        if (dx + dx < getWidth() + rectangle.getWidth() && dy + dy < this.getHeight() + rectangle.getHeight()) {
-            return true;
-        }
-        return false;
+        return dx + dx < getWidth() + rectangle.getWidth() && dy + dy < this.getHeight() + rectangle.getHeight();
     }
 }
