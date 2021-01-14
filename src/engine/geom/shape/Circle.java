@@ -1,6 +1,7 @@
 package engine.geom.shape;
 
 import engine.physics2d.Vector;
+import java.awt.geom.Ellipse2D;
 
 public class Circle extends Shape {
 	private double radius;
@@ -27,8 +28,7 @@ public class Circle extends Shape {
 
 	@Override
 	public java.awt.Shape stroke() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Ellipse2D.Double(origin.getX(), origin.getY(), radius, radius);
 	}
 
 	@Override
