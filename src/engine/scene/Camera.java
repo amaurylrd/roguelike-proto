@@ -64,12 +64,17 @@ public class Camera extends Rectangle {
 
 	//TODO: à modifier
 	public boolean focuses(Component component) {
-		//Rectangle bounds = component.getBounds().clone();
+		Rectangle bounds = component.getBounds().clone();
 		//bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
 		//scene.getContext().draw(bounds.stroke());
+		
+		if (component.getLayer() != 0)
+			bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
+
 		if (intersects(component.getBounds()))
-			scene.getContext().draw(component.getBounds().stroke());
+			scene.getContext().draw(bounds.stroke());
+
 		//scene.getContext().draw(this.stroke());
-		return intersects(component.getBounds());
+		return intersects(bounds);
 	}
 }
