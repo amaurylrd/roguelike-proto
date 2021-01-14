@@ -12,7 +12,7 @@ public abstract class Canvas {
     private JFrame rootPane;
     private Graphics2D offscreen, onscreen;
     private BufferedImage offscreenImage;
-
+    
     public void bind(JFrame contentPane) {
         rootPane = contentPane;
         int width = contentPane.getWidth(), height = contentPane.getHeight();

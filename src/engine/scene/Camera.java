@@ -10,8 +10,8 @@ public class Camera extends Rectangle {
 
 	public Camera(Scene scene) {
 		super(0, 0, scene.getWidth(), scene.getHeight());
+		viewport = clone();
 		this.scene = scene;
-		viewport = new Rectangle(0, 0, scene.getWidth(), scene.getHeight());
 	}
 
 	public double shakeDuration = 0.0;
@@ -63,7 +63,13 @@ public class Camera extends Rectangle {
 	public static double lerp(double a, double b, double f) {
 		return a + f*(b - a);
 	}
-
+	
+	/**
+	 * Returns if the specified {@ccode component} should be painted.
+	 * 
+	 * @param component the specified component
+	 * @return <true> if the {@ccode component} is contained in the camera's viewport
+	 */
 	public boolean focuses(Component component) {
 		return viewport.intersects(component.getBounds());
 	}
