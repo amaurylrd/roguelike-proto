@@ -83,11 +83,15 @@ public abstract class Entity extends Collider {
                 collision.normal = center2.getY() - center.getY() > y ? new Vector(0, 1) : new Vector(0, 0);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
+            else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
+                collision.normal = new Vector(0, 1);
+            else if (Math.abs(center.getY() - center2.getY()) < collider.bounds.getHeight() / 2)
+                collision.normal = new Vector(1, 0);
             else {
-                Vector rcenter = center.clone();
-                rcenter.translate(Math.signum(center2.getX() - rcenter.getX()) * collider.bounds.getWidth() / 2,
-                    Math.signum(center2.getY() - rcenter.getY()) * collider.bounds.getHeight() / 2);
-                if (Math.abs(rcenter.getX() - center2.getX()) * bounds.getHeight() - Math.abs(rcenter.getY() - center2.getY()) * bounds.getWidth() < 0)
+                Vector relativeCenter = center.clone();
+                relativeCenter.translate(Math.signum(center2.getX() - center.getX()) * collider.bounds.getWidth() / 2,
+                    Math.signum(center2.getY() - center.getY()) * collider.bounds.getHeight() / 2);
+                if (Math.abs(relativeCenter.getX() - center2.getX()) * bounds.getHeight() - Math.abs(relativeCenter.getY() - center2.getY()) * bounds.getWidth() < 0)
                     collision.normal = new Vector(0, 1);
                 else
                     collision.normal = new Vector(1, 0);

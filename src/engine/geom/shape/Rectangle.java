@@ -1,7 +1,5 @@
 package engine.geom.shape;
 
-import java.awt.geom.Point2D;
-
 import engine.geom.Dimension;
 import engine.physics2d.Vector;
 
@@ -85,8 +83,8 @@ public class Rectangle extends Polygon {
      * @return the coordinates
      * @see setLocation
      */
-    public Point2D.Double getLocation() {
-        return new Point2D.Double(getX(), getY());
+    public Vector getLocation() {
+        return new Vector(getX(), getY());
     }
 
     /**

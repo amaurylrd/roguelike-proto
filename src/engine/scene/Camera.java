@@ -23,6 +23,7 @@ public class Camera extends Rectangle {
 	}
 
 	protected void update(double dt) {
+		
 		if (scene.player != null) {
 			Rectangle playerBox = scene.player.getBounds();
 			double targetX = playerBox.getX() + playerBox.getWidth() / 2 - scene.getWidth() / 2.3;
@@ -46,7 +47,7 @@ public class Camera extends Rectangle {
 
 			double dx = deltaX, dy = deltaY;
 			translate(dx * amplitude * Math.min(shakeDuration, 1), dy * amplitude * Math.min(shakeDuration, 1));
-		} 
+		}
 	}
 
 	/**
@@ -61,9 +62,14 @@ public class Camera extends Rectangle {
 		return a + f*(b - a);
 	}
 
+	//TODO: à modifier
 	public boolean focuses(Component component) {
 		Rectangle bounds = component.getBounds().clone();
 		bounds.translate((1 + 0.05 * component.getLayer()) * getX(), (1 + 0.05 * component.getLayer()) * getY());
+		scene.getContext().draw(bounds.stroke());
+		/*if (intersects(bounds))
+			scene.getContext().draw(bounds.stroke());*/
+		scene.getContext().draw(this.stroke());
 		return intersects(bounds);
 	}
 }
