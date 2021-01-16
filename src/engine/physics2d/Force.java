@@ -1,4 +1,4 @@
-package engine.physics2d; 
+package engine.physics2d;
 
 //forces constantes
 public final class Force {

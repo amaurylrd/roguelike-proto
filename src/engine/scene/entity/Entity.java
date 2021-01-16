@@ -47,7 +47,10 @@ public abstract class Entity extends Collider {
     // public boolean isGrounded() {
     //     return grounded;
     // }
-    
+    public void applyForce(Vector vector) {
+        velocity.translate(vector);
+    }
+
     public void applyImpulse() {
         //velocity += impulse / m;
         velocity.translate(impulse);
@@ -55,24 +58,17 @@ public abstract class Entity extends Collider {
     }
     
     public class Collision { //Manifold 
-        public Entity A;
-        public Collider B;
+        public Collider collider;
         public boolean collides;
         public Vector normal;
         public double depth; //penetration
-        
-        @Override
-        public String toString() {
-            return this.getClass().getName() + "[A:" + A + ", B:" + B + ", normal:" + normal + ", penetration:" + depth + "]";
-        }
     }
 
     public Collision collides(Collider collider) {
         Collision collision = new Collision(); 
         if (collision.collides = bounds.intersects(collider.bounds)) {
-            collision.A = this;
-            collision.B = collider;
-            
+            collision.collider = collider;
+
             Vector center = bounds.center();
             Vector center2 = collider.bounds.center();
     
