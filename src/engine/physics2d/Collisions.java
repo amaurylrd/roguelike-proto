@@ -7,12 +7,12 @@ import java.util.Collection;
 
 import engine.scene.entity.Entity;
 import engine.scene.entity.Entity.Collision;
-import engine.scene.entity.Tile;
+import engine.scene.entity.Collider;
 
 public class Collisions {
 	private static Map<Entity, Collection<Collision>> contacts;
 
-	public static void detection(List<Entity> entities, Collection<Tile> tiles) {
+	public static void detection(List<Entity> entities, Collection<Collider> tiles) {
 		contacts = new java.util.HashMap<Entity, Collection<Collision>>();
 		for (int i = 0; i < entities.size(); ++i) {
 			Collection<Collision> collisions = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Collisions {
 					collisions.add(collision);
 			}
 
-			for (Tile tile : tiles) {
+			for (Collider tile : tiles) {
 				Collision collision = entity.collides(tile);
 				if (collision.collides)
 					collisions.add(collision);
@@ -42,43 +42,23 @@ public class Collisions {
 					Entity colldier = (Entity) contact.collider;
 					final Vector normal = contact.normal;
 
-					double v1 = entity.velocity.dot(normal);
-					double v2 = colldier.velocity.dot(normal);
-					double m1 = entity.mass;
-					double m2 = colldier.mass;
+					double v1 = entity.velocity.dot(normal), v2 = colldier.velocity.dot(normal);
+					double m1 = entity.mass, m2 = colldier.mass;
 					double vf = (entity.restitution + colldier.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
 					double vf2 = (entity.restitution + colldier.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
-					
-					Vector forces = Vector.scale(normal, vf - v1);
-					if (Math.abs(entity.impulse.getX()) < Math.abs(forces.getX()))
-						entity.impulse.setX(forces.getX());
-					
-					if (Math.abs(entity.impulse.getY()) < Math.abs(forces.getY()))
-						entity.impulse.setY(forces.getY());
 
-					forces = Vector.scale(normal, vf2 - v2);
-					if (Math.abs(colldier.impulse.getX()) < Math.abs(forces.getX()))
-						colldier.impulse.setX(forces.getX());
-					
-					if (Math.abs(colldier.impulse.getY()) < Math.abs(forces.getY()))
-						colldier.impulse.setY(forces.getY());
-
-				} else if (contact.collider instanceof Tile) {
-					Tile colldier = (Tile) contact.collider;
-					
+					entity.updateImpulse(Vector.scale(normal, vf - v1));
+					colldier.updateImpulse(Vector.scale(normal, vf2 - v2));
+				} else {
 					final Vector normal = contact.normal;
-					final Vector tangeante = new Vector(-normal.getY(), normal.getX());
-						
-					double bounce = (1 + 0*Math.max(entity.restitution, colldier.restitution)) * entity.velocity.dot(normal);
-					double frict = 50/entity.mass * Math.min(entity.friction, colldier.friction) * entity.velocity.dot(tangeante);
+					final Vector tangent = new Vector(-normal.getY(), normal.getX());
 
-					Vector f = Vector.scale(normal, -bounce);
-					f.translate(Vector.scale(tangeante, -frict));
-					if (Math.abs(entity.impulse.getX()) < Math.abs(f.getX()))
-						entity.impulse.setX(f.getX());
-					
-					if (Math.abs(entity.impulse.getY()) < Math.abs(f.getY()))
-						entity.impulse.setY(f.getY());
+					double restitution = (1 + 0*Math.max(entity.restitution, contact.collider.restitution)) * entity.velocity.dot(normal); //TODO
+					double friction = 50 / entity.mass * Math.min(entity.friction, contact.collider.friction) * entity.velocity.dot(tangent);
+
+					Vector forces = Vector.scale(normal, -restitution); 
+					forces.translate(Vector.scale(tangent, -friction)); //TODO
+					entity.updateImpulse(forces);
 				}
 			}
 		}
@@ -86,12 +66,10 @@ public class Collisions {
 
 	public static void correction() {
 		for (Map.Entry<Entity, Collection<Collision>> entry : contacts.entrySet()) {
-			Entity entity = entry.getKey();
 			for (Collision contact : entry.getValue()) {
-				entity.getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.depth));
+				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.depth));
 				if (contact.collider instanceof Entity)
 					((Entity) contact.collider).getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.depth));
-			
 			}
 		}
 	}

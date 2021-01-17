@@ -3,7 +3,7 @@ package engine.scene;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 import engine.scene.entity.Entity;
-import engine.scene.entity.Tile;
+import engine.scene.entity.Collider;
 import engine.scene.entity.Player;
 import engine.physics2d.Force;
 import engine.physics2d.Vector;
@@ -62,39 +62,36 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
-		dt /= 10;
+		//dt /= 10;
 		//if (player != null) {
 
 			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
 			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = x * -2 + x2 * 2;
+			double targetvelocity = x * -0.5 + x2 * 0.5;
 			
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
 			if (Input.isPressed(Input.JUMP)) {
 				//camera.shake(300);
-				player.velocity.setY(-1.5);
+				player.velocity.setY(-0.5);
 			}
 
 			List<Entity> entities = new ArrayList<Entity>();
-			Collection<Tile> tiles = new ArrayList<Tile>();
+			Collection<Collider> tiles = new ArrayList<Collider>();
 			for (Component component : gameObjects.get(Integer.valueOf(player.getLayer()))) {
 				if (component instanceof Entity) {
 					Entity entity = (Entity) component;
 					entity.applyForce(new Vector(0, Force.GRAVITY * dt));
 					entities.add(entity);
-				} 
-				else if (component instanceof Tile) {
-					tiles.add((Tile) component);
-				}
+				} else
+					tiles.add((Collider) component);
 			}
 			
 			Collisions.detection(entities, tiles);
 			Collisions.resolve();
 
-			for (Entity entity : entities) {
+			for (Entity entity : entities)
 				entity.applyImpulse();
-			}
 			
 
 		camera.update(dt);

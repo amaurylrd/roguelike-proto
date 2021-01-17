@@ -56,6 +56,13 @@ public abstract class Entity extends Collider {
         velocity.translate(impulse);
         impulse.set(0, 0);
     }
+
+    public void updateImpulse(Vector forces) {
+        if (Math.abs(impulse.getX()) < Math.abs(forces.getX()))
+			impulse.setX(forces.getX());
+		if (Math.abs(impulse.getY()) < Math.abs(forces.getY()))
+			impulse.setY(forces.getY());
+    }
     
     public class Collision { //Manifold 
         public Collider collider;
