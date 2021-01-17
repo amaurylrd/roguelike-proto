@@ -23,7 +23,8 @@ import java.awt.Graphics2D;
 
 import sandbox.Input;
 
-public class Scene extends Canvas implements Drawable {
+public abstract class Scene extends Canvas implements Drawable {
+	//TODO static physcalLayer ?
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
 	protected Player player;
 	private Camera camera;
@@ -62,12 +63,11 @@ public class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
-		//dt /= 10;
-		//if (player != null) {
-
-			int x = Input.isPressed(Input.LEFT) ? 1 : 0;
-			int x2 = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = x * -0.5 + x2 * 0.5;
+		//abstract handleInputs()
+		if (player != null) {
+			int left = Input.isPressed(Input.LEFT) ? 1 : 0;
+			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
+			double targetvelocity = left * -0.5 + right * 0.5;
 			
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
@@ -75,24 +75,23 @@ public class Scene extends Canvas implements Drawable {
 				//camera.shake(300);
 				player.velocity.setY(-0.5);
 			}
+		}
 
-			List<Entity> entities = new ArrayList<Entity>();
-			Collection<Collider> tiles = new ArrayList<Collider>();
-			for (Component component : gameObjects.get(Integer.valueOf(player.getLayer()))) {
-				if (component instanceof Entity) {
-					Entity entity = (Entity) component;
-					entity.applyForce(new Vector(0, Force.GRAVITY * dt));
-					entities.add(entity);
-				} else
-					tiles.add((Collider) component);
-			}
+		List<Entity> entities = new ArrayList<Entity>();
+		Collection<Collider> tiles = new ArrayList<Collider>();
+		for (Component component : gameObjects.get(Integer.valueOf(player.getLayer()))) {
+			if (component instanceof Entity) {
+				Entity entity = (Entity) component;
+				entity.applyForce(new Vector(0, Force.GRAVITY * dt));
+				entities.add(entity);
+			} else
+				tiles.add((Collider) component);
+		}
 			
-			Collisions.detection(entities, tiles);
-			Collisions.resolve();
-
-			for (Entity entity : entities)
-				entity.applyImpulse();
+		Collisions.detection(entities, tiles);
+		Collisions.resolve();
 			
+		entities.forEach((entity) -> entity.applyImpulse());
 
 		camera.update(dt);
 		for (Collection<Component> layer : gameObjects.values()) {
@@ -105,7 +104,9 @@ public class Scene extends Canvas implements Drawable {
 					component.update(dt);
 			}
 		}
+		
 		Collisions.correction();
+		Collisions.clear();
 	}
 
 	//flickering setColor setFont

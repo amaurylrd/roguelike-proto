@@ -64,15 +64,15 @@ public abstract class Entity extends Collider {
 			impulse.setY(forces.getY());
     }
     
-    public class Collision { //Manifold 
+    public final class Manifold {
         public Collider collider;
         public boolean collides;
         public Vector normal;
-        public double depth; //penetration
+        public double penetration;
     }
 
-    public Collision collides(Collider collider) {
-        Collision collision = new Collision(); 
+    public Manifold collides(Collider collider) {
+        Manifold collision = new Manifold();
         if (collision.collides = bounds.intersects(collider.bounds)) {
             collision.collider = collider;
 
@@ -101,9 +101,9 @@ public abstract class Entity extends Collider {
             }
 
             if (collision.normal.getX() == 1)
-                collision.depth = Math.signum(center.getX() - center2.getX()) * (2 + x - Math.abs(center2.getX() - center.getX()));
+                collision.penetration = Math.signum(center.getX() - center2.getX()) * (2 + x - Math.abs(center2.getX() - center.getX()));
             else if (collision.normal.getY() == 1)
-                collision.depth = Math.signum(center.getY() - center2.getY()) * (2 + y - Math.abs(center2.getY() - center.getY()));
+                collision.penetration = Math.signum(center.getY() - center2.getY()) * (2 + y - Math.abs(center2.getY() - center.getY()));
         }
         return collision;
     }

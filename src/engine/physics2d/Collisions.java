@@ -6,25 +6,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import engine.scene.entity.Entity;
-import engine.scene.entity.Entity.Collision;
+import engine.scene.entity.Entity.Manifold;
 import engine.scene.entity.Collider;
 
 public class Collisions {
-	private static Map<Entity, Collection<Collision>> contacts;
+	private static Map<Entity, Collection<Manifold>> contacts = new java.util.HashMap<Entity, Collection<Manifold>>();
 
 	public static void detection(List<Entity> entities, Collection<Collider> tiles) {
-		contacts = new java.util.HashMap<Entity, Collection<Collision>>();
 		for (int i = 0; i < entities.size(); ++i) {
-			Collection<Collision> collisions = new ArrayList<>();
+			Collection<Manifold> collisions = new ArrayList<>();
 			Entity entity = entities.get(i);
 			for (int j = i + 1; j < entities.size(); ++j) {
-				Collision collision = entity.collides(entities.get(j));
+				Manifold collision = entity.collides(entities.get(j));
 				if (collision.collides)
 					collisions.add(collision);
 			}
 
 			for (Collider tile : tiles) {
-				Collision collision = entity.collides(tile);
+				Manifold collision = entity.collides(tile);
 				if (collision.collides)
 					collisions.add(collision);
 			}
@@ -35,9 +34,9 @@ public class Collisions {
 	}
 
 	public static void resolve() {
-		for (Map.Entry<Entity, Collection<Collision>> entry : contacts.entrySet()) {
+		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
 			Entity entity = entry.getKey();
-			for (Collision contact : entry.getValue()) {
+			for (Manifold contact : entry.getValue()) {
 				if (contact.collider instanceof Entity) {
 					Entity colldier = (Entity) contact.collider;
 					final Vector normal = contact.normal;
@@ -65,12 +64,16 @@ public class Collisions {
 	}
 
 	public static void correction() {
-		for (Map.Entry<Entity, Collection<Collision>> entry : contacts.entrySet()) {
-			for (Collision contact : entry.getValue()) {
-				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.depth));
+		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
+			for (Manifold contact : entry.getValue()) {
+				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.penetration));
 				if (contact.collider instanceof Entity)
-					((Entity) contact.collider).getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.depth));
+					((Entity) contact.collider).getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));
 			}
 		}
+	}
+
+	public static void clear() {
+		contacts.clear();
 	}
 }
