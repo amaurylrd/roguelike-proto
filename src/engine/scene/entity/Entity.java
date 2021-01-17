@@ -4,7 +4,11 @@ import engine.physics2d.Vector;
 
 public abstract class Entity extends Collider {
     public Vector velocity = new Vector(0, 0); //TODO: protected
-    public Vector impulse = new Vector(0, 0);
+    private Vector impulse = new Vector(0, 0);
+
+    /**
+     * Specifies the density of this {@code Entity}.
+     */
     public double mass; //TODO: protected density
 
     //private boolean grounded = false;
@@ -22,7 +26,6 @@ public abstract class Entity extends Collider {
     @Override
 	public void update(double dt) {
         bounds.translate(Vector.scale(velocity, dt));
-        //previous = new Shadow(bounds.clone(), velocity.clone());
     }
 
     //sprites = new HashMap<String, Sprite>();
@@ -47,10 +50,7 @@ public abstract class Entity extends Collider {
     // public boolean isGrounded() {
     //     return grounded;
     // }
-    public void applyForce(Vector vector) {
-        velocity.translate(vector);
-    }
-
+    
     public void applyImpulse() {
         //velocity += impulse / m;
         velocity.translate(impulse);
@@ -107,6 +107,4 @@ public abstract class Entity extends Collider {
         }
         return collision;
     }
-
-    //si collides true dans scene, player.apply(comp) comp.apply(player)
 }

@@ -70,7 +70,7 @@ public abstract class Scene extends Canvas implements Drawable {
 			double targetvelocity = left * -0.5 + right * 0.5;
 			
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
-
+			
 			if (Input.isPressed(Input.JUMP)) {
 				//camera.shake(300);
 				player.velocity.setY(-0.5);
@@ -82,7 +82,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		for (Component component : gameObjects.get(Integer.valueOf(player.getLayer()))) {
 			if (component instanceof Entity) {
 				Entity entity = (Entity) component;
-				entity.applyForce(new Vector(0, Force.GRAVITY * dt));
+				entity.velocity.translateY(Force.GRAVITY * dt);
 				entities.add(entity);
 			} else
 				tiles.add((Collider) component);
