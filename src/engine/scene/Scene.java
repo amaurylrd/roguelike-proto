@@ -12,7 +12,6 @@ import engine.physics2d.Collisions;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +95,9 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
+		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER).objects;
 		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(BODIES_LAYER).objects;
 		entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
-		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER).objects;
 
 		Collisions.detection(entities, tiles);
 		Collisions.resolve();
