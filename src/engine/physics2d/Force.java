@@ -2,5 +2,5 @@ package engine.physics2d;
 
 //forces constantes
 public final class Force {
-	public static double GRAVITY = 0.001;
+	public static double GRAVITY = 0.0001;
 }

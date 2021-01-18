@@ -30,23 +30,28 @@ public class LTest extends Level {
 			}
 		}
 		
+		int index1, index2;
+		index1 = index2 = 0;
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100, 250, 100, 10, 0, true)); //plafond banane
+				add(new BoxTest(i*100, 250, 100, 10, index1, true)); //plafond banane
 				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3)); //background -3
-				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, 0)); //sol banane test
+				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, index2)); //sol banane test
 			}
 		}
+
+		add(new BoxTest(100+100, 100 + 500, 100, 100, 2));
 		
-		Player p = new Player(150, 300, 100, 100);
-		p.mass = 150;
-		add(p);
 
 		PhyEntity e = new PhyEntity(200, 0, 100, 100);
 		e.mass = 150;
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
+
+		Player p = new Player(150, 300, 100, 100);
+		p.mass = 150;
+		add(p);
 	}
 
 	public int[][] initialize(int width, int height) {

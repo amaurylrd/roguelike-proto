@@ -66,6 +66,10 @@ public class Collisions {
 	public static void correction() {
 		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
 			for (Manifold contact : entry.getValue()) {
+				// double f = penetration / (m1 + m2)
+				// m1 = normal.scale(f * 0.8 * m2)
+				// m2 = normal.scale(f * 0.8 * m1)
+
 				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.penetration));
 				if (contact.collider instanceof Entity)
 					((Entity) contact.collider).getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));

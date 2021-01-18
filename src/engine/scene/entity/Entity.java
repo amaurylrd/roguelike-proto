@@ -4,7 +4,7 @@ import engine.physics2d.Vector;
 
 public abstract class Entity extends Collider {
     public Vector velocity = new Vector(0, 0); //TODO: protected
-    private Vector impulse = new Vector(0, 0);
+    public Vector impulse = new Vector(0, 0); //private
 
     /**
      * Specifies the density of this {@code Entity}.
@@ -82,8 +82,8 @@ public abstract class Entity extends Collider {
             double x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
             double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
     
-            if (collider instanceof Tile && ((Tile) collider).traversable)
-                collision.normal = center2.getY() - center.getY() > y ? new Vector(0, 1) : new Vector(0, 0);
+            if (collider instanceof Tile && collider.traversable)
+                collision.normal = velocity.getY() > 0 ? new Vector(0, 1) : new Vector(0, 0);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
