@@ -24,58 +24,57 @@ import sandbox.Input;
 
 @SuppressWarnings("unchecked")
 public abstract class Scene extends Canvas implements Drawable {
-	public class Layer {
-		public int id;
-		public int depth;
+	private class Layer {
+		public double depth;
+		public Collection<Component> objects;
 
-		public Layer(int n) {
-			id = depth = n;
+		public Layer(Collection<Component> components, double d) {
+			objects = components;
+			depth = d;
 		}
 	}
 
-	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
+	private Map<Integer, Layer> gameObjects = new TreeMap<Integer, Layer>();
 	protected Player player;
 	protected Camera camera;
 	
 	public final static int BODIES_LAYER =  0;
 	public final static int SOLIDS_LAYER = -1;
 
+	public Scene() {
+		gameObjects.put(BODIES_LAYER, new Layer(new ArrayList<>(), .0));
+		gameObjects.put(SOLIDS_LAYER, new Layer(new ArrayList<>(), .0));
+	}
+
 	public void start() {
 		camera = new Camera(this);
 	}
 
-	// public void add(Component component, int zindex) {
-	// 	if (component != null) {
-	// 		if (component instanceof Player && player == null)
-	// 			player = (Player) component;
-	// 		Collection<Component> layer = gameObjects.computeIfAbsent(zindex, k -> new ArrayList<Component>());
-	// 		layer.add(component);
-	// 	}
-	// }
+	public void setLayer(int zindex, double depth) {
+		gameObjects.computeIfAbsent(zindex, k -> new Layer(new ArrayList<>(), depth));
+	}
 
 	public void add(Component... components) {
 		for (Component component : components) {
 			if (component != null) {
 				if (component instanceof Player && player == null)
 					player = (Player) component;
-				Collection<Component> layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new ArrayList<Component>());
-				layer.add(component);
+				Layer layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new Layer(new ArrayList<Component>(), k));
+				layer.objects.add(component);
 			}
 		}
 	}
 
 	public void remove(Component... components) {
 		for (Component component : components) {
-			int key = component.getLayer();
+			Integer key = Integer.valueOf(component.getLayer());
 			if (gameObjects.containsKey(key)) {
-				Collection<Component> layer = Collections.synchronizedCollection(new ArrayList<Component>(gameObjects.get(key)));
-				synchronized (layer) {
-					Iterator<Component> iterator = layer.iterator();
-					while (iterator.hasNext() && !component.equals(iterator.next())) {
-						iterator.remove();
-						if (layer.isEmpty())
-							gameObjects.remove(key);
-					}
+				Layer layer = gameObjects.get(key);
+				Iterator<Component> iterator = layer.objects.iterator();
+				while (iterator.hasNext() && !component.equals(iterator.next())) {
+					iterator.remove();
+					if (layer.objects.isEmpty())
+						gameObjects.remove(key);
 				}
 			}
 		}
@@ -97,18 +96,17 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(BODIES_LAYER);
-		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER);
-
+		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(BODIES_LAYER).objects;
 		entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
+		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER).objects;
 
 		Collisions.detection(entities, tiles);
 		Collisions.resolve();
 
 		entities.forEach((entity) -> entity.applyImpulse());
 		camera.update(dt);
-		for (Collection<Component> layer : gameObjects.values()) {
-			Iterator<Component> iterator = layer.iterator();
+		for (Layer layer : gameObjects.values()) {
+			Iterator<Component> iterator = layer.objects.iterator();
 			while (iterator.hasNext()) {
 				Component component = iterator.next();
 				if (component.isRemovable())
@@ -127,9 +125,8 @@ public abstract class Scene extends Canvas implements Drawable {
 	@Override
 	public void render(Graphics2D graphics) {
 		final double nthread = Runtime.getRuntime().availableProcessors();
-		for (Collection<Component> layer : gameObjects.values()) {
-			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer), (int) Math.ceil((double) layer.size() / nthread));
-			
+		for (Layer layer : gameObjects.values()) {
+			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer.objects), (int) Math.ceil((double) layer.objects.size() / nthread));
 			Thread threads[] = new Thread[batches.size()];
 			for (int i = 0; i < threads.length; i++) {
 				List<Component> batch = batches.get(i);
@@ -138,11 +135,11 @@ public abstract class Scene extends Canvas implements Drawable {
 					public void run() {
 						for (Component component : batch) {
 							if (component.isOpaque()) {
-								int zindex = component.getLayer(); //TODO depth by layer
-								component.getBounds().translate((1 + 0.05 * zindex) * -camera.getX(), (1 + 0.05 * zindex) * -camera.getY());
+								double paralax = layer.depth;
+								component.getBounds().translate((1 + 0.05 * paralax) * -camera.getX(), (1 + 0.05 * paralax) * -camera.getY());
 								if (camera.focuses(component))
 									component.render(graphics);
-								component.getBounds().translate((1 + 0.05 * zindex) * camera.getX(), (1 + 0.05 * zindex) * camera.getY());
+								component.getBounds().translate((1 + 0.05 * paralax) * camera.getX(), (1 + 0.05 * paralax) * camera.getY());
 							}
 						}
 					}
