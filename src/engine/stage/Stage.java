@@ -218,7 +218,6 @@ public final class Stage extends Window {
             
                 alpha = accumulator / DELTA_TIME;
                 scene.clear();
-                System.out.println("clear");
                 scene.render(scene.getContext());
                 scene.show();
             }
