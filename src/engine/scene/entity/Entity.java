@@ -4,7 +4,7 @@ import engine.physics2d.Vector;
 
 public abstract class Entity extends Collider {
     public Vector velocity = new Vector(0, 0); //TODO: protected
-    public Vector impulse = new Vector(0, 0); //private
+    private Vector impulse = new Vector(0, 0);
 
     /**
      * Specifies the density of this {@code Entity}.
@@ -15,12 +15,8 @@ public abstract class Entity extends Collider {
     //private Map<String, Sprite> sprites;
     //private String currentSprite;
 
-    public Entity(double x, double y, double width, double height, int layer) {
-        super(x, y, width, height, layer);
-    }
-
-    public Entity(double x, double y, double width, double height) {
-        super(x, y, width, height, 0);
+    public Entity(double x, double y, double width, double height, int zindex) {
+        super(x, y, width, height, zindex);
     }
 
     @Override

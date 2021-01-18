@@ -14,8 +14,8 @@ public class PhyEntity extends Entity {
 	 * @param width  the width of the bounding {@code Rectangle}
 	 * @param height the height of the bounding {@code Rectangle}
 	 */
-	public PhyEntity(double x, double y, double width, double height) {
-		super(x, y, width, height, 0);
+	public PhyEntity(double x, double y, double width, double height, int zindex) {
+		super(x, y, width, height, zindex);
 	}
 
 	@Override

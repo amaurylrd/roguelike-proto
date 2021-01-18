@@ -29,11 +29,11 @@ public abstract class Component implements Drawable {
      * @param y the y coordinate of the bounding {@code Rectangle}
      * @param width the width of the bounding {@code Rectangle}
      * @param height the height of the bounding {@code Rectangle}
-     * @param layer the z-index of this {@code Component}
+     * @param zindex the z-index of this {@code Component}
      */
-    public Component(double x, double y, double width, double height, int layer) {
+    public Component(double x, double y, double width, double height, int zindex) {
         bounds = new Rectangle(x, y, width, height);
-        this.layer = layer;
+        layer = zindex;
     }
 
     /**
@@ -89,16 +89,6 @@ public abstract class Component implements Drawable {
      */
     public int getLayer() {
         return layer;
-    }
-
-    /**
-     * Sets the z-index of this {@code Component}.
-     * 
-     * @param zindex the stack level of the generated box in the current stacking context
-     * @see getLayer()
-     */
-    public void setLayer(int zindex) {
-        layer = zindex;
     }
 
     /**

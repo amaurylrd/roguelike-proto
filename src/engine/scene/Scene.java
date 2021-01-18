@@ -6,7 +6,6 @@ import engine.scene.entity.Entity;
 import engine.scene.entity.Collider;
 import engine.scene.entity.Player;
 import engine.physics2d.Force;
-import engine.physics2d.Vector;
 import engine.util.collection.Lists;
 import engine.physics2d.Collisions;
 
@@ -25,13 +24,34 @@ import sandbox.Input;
 
 @SuppressWarnings("unchecked")
 public abstract class Scene extends Canvas implements Drawable {
+	public class Layer {
+		public int id;
+		public int depth;
+
+		public Layer(int n) {
+			id = depth = n;
+		}
+	}
+
 	private Map<Integer, Collection<Component>> gameObjects = new TreeMap<Integer, Collection<Component>>();
 	protected Player player;
 	protected Camera camera;
 	
+	public final static int BODIES_LAYER =  0;
+	public final static int SOLIDS_LAYER = -1;
+
 	public void start() {
 		camera = new Camera(this);
 	}
+
+	// public void add(Component component, int zindex) {
+	// 	if (component != null) {
+	// 		if (component instanceof Player && player == null)
+	// 			player = (Player) component;
+	// 		Collection<Component> layer = gameObjects.computeIfAbsent(zindex, k -> new ArrayList<Component>());
+	// 		layer.add(component);
+	// 	}
+	// }
 
 	public void add(Component... components) {
 		for (Component component : components) {
@@ -77,21 +97,11 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		// List<Entity> entities = (List<Entity>) (Object) gameObjects.get(0);
-		// List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(-1);
+		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(BODIES_LAYER);
+		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER);
 
-		// entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
-		List<Entity> entities = new ArrayList<Entity>();
-		Collection<Collider> tiles = new ArrayList<Collider>();
-		for (Component component : gameObjects.get(Integer.valueOf(player.getLayer()))) {
-			if (component instanceof Entity) {
-				Entity entity = (Entity) component;
-				entity.velocity.translateY(Force.GRAVITY * dt);
-				entities.add(entity);
-			} else
-				tiles.add((Collider) component);
-		}
-			
+		entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
+
 		Collisions.detection(entities, tiles);
 		Collisions.resolve();
 
@@ -116,9 +126,9 @@ public abstract class Scene extends Canvas implements Drawable {
 	//flickering setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
-		final int nthread = Runtime.getRuntime().availableProcessors();
+		final double nthread = Runtime.getRuntime().availableProcessors();
 		for (Collection<Component> layer : gameObjects.values()) {
-			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer), (int) Math.ceil(layer.size() / nthread));
+			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer), (int) Math.ceil((double) layer.size() / nthread));
 			
 			Thread threads[] = new Thread[batches.size()];
 			for (int i = 0; i < threads.length; i++) {

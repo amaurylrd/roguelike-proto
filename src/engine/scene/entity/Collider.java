@@ -8,9 +8,10 @@ public abstract class Collider extends Component {
 	public double friction; //TODO: protected
     protected boolean solid = true;
     public boolean traversable;
-	
-	public Collider(double x, double y, double width, double height, int layer) {
-		super(x, y, width, height, layer);
+    
+    
+	public Collider(double x, double y, double width, double height, int zindex) {
+		super(x, y, width, height, zindex);
 	}
 
 	/**

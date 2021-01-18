@@ -7,14 +7,14 @@ import engine.scene.entity.Tile;
 
 public class BoxTest extends Tile {
 
-	public BoxTest(double x, double y, double width, double height, int layer) {
-		super("banana", x, y, width, height, layer);
+	public BoxTest(double x, double y, double width, double height, int zindex) {
+		super("banana", x, y, width, height, zindex);
 		restitution = 0.5;
 		friction = 0.01;
 	}
 
-	public BoxTest(double x, double y, double width, double height, int layer, boolean test) {
-		super("banana", x, y, width, height, layer);
+	public BoxTest(double x, double y, double width, double height, int zindex, boolean test) {
+		super("banana", x, y, width, height, zindex);
 		traversable = test;
 		restitution = 0.5;
 		friction = 0.01;

@@ -9,7 +9,8 @@ public class Lists {
 	public static <T> List<List<T>> chunk(List<T> list, int sublength) {
 		List<List<T>> partitions = new ArrayList<>();
 		for (int i = 0; i < list.size(); i += sublength)
-			partitions.add(list.subList(i, Math.min(i + sublength, list.size() - 1)));
+			partitions.add(list.subList(i, Math.min(i + sublength, list.size())));
+
 		return partitions;
 	}
 }

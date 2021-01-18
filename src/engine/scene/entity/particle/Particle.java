@@ -10,8 +10,8 @@ public abstract class Particle extends Entity {
     private int rgb = 0xffffffff;
     private int alpha = 255;
 
-    public Particle(double x, double y, double size, int layer) {
-        super(x, y, size, size, layer);
+    public Particle(double x, double y, double size, int zindex) {
+        super(x, y, size, size, zindex);
         velocity.set(Random.nextDouble(-1, 1), Random.nextDouble(-1, 1));
     }
 
