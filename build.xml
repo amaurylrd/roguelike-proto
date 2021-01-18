@@ -30,6 +30,7 @@
       		<classpath refid="scala.classpath"/>
     	</taskdef>
 
+		<mkdir dir="${dst.dir}"/>
 		<scalac srcdir="${src.dir}" destdir="${dst.dir}" classpathref="scala.classpath" logging="none">
     		<include name="**/*.scala"/>
   		</scalac>
