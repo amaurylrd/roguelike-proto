@@ -49,6 +49,8 @@ public class LTest extends Level {
 		Player p = new Player(150, 300, 100, 100, BODIES_LAYER);
 		p.mass = 150;
 		add(p);
+
+		//add(new MovingPlateform(100, 300, 300, 50, SOLIDS_LAYER));
 	}
 
 	public int[][] initialize(int width, int height) {

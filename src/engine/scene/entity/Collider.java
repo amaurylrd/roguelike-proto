@@ -1,8 +1,12 @@
 package engine.scene.entity;
 
+import engine.physics2d.Vector;
+
 //collidable object
 //rigib body
 public abstract class Collider extends Component {
+    public Vector velocity = new Vector(0, 0); //TODO: protected
+     
     public double restitution; //TODO: protected
     //bounciness coefficient of restitution elasticity
 	public double friction; //TODO: protected

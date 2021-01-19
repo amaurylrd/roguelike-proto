@@ -3,13 +3,15 @@ package engine.scene.entity;
 import engine.physics2d.Vector;
 
 public abstract class Entity extends Collider {
-    public Vector velocity = new Vector(0, 0); //TODO: protected
+    /**
+     * Impulse is a term that quantifies the overall effect of a force acting on this {@Entity} over time.
+     */
     private Vector impulse = new Vector(0, 0);
 
     /**
      * Specifies the density of this {@code Entity}.
      */
-    public double mass; //TODO: protected density
+    public double mass;
 
     //private boolean grounded = false;
     //private Map<String, Sprite> sprites;
@@ -26,26 +28,6 @@ public abstract class Entity extends Collider {
 
     //sprites = new HashMap<String, Sprite>();
     //currentSprite = null;
-
-    // /**
-    //  * Specifies whether this component is grounded or not.
-    //  * 
-    //  * @param isGrounded <i>true</i> if this component should be grounded
-    //  * @see isGrounded()
-    //  */
-    // public void setGrounded(boolean isGrounded) {
-    //     grounded = isGrounded;
-    // }
-
-    // /**
-    //  * Checks whether or not this component is grounded.
-    //  * 
-    //  * @return <i>true</i> if this component is grounded, <i>false</i> otherwise
-    //  * @see setGrounded(boolean isGrounded)
-    //  */
-    // public boolean isGrounded() {
-    //     return grounded;
-    // }
     
     public void applyImpulse() {
         //velocity += impulse / m;
