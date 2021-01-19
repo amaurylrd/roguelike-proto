@@ -97,6 +97,14 @@ public class Vector {
 		set(x * factor, y * factor);
 	}
 
+	public void scaleX(double factor) {
+		set(x * factor, y);
+	}
+
+	public void scaleY(double factor) {
+		set(x, y * factor);
+	}
+
 	public static double dot(Vector v1, Vector v2) {
 		return v1.dot(v2);
 	}
