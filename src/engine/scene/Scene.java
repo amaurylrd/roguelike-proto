@@ -7,6 +7,7 @@ import engine.scene.entity.Entity;
 import engine.scene.entity.Collider;
 import engine.scene.entity.Player;
 import engine.physics2d.Force;
+import engine.physics2d.Vector;
 import engine.util.collection.Lists;
 import engine.physics2d.Collisions;
 
@@ -94,7 +95,8 @@ public abstract class Scene extends Canvas implements Drawable {
 
 		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(KINEMATIC_LAYER).objects;
 		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(DYNAMIC_LAYER).objects;
-		entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
+		Vector constantForces = Vector.scale(Force.GRAVITY, dt);
+		entities.forEach((entity) -> entity.applyForce(constantForces));
 
 		Collisions.detection(entities, tiles);
 		Collisions.resolve();

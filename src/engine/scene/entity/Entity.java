@@ -29,6 +29,10 @@ public abstract class Entity extends Collider {
     //sprites = new HashMap<String, Sprite>();
     //currentSprite = null;
     
+    public void applyForce(Vector vector) {
+        velocity.translate(vector);
+    }
+
     public void applyImpulse() {
         //velocity += impulse / m;
         velocity.translate(impulse);

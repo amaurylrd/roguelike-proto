@@ -49,15 +49,6 @@ public abstract class Collider extends Component {
         super(x, y, width, height, zindex);
 	}
 
-    /**
-     * Tells whether this {@code Collider} is a kinmatic object or not.
-     * 
-     * @return <i>true</i> if kinmatic, <i>flase</i> otherwise
-     */
-    public boolean isKinematic() {
-        return type.equals(CollisionType.KINEMATIC);
-    }
-
 	/**
      * Specifies whether this {@code Collider} is solid or not.
      * 
