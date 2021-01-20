@@ -26,9 +26,7 @@ public class Player extends Entity { //abstract player à check instance of exte
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		//drawBounds(graphics, Color.RED);
 		graphics.fill(bounds.stroke());
-		graphics.drawString("Velocity: " + velocity, (int) (bounds.getX() + bounds.getWidth()), (int) bounds.getY() - 10);
 	}
 
 	@Override

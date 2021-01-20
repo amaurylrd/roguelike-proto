@@ -28,25 +28,10 @@ public class BoxTest extends Tile {
 
 	@Override
 	protected void draw(Graphics2D graphics) {
-		//drawBounds(graphics, Color.RED);
-		
-		
-		if (getLayer() ==  -3) { //TODO TEST
-			
-			//engine.scene.Scene.lock = true;
-			Color p = graphics.getColor();
-			graphics.setColor(Color.BLUE);
-			graphics.fill(bounds.stroke());
-			graphics.setColor(p);
-			//engine.scene.Scene.lock = false;
-		} else {
-			//engine.scene.Scene.lock = true;
-			Color penColor = graphics.getColor();
-        	graphics.setColor(Color.RED);
-        	graphics.draw(bounds.stroke());
-			graphics.setColor(penColor);
-			//engine.scene.Scene.lock = false;
-		}
+		Color p = graphics.getColor();
+		graphics.setColor(getLayer() ==  -3 ? Color.BLUE : Color.RED);
+		graphics.fill(bounds.stroke());
+		graphics.setColor(p);
 		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null)
 	}
 }

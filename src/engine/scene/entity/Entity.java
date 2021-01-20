@@ -61,7 +61,7 @@ public abstract class Entity extends Collider {
             double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
     
             if (collider instanceof Tile && collider.traversable)
-                collision.normal = velocity.getY() > 0 ? new Vector(0, 1) : new Vector(0, 0);
+                collision.normal = velocity.getY() < 0 ? new Vector(0, 0) : new Vector(0, 1);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)

@@ -26,7 +26,6 @@ public class PhyEntity extends Entity {
 	@Override
 	protected void draw(Graphics2D graphics) {
 		drawBounds(graphics, java.awt.Color.RED);
-		graphics.drawString("Velocity: " + velocity, (int) (bounds.getX() + bounds.getWidth()), (int) bounds.getY() - 10);
 	}
 
 	@Override
