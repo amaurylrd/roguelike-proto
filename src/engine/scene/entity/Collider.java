@@ -2,8 +2,9 @@ package engine.scene.entity;
 
 import engine.physics2d.Vector;
 
-//collidable object
-//rigib body
+/**
+ * The class {@code Collider} a collidable body which are placed under the law of the physics engine.
+ */
 public abstract class Collider extends Component {
     public Vector velocity = new Vector(0, 0); //TODO: protected
     
@@ -35,9 +36,9 @@ public abstract class Collider extends Component {
 	}
 
 	/**
-     * Specifies whether this {@code Entity} is solid or not.
+     * Specifies whether this {@code Collider} is solid or not.
      * 
-     * @param isSolid <i>true</i> if this {@code Entity} should be solid
+     * @param isSolid <i>true</i> if this {@code Collider} should be solid
      * @see isSolid()
      */
     public void setSolid(boolean isSolid) {
@@ -45,9 +46,9 @@ public abstract class Collider extends Component {
     }
 
     /**
-     * Checks whether or not this {@code Entity} is solid.
+     * Checks whether or not this {@code Collider} is solid.
      * 
-     * @return <i>true</i> if this {@code Entity} is solid, <i>false</i> otherwise
+     * @return <i>true</i> if this {@code Collider} is solid, <i>false</i> otherwise
      * @see setSolid(boolean isSolid)
      */
     public boolean isSolid() {
