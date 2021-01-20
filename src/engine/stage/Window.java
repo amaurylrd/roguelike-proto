@@ -27,13 +27,11 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
         setResizable(false);
         setUndecorated(true);
 
-        //setFocusTraversalKeysEnabled(false);
         addWindowFocusListener(this);
         addComponentListener(this);
 
-
-        //TODO
-        addKeyListener(new sandbox.Input());
+        setFocusTraversalKeysEnabled(true);
+        addKeyListener(new Input()); //TODO
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getRootPane().registerKeyboardAction(event -> {

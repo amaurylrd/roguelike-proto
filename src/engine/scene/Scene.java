@@ -1,5 +1,6 @@
 package engine.scene;
 
+import engine.stage.Input;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
 import engine.scene.entity.Entity;
@@ -16,10 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
-
-
-
-import sandbox.Input;
 
 @SuppressWarnings("unchecked")
 public abstract class Scene extends Canvas implements Drawable {
