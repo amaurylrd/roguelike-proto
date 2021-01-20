@@ -6,6 +6,9 @@ import engine.physics2d.Vector;
  * The class {@code Collider} a collidable body which are placed under the law of the physics engine.
  */
 public abstract class Collider extends Component {
+    /**
+     * The attribut {@code velocity} specified the linear velocity of this body per update.
+     */
     public Vector velocity = new Vector(0, 0); //TODO: protected
     
     /**
@@ -54,4 +57,12 @@ public abstract class Collider extends Component {
     public boolean isSolid() {
         return solid;
     }
+
+    // public void updateVelocity(Vector vector) {
+    //     velocity.set(vector);
+    // }
+
+    // public void applyForce(Vector vector) {
+    //     velocity.translate(vector);
+    // }
 }
