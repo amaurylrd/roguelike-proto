@@ -33,20 +33,20 @@ public class LTest extends Level {
 		
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100, 250, 100, 10, SOLIDS_LAYER, true)); //plafond banane
+				add(new BoxTest(i*100, 250, 100, 10, KINEMATIC_LAYER, true)); //plafond banane
 				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3)); //background -3
-				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, SOLIDS_LAYER)); //sol banane test
+				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, KINEMATIC_LAYER)); //sol banane test
 			}
 		}
 		
 
-		PhyEntity e = new PhyEntity(200, 0, 100, 100, BODIES_LAYER);
+		PhyEntity e = new PhyEntity(200, 0, 100, 100, DYNAMIC_LAYER);
 		e.mass = 150;
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
 
-		Player p = new Player(150, 300, 100, 100, BODIES_LAYER);
+		Player p = new Player(150, 300, 100, 100, DYNAMIC_LAYER);
 		p.mass = 150;
 		add(p);
 

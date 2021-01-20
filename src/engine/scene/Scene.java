@@ -37,12 +37,12 @@ public abstract class Scene extends Canvas implements Drawable {
 	protected Player player;
 	protected Camera camera;
 	
-	public final static int BODIES_LAYER =  0;
-	public final static int SOLIDS_LAYER = -1;
+	public final static int DYNAMIC_LAYER =  0;
+	public final static int KINEMATIC_LAYER = -1;
 
 	public Scene() {
-		gameObjects.put(BODIES_LAYER, new Layer(new ArrayList<>(), .0));
-		gameObjects.put(SOLIDS_LAYER, new Layer(new ArrayList<>(), .0));
+		gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), .0));
+		gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), .0));
 	}
 
 	public void start() {
@@ -95,8 +95,8 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(SOLIDS_LAYER).objects;
-		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(BODIES_LAYER).objects;
+		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(KINEMATIC_LAYER).objects;
+		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(DYNAMIC_LAYER).objects;
 		entities.forEach((entity) -> entity.velocity.translateY(Force.GRAVITY * dt));
 
 		Collisions.detection(entities, tiles);
