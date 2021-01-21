@@ -6,58 +6,70 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import engine.scene.entity.Entity;
-import engine.scene.entity.Entity.Manifold;
+import engine.scene.entity.Collider.Manifold;
 import engine.scene.entity.Collider;
 
 public class Collisions {
-	private static Map<Entity, Collection<Manifold>> contacts = new java.util.HashMap<Entity, Collection<Manifold>>();
+	private static Map<Entity, Collection<Manifold>> contacts = new java.util.Hashtable<Entity, Collection<Manifold>>();
 
-	public static void detection(List<Entity> entities, Collection<Collider> tiles) {
-		for (int i = 0; i < entities.size(); ++i) {
+	/**
+	 * This method manages collision detection. It stores each collision and resolves collision response.
+	 * 
+	 * @param dynamicObjects
+	 * @param kinematicObjects
+	 * @param staticObjects
+	 */
+	public static void detection(List<Entity> dynamicObjects, List<Collider> kinematicObjects, Collection<Collider> staticObjects) {
+		for (int i = 0; i < dynamicObjects.size(); ++i) {
+			Entity entity = dynamicObjects.get(i);
 			Collection<Manifold> collisions = new ArrayList<>();
-			Entity entity = entities.get(i);
-			for (int j = i + 1; j < entities.size(); ++j) {
-				Manifold collision = entity.collides(entities.get(j));
-				if (collision.collides)
+			for (int j = i + 1; j < dynamicObjects.size(); ++j) {
+				Manifold collision = entity.collides(dynamicObjects.get(j));
+				if (collision.collides) {
 					collisions.add(collision);
+					entity.applyCollision(collision);
+					
+					//handleCollision()
+				}
 			}
-
-			for (Collider tile : tiles) {
-				Manifold collision = entity.collides(tile);
-				if (collision.collides)
+			for (Collider kinematicObject : kinematicObjects) {
+				Manifold collision = entity.collides(kinematicObject);
+				if (collision.collides) {
 					collisions.add(collision);
+					//kinematicObjects.get(j).handleCollision(entity);
+				}
 			}
-
-			if (!collisions.isEmpty())
-				contacts.put(entity, collisions);
-		}
-	}
-
-	public static void resolve() {
-		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
-			Entity entity = entry.getKey();
-			for (Manifold contact : entry.getValue()) {
-				if (contact.collider instanceof Entity) {
-					Entity colldier = (Entity) contact.collider;
-					final Vector normal = contact.normal;
-
-					double v1 = entity.velocity.dot(normal), v2 = colldier.velocity.dot(normal);
-					double m1 = entity.mass, m2 = colldier.mass;
-					double vf = (entity.restitution + colldier.restitution) * (2 * m2 * v2 +  (m1 - m2) * v1) / (m1 + m2);
-					double vf2 = (entity.restitution + colldier.restitution) * (2 * m1 * v1 +  (m2 - m1) * v2) / (m1 + m2);
-
-					entity.updateImpulse(Vector.scale(normal, vf - v1));
-					colldier.updateImpulse(Vector.scale(normal, vf2 - v2));
-				} else {
-					final Vector normal = contact.normal;
+			for (Collider staticObject : staticObjects) {
+				Manifold collision = entity.collides(staticObject);
+				if (collision.collides) {
+					collisions.add(collision);
+					final Vector normal = collision.normal;
 					final Vector tangent = new Vector(-normal.getY(), normal.getX());
-
-					double restitution = (1 + 0*Math.max(entity.restitution, contact.collider.restitution)) * entity.velocity.dot(normal); //TODO
-					double friction = 50 / entity.mass * Math.min(entity.friction, contact.collider.friction) * entity.velocity.dot(tangent);
-
+					double restitution = (1 + 0*Math.max(entity.restitution, collision.collider.restitution)) * entity.velocity.dot(normal); //TODO
+					double friction = 50 / entity.mass * Math.min(entity.friction, collision.collider.friction) * entity.velocity.dot(tangent);
 					Vector forces = Vector.scale(normal, -restitution); 
 					forces.translate(Vector.scale(tangent, -friction)); //TODO
 					entity.updateImpulse(forces);
+				}
+			}
+			if (!collisions.isEmpty())
+				contacts.put(entity, collisions);
+		}
+
+		for (int i = 0; i < kinematicObjects.size(); ++i) {
+			Collection<Manifold> collisions = new ArrayList<>();
+			for (int j = i + 1; j < kinematicObjects.size(); ++j) {
+				Manifold collision = kinematicObjects.get(i).collides(kinematicObjects.get(j));
+				if (collision.collides) {
+					//kinematicObjects.get(j).handleCollision(entity);
+					//kinematicObjects.get(i).handleCollision(entity);
+				}
+			}
+
+			for (Collider staticObject : staticObjects) {
+				Manifold collision = kinematicObjects.get(i).collides(staticObject);
+				if (collision.collides) {
+					//kinematicObjects.get(i).handleCollision(entity);
 				}
 			}
 		}
@@ -71,8 +83,8 @@ public class Collisions {
 				// m2 = normal.scale(f * 0.8 * m1)
 
 				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.penetration));
-				if (contact.collider instanceof Entity)
-					((Entity) contact.collider).getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));
+				if (!contact.collider.isKinematic())
+					contact.collider.getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));
 			}
 		}
 	}

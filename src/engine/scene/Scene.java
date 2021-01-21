@@ -35,12 +35,19 @@ public abstract class Scene extends Canvas implements Drawable {
 	protected Player player;
 	protected Camera camera;
 	
+	 /**
+     * Static bodies collide but are immovable.
+     * Kinematic bodies are movable but are not be driven by the physics engine.
+     * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
+     */
 	public final static int DYNAMIC_LAYER =  0;
-	public final static int KINEMATIC_LAYER = -1;
+	public final static int STATIC_LAYER = -1;
+	public final static int KINEMATIC_LAYER = -2;
 
 	public Scene() {
-		gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), .0));
-		gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), .0));
+		gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), 0));
+		gameObjects.put(STATIC_LAYER, new Layer(new ArrayList<>(), 0));
+		gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), 0));
 	}
 
 	public void start() {
@@ -93,15 +100,18 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		List<Collider> tiles = (List<Collider>) (Object) gameObjects.get(KINEMATIC_LAYER).objects;
-		List<Entity> entities = (List<Entity>) (Object) gameObjects.get(DYNAMIC_LAYER).objects;
+		
+		List<Entity> dynamicObjects = (List<Entity>) (Object) gameObjects.get(DYNAMIC_LAYER).objects;
 		Vector constantForces = Vector.scale(Force.GRAVITY, dt);
-		entities.forEach((entity) -> entity.applyForce(constantForces));
+		dynamicObjects.forEach((entity) -> entity.applyForce(constantForces));
 
-		Collisions.detection(entities, tiles);
-		Collisions.resolve();
+		List<Collider> kinematicObjects = (List<Collider>) (Object) gameObjects.get(KINEMATIC_LAYER).objects;
+		Collection<Collider> staticObjects = (Collection<Collider>) (Object) gameObjects.get(STATIC_LAYER).objects;
 
-		entities.forEach((entity) -> entity.applyImpulse());
+		Collisions.detection(dynamicObjects, kinematicObjects, staticObjects);
+		//Collisions.resolve();
+
+		dynamicObjects.forEach((entity) -> entity.applyImpulse());
 		camera.update(dt);
 		for (Layer layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.objects.iterator();

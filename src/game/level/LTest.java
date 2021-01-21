@@ -33,9 +33,9 @@ public class LTest extends Level {
 		
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100, 250, 100, 10, KINEMATIC_LAYER, true)); //plafond banane
+				add(new BoxTest(i*100, 250, 100, 10, STATIC_LAYER, true)); //plafond banane
 				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3)); //background -3
-				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, KINEMATIC_LAYER)); //sol banane test
+				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, STATIC_LAYER)); //sol banane test
 			}
 		}
 		
@@ -45,6 +45,12 @@ public class LTest extends Level {
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
+
+		PhyEntity d = new PhyEntity(200, 0, 100, 100, KINEMATIC_LAYER, true);
+		d.mass = 150;
+		d.restitution = 0.8;
+		d.friction = 1;
+		add(d);
 
 		Player p = new Player(150, 300, 100, 100, DYNAMIC_LAYER);
 		p.mass = 150;

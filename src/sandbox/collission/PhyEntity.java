@@ -18,6 +18,13 @@ public class PhyEntity extends Entity {
 		super(x, y, width, height, zindex);
 	}
 
+	public PhyEntity(double x, double y, double width, double height, int zindex, boolean b) {
+		super(x, y, width, height, zindex);
+		kinematic = b;
+	}
+
+	
+
 	@Override
 	public void update(double dt) {
 		bounds.translate(Vector.scale(velocity, dt));

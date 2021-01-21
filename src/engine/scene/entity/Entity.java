@@ -29,6 +29,19 @@ public abstract class Entity extends Collider {
     //sprites = new HashMap<String, Sprite>();
     //currentSprite = null;
     
+    //@Override
+    public void applyCollision(Manifold manifold) {
+        final Vector normal = manifold.normal;
+        Entity collider = (Entity) manifold.collider;
+        double v1 = velocity.dot(normal), v2 = collider.velocity.dot(normal);
+        if ((v1 - v2) * Vector.sub(bounds.getLocation(), collider.bounds.getLocation()).dot(normal) < 0) {
+		    double vf = (restitution + collider.restitution) * (2 * collider.mass * v2 +  (mass - collider.mass) * v1) / (mass + collider.mass);
+		    double vf2 = (restitution + collider.restitution) * (2 * mass * v1 +  (collider.mass - mass) * v2) / (mass + collider.mass);
+		    updateImpulse(Vector.scale(normal, vf - v1));
+            collider.updateImpulse(Vector.scale(normal, vf2 - v2));
+        }
+    }
+
     public void applyForce(Vector vector) {
         velocity.translate(vector);
     }
@@ -44,49 +57,5 @@ public abstract class Entity extends Collider {
 			impulse.setX(forces.getX());
 		if (Math.abs(impulse.getY()) < Math.abs(forces.getY()))
 			impulse.setY(forces.getY());
-    }
-    
-    public final class Manifold {
-        public Collider collider;
-        public boolean collides;
-        public Vector normal;
-        public double penetration;
-    }
-
-    public Manifold collides(Collider collider) {
-        Manifold collision = new Manifold();
-        if (collision.collides = bounds.intersects(collider.bounds)) {
-            collision.collider = collider;
-
-            Vector center = bounds.center();
-            Vector center2 = collider.bounds.center();
-    
-            double x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
-            double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
-    
-            if (collider instanceof Tile && collider.traversable)
-                collision.normal = velocity.getY() < 0 ? new Vector(0, 0) : new Vector(0, 1);
-            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
-                collision.normal = new Vector(0, 0);
-            else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
-                collision.normal = new Vector(0, 1);
-            else if (Math.abs(center.getY() - center2.getY()) < collider.bounds.getHeight() / 2)
-                collision.normal = new Vector(1, 0);
-            else {
-                Vector relativeCenter = center.clone();
-                relativeCenter.translate(Math.signum(center2.getX() - center.getX()) * collider.bounds.getWidth() / 2,
-                    Math.signum(center2.getY() - center.getY()) * collider.bounds.getHeight() / 2);
-                if (Math.abs(relativeCenter.getX() - center2.getX()) * bounds.getHeight() - Math.abs(relativeCenter.getY() - center2.getY()) * bounds.getWidth() < 0)
-                    collision.normal = new Vector(0, 1);
-                else
-                    collision.normal = new Vector(1, 0);
-            }
-
-            if (collision.normal.getX() == 1)
-                collision.penetration = Math.signum(center.getX() - center2.getX()) * (2 + x - Math.abs(center2.getX() - center.getX()));
-            else if (collision.normal.getY() == 1)
-                collision.penetration = Math.signum(center.getY() - center2.getY()) * (2 + y - Math.abs(center2.getY() - center.getY()));
-        }
-        return collision;
     }
 }
