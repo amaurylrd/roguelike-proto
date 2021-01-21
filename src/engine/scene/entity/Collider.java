@@ -35,17 +35,18 @@ public abstract class Collider extends Component {
     protected boolean traversable = false;
 
     /**
+     * Static bodies collide but are immovable.
      * Kinematic bodies are movable but are not be driven by the physics engine.
+     * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
      */
-    protected boolean kinematic = false;
+    public enum CollisionType {
+        STATIC, KINEMATIC, DYNAMIC
+    }
 
-    /**
-     * Tells whether this {@code Collider} is kinematic.
-     * 
-     * @return <i>true</i> if this {@code Collider} is kinematic, <i>false</i> otherwise
-     */
-    public boolean isKinematic() {
-        return kinematic;
+    protected CollisionType type = CollisionType.DYNAMIC;
+
+    public boolean isDynamic() {
+        return type.equals(CollisionType.DYNAMIC);
     }
 
 	public Collider(double x, double y, double width, double height, int zindex) {

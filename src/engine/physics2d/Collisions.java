@@ -83,7 +83,7 @@ public class Collisions {
 				// m2 = normal.scale(f * 0.8 * m1)
 
 				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.penetration));
-				if (!contact.collider.isKinematic())
+				if (contact.collider.isDynamic())
 					contact.collider.getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));
 			}
 		}

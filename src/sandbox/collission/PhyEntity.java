@@ -20,10 +20,8 @@ public class PhyEntity extends Entity {
 
 	public PhyEntity(double x, double y, double width, double height, int zindex, boolean b) {
 		super(x, y, width, height, zindex);
-		kinematic = b;
+		type = CollisionType.KINEMATIC;
 	}
-
-	
 
 	@Override
 	public void update(double dt) {
