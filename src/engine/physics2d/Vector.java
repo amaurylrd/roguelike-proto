@@ -83,6 +83,9 @@ public class Vector {
 		return normalized;
 	}
 	
+	/**
+	 * Normalises this {@code Vector}, making it a unit vector.
+	 */
 	public void normalize() {
 		double length = magnitude();
 		if (length > 0)
