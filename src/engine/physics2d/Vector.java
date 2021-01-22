@@ -86,7 +86,14 @@ public class Vector {
 	public void normalize() {
 		double length = magnitude();
 		if (length > 0)
-		   scale(1/length);
+			scale(1 / length);
+	}
+
+	//TODO test
+	public void rotate(double radians) {
+		double cos = Math.cos(radians);
+		double sin = Math.sin(radians);
+		set(x * cos - y * sin, x * sin + y * cos);
 	}
 
 	public static Vector scale(Vector vector, double factor) {
