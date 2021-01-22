@@ -12,7 +12,7 @@ public class Circle extends Shape {
 	}
 
 	@Override
-	public void rotate(float theta) {
+	public void rotate(double theta) {
 		rotation -= theta;
 	}
 

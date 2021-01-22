@@ -90,9 +90,9 @@ public abstract class Collider extends Component {
     
             double x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
             double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
-    
-            if (collider instanceof Tile && collider.traversable)
-                collision.normal = velocity.getY() < 0 ? new Vector(0, 0) : new Vector(0, 1);
+            
+            if (collider instanceof Tile && collider.traversable) //&& center.getY() - center2.getY() > y - 20
+                collision.normal = (collision.collides = velocity.getY() > 0) ? new Vector(0, 1) : new Vector(0, 0);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
@@ -103,16 +103,20 @@ public abstract class Collider extends Component {
                 Vector relativeCenter = center.clone();
                 relativeCenter.translate(Math.signum(center2.getX() - center.getX()) * collider.bounds.getWidth() / 2,
                     Math.signum(center2.getY() - center.getY()) * collider.bounds.getHeight() / 2);
-                if (Math.abs(relativeCenter.getX() - center2.getX()) * bounds.getHeight() - Math.abs(relativeCenter.getY() - center2.getY()) * bounds.getWidth() < 0)
+                if (Math.abs(relativeCenter.getX() - center2.getX()) *
+                    bounds.getHeight() - Math.abs(relativeCenter.getY() - center2.getY()) * bounds.getWidth() < 0)
                     collision.normal = new Vector(0, 1);
                 else
                     collision.normal = new Vector(1, 0);
             }
 
-            if (collision.normal.getX() == 1)
-                collision.penetration = Math.signum(center.getX() - center2.getX()) * (2 + x - Math.abs(center2.getX() - center.getX()));
-            else if (collision.normal.getY() == 1)
-                collision.penetration = Math.signum(center.getY() - center2.getY()) * (2 + y - Math.abs(center2.getY() - center.getY()));
+            if (collision.collides = (collision.collides && (velocity.dot(collision.normal) - collider.velocity.dot(collision.normal))
+                * Vector.sub(bounds.getLocation(), collider.bounds.getLocation()).dot(collision.normal) < 0)) {
+                if (collision.normal.getX() == 1)
+                    collision.penetration = Math.signum(center.getX() - center2.getX()) * (x - Math.abs(center2.getX() - center.getX()));
+                else if (collision.normal.getY() == 1)
+                    collision.penetration = Math.signum(center.getY() - center2.getY()) * (y - Math.abs(center2.getY() - center.getY()));
+            }
         }
         return collision;
     }

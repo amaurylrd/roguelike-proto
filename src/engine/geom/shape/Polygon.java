@@ -233,7 +233,7 @@ public class Polygon extends Shape {
      * @param theta the angle of rotation in radians
      */
 	@Override
-	public void rotate(float theta) {
+	public void rotate(double theta) {
 		rotation -= theta;
 		Vector massCenter = centroid();
 		for (int i = 0; i < vertices; ++i) {

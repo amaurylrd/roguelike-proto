@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 @SuppressWarnings("unchecked")
 public abstract class Scene extends Canvas implements Drawable {
@@ -86,16 +87,17 @@ public abstract class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
+		//dt *= 1.1;
 		//abstract handleInputs()
 		if (player != null) {
-			int left = Input.isPressed(Input.LEFT) ? 1 : 0;
+			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			double targetvelocity = left * -0.2 + right * 0.2;
 			
-			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
-			
+			double targetvelocity = left * 0.2 + right * 0.2;
+			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1); //damping
+
 			if (Input.isPressed(Input.JUMP)) {
-				//camera.shake(3000);
+				//camera.addTrauma(0.8);
 				player.velocity.setY(-0.2);
 			}
 		}
@@ -133,6 +135,8 @@ public abstract class Scene extends Canvas implements Drawable {
 	@Override
 	public void render(Graphics2D graphics) {
 		final double nthread = Runtime.getRuntime().availableProcessors();
+		AffineTransform transform = graphics.getTransform();
+		graphics.rotate(camera.getRotation(),  camera.getWidth() / 2,  camera.getHeight() / 2);
 		for (Layer layer : gameObjects.values()) {
 			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer.objects), (int) Math.ceil((double) layer.objects.size() / nthread));
 			Thread threads[] = new Thread[batches.size()];
@@ -161,5 +165,6 @@ public abstract class Scene extends Canvas implements Drawable {
 				} catch (InterruptedException exception) {}
 			}
 		}
+		graphics.setTransform(transform);
 	}
 }

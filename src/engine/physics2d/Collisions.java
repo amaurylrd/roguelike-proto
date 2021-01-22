@@ -28,14 +28,23 @@ public class Collisions {
 				if (collision.collides) {
 					collisions.add(collision);
 					entity.applyCollision(collision);
-					
-					//handleCollision()
+					//collision.collider.applyCollision(collision);
 				}
 			}
 			for (Collider kinematicObject : kinematicObjects) {
 				Manifold collision = entity.collides(kinematicObject);
 				if (collision.collides) {
 					collisions.add(collision);
+					final Vector normal = collision.normal;
+					final Vector tangent = new Vector(-normal.getY(), normal.getX());
+					double restitution = Math.max(entity.restitution, collision.collider.restitution) * entity.velocity.dot(normal);
+					if (Math.abs(restitution) < 0.01)
+						restitution = 0;
+					double friction = 50 / entity.mass * Math.min(entity.friction, collision.collider.friction) * entity.velocity.dot(tangent);
+					entity.updateImpulse(Vector.sub(Vector.scale(normal, -entity.velocity.dot(normal) - restitution), Vector.scale(tangent, friction)));
+					
+					//vole le momentum de la plateform
+
 					//kinematicObjects.get(j).handleCollision(entity);
 				}
 			}
@@ -45,11 +54,11 @@ public class Collisions {
 					collisions.add(collision);
 					final Vector normal = collision.normal;
 					final Vector tangent = new Vector(-normal.getY(), normal.getX());
-					double restitution = (1 + 0*Math.max(entity.restitution, collision.collider.restitution)) * entity.velocity.dot(normal); //TODO
+					double restitution = Math.max(entity.restitution, collision.collider.restitution) * entity.velocity.dot(normal);
+					if (Math.abs(restitution) < 0.01)
+						restitution = 0;
 					double friction = 50 / entity.mass * Math.min(entity.friction, collision.collider.friction) * entity.velocity.dot(tangent);
-					Vector forces = Vector.scale(normal, -restitution); 
-					forces.translate(Vector.scale(tangent, -friction)); //TODO
-					entity.updateImpulse(forces);
+					entity.updateImpulse(Vector.sub(Vector.scale(normal, -entity.velocity.dot(normal) - restitution), Vector.scale(tangent, friction)));
 				}
 			}
 			if (!collisions.isEmpty())
@@ -76,15 +85,16 @@ public class Collisions {
 	}
 
 	public static void correction() {
+		java.util.Set<Entity> set = new java.util.HashSet<>();
+
 		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
 			for (Manifold contact : entry.getValue()) {
-				// double f = penetration / (m1 + m2)
-				// m1 = normal.scale(f * 0.8 * m2)
-				// m2 = normal.scale(f * 0.8 * m1)
-
-				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.1 * contact.penetration));
-				if (contact.collider.isDynamic())
-					contact.collider.getBounds().translate(Vector.scale(contact.normal, -0.1 * contact.penetration));
+				set.add(entry.getKey());
+				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.8 * contact.penetration));
+				if (contact.collider.isDynamic()) {
+					contact.collider.getBounds().translate(Vector.scale(contact.normal, -0.8 * contact.penetration));
+					//set.add(contact.collider);
+				}
 			}
 		}
 	}

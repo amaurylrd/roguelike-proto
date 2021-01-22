@@ -32,6 +32,6 @@ public class BoxTest extends Tile {
 		graphics.setColor(getLayer() ==  -3 ? Color.BLUE : Color.RED);
 		graphics.fill(bounds.stroke());
 		graphics.setColor(p);
-		//graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), null)
+		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight(), null);
 	}
 }

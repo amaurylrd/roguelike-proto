@@ -9,7 +9,7 @@ public abstract class Shape {
 	/**
      * The rotation in radians applied to this {@code Shape}. 
      */
-	protected float rotation = 0f;
+	protected double rotation = 0f;
 
 	/**
      * Rotates the Z axis of this {@code Shape} in counter-clockwise direction.
@@ -17,14 +17,14 @@ public abstract class Shape {
      * 
      * @param theta the angle of rotation in radians
      */
-	public abstract void rotate(float theta);
+	public abstract void rotate(double theta);
 
 	/**
      * Gets the rotation of this {@code Shape} in radians.
      * 
      * @return the rotation theta
      */
-    public float getRotation() {
+    public double getRotation() {
         return rotation;
 	}
 	

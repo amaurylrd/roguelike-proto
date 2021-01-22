@@ -15,8 +15,7 @@ public abstract class Tile extends Collider {
 	}
 
 	@Override
-	public void render(Graphics2D graphics) {
-		super.render(graphics);
+	protected void draw(Graphics2D graphics) {
 		graphics.drawImage(texture, (int) bounds.getX(), (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight(), null);
 	}
 

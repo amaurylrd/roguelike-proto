@@ -13,6 +13,8 @@ public abstract class Entity extends Collider {
      */
     public double mass;
 
+    public Vector testCorrestion;
+
     //private boolean grounded = false;
     //private Map<String, Sprite> sprites;
     //private String currentSprite;
@@ -30,16 +32,19 @@ public abstract class Entity extends Collider {
     //currentSprite = null;
     
     //@Override
+    //TODO applyCol(Vector normal, Component ta mère)
     public void applyCollision(Manifold manifold) {
         final Vector normal = manifold.normal;
         Entity collider = (Entity) manifold.collider;
+
         double v1 = velocity.dot(normal), v2 = collider.velocity.dot(normal);
-        if ((v1 - v2) * Vector.sub(bounds.getLocation(), collider.bounds.getLocation()).dot(normal) < 0) {
-		    double vf = (restitution + collider.restitution) * (2 * collider.mass * v2 +  (mass - collider.mass) * v1) / (mass + collider.mass);
-		    double vf2 = (restitution + collider.restitution) * (2 * mass * v1 +  (collider.mass - mass) * v2) / (mass + collider.mass);
-		    updateImpulse(Vector.scale(normal, vf - v1));
-            collider.updateImpulse(Vector.scale(normal, vf2 - v2));
-        }
+        double maxRestitution = Math.max(restitution, collider.restitution);
+
+        double vf = maxRestitution * (2 * collider.mass * v2 + (mass - collider.mass) * v1) / (mass + collider.mass);
+        updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - v1));
+
+        vf = maxRestitution * (2 * mass * v1 + (collider.mass - mass) * v2) / (mass + collider.mass);
+        collider.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - v2));
     }
 
     public void applyForce(Vector vector) {

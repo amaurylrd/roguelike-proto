@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import engine.scene.Scene;
 import engine.scene.entity.Player;
 import engine.util.Random;
+import sandbox.LateralMovingPlateform;
+import sandbox.VerticalMovingPlateform;
 import sandbox.collission.BoxTest;
 import sandbox.collission.PhyEntity;
 
@@ -31,6 +33,8 @@ public class LTest extends Level {
 			}
 		}
 		
+
+
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
 				add(new BoxTest(i*100, 250, 100, 10, STATIC_LAYER, true)); //plafond banane
@@ -38,7 +42,8 @@ public class LTest extends Level {
 				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, STATIC_LAYER)); //sol banane test
 			}
 		}
-		
+		add(new VerticalMovingPlateform(-200, 500, 150, 70, KINEMATIC_LAYER));
+		add(new LateralMovingPlateform(50, 100, 150, 70, KINEMATIC_LAYER));
 
 		PhyEntity e = new PhyEntity(200, 0, 100, 100, DYNAMIC_LAYER);
 		e.mass = 150;
@@ -46,7 +51,7 @@ public class LTest extends Level {
 		e.friction = 1;
 		add(e);
 
-		PhyEntity d = new PhyEntity(200, 0, 100, 100, KINEMATIC_LAYER, true);
+		PhyEntity d = new PhyEntity(350, 100, 100, 100, KINEMATIC_LAYER, true);
 		d.mass = 150;
 		d.restitution = 0.8;
 		d.friction = 1;
@@ -56,6 +61,7 @@ public class LTest extends Level {
 		p.mass = 150;
 		add(p);
 
+		
 		//add(new MovingPlateform(100, 300, 300, 50, SOLIDS_LAYER));
 	}
 

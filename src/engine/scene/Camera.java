@@ -14,54 +14,32 @@ public class Camera extends Rectangle {
 		this.scene = scene;
 	}
 
-	public double shakeDuration = 0.0;
-	public double internalTimer = 0.0;
+	public double trauma = 0.0; //turbulence [0 ; 1]
+	public double decay = 0.6;  ///How quickly the shaking stops [0 ; 1].
 
-	public double amplitude = 20.0;
-	public double frequency = 35;
+	public double amplitude = 0.2; //amplitude of shakes
 
-	public void shake(double duration) {
-		shakeDuration = duration;
+	public void addTrauma(double amount) {
+		trauma = Math.min(trauma + amount, 1.0);
 	}
 
 	protected void update(double dt) {
-		
 		if (scene.player != null) {
 			Rectangle playerBox = scene.player.getBounds();
 			double targetX = playerBox.getX() + playerBox.getWidth() / 2 - scene.getWidth() / 2.3;
 			double targetY = playerBox.getY() + playerBox.getHeight() / 2 - scene.getHeight() / 2;
 			translate((targetX - getX()) * 0.1, (targetY - getY()) * 0.02);
+			rotation = rotation * 0.9;
 		}
 
-		internalTimer += dt;
-		if (shakeDuration > 0) {
-			shakeDuration -= dt;
-			double shakeTime = (internalTimer * frequency);
-			double deltaT = shakeTime - (int) shakeTime;
-			
-			//dans le constructeur
-			double fst = Random.nextDouble() * 2 - 1;
-			double scd = Random.nextDouble() * 2 - 1;
-			double lst = Random.nextDouble() * 2 - 1;
-			
-			double deltaX = fst * deltaT + scd * ( 1 - deltaT);
-			double deltaY = scd * deltaT + lst * ( 1 - deltaT);
-
-			double dx = deltaX, dy = deltaY;
-			translate(dx * amplitude * Math.min(shakeDuration, 1), dy * amplitude * Math.min(shakeDuration, 1));
+		if (trauma > 0) {			
+			double magnitude = amplitude * trauma * trauma * trauma;
+			double offsetX = Random.nextDouble(-1, 1) * magnitude * 50;
+			double offsetY = Random.nextDouble(-1, 1) * magnitude * 50;
+			translate(offsetX, offsetY);
+			rotation -= Random.nextDouble(-1, 1) * magnitude * Math.PI/50;
+			trauma -= Math.min((trauma + 0.3) * decay * dt / 1000, trauma);
 		}
-	}
-
-	/**
-	 * Gives the linear interpolation between two known points.
-	 * 
-	 * @param a the minimum value to evaluate
-	 * @param b the maximum value to evaluate
-	 * @param f the interpolation value between the two previous values
-	 * @return the linear interpolation
-	 */
-	public static double lerp(double a, double b, double f) {
-		return a + f*(b - a);
 	}
 	
 	/**

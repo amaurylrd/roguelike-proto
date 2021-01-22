@@ -46,9 +46,9 @@ public abstract class Component implements Drawable {
     @Override
     public void render(Graphics2D graphics) {
         if (!isRemovable() && isOpaque()) {
-            Color penColor = graphics.getColor();
+            //Color penColor = graphics.getColor();
             draw(graphics);
-            graphics.setColor(penColor);
+            //graphics.setColor(penColor);
         }
     }
 
@@ -107,10 +107,10 @@ public abstract class Component implements Drawable {
      * @param color the color of the bounds
      */
     protected void drawBounds(Graphics2D graphics, Color color) { //TODO dans une classe Graphics2d
-        Color penColor = graphics.getColor();
-        graphics.setColor(color);
+        //Color penColor = graphics.getColor();
+        //graphics.setColor(color);
         graphics.draw(bounds.stroke());
-        graphics.setColor(penColor);
+        //graphics.setColor(penColor);
     }
 
     @Override
