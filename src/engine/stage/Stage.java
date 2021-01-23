@@ -127,76 +127,10 @@ public final class Stage extends Window {
 
     private volatile boolean running = false;
     private volatile boolean paused = false;
+
     public Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
-            /*
-             * final int TARGET_FPS = 60; final long RENDER_SPEED = 1000000000 / TARGET_FPS;
-             * 
-             * //long lastRenderTime = System.nanoTime();
-             * Plateform.trace("Debug: The stage is now running the game loop."); running =
-             * true; try { Thread.sleep(3000); } catch (InterruptedException e) {} long
-             * lastUpdateTime = System.nanoTime();
-             * 
-             * while (running) { //TODO: if (!paused) Scene scene = getScene(); //
-             * System.out.println("chatte" + scene.player.getBounds().getLocation()); long
-             * currentTime = System.nanoTime(); long updateTime = currentTime -
-             * lastUpdateTime; float elapsed = updateTime/(float) RENDER_SPEED;
-             * System.out.println(elapsed); scene.update(elapsed);
-             * 
-             * 
-             * scene.clear(); // long renderTime = currentTime - lastRenderTime; //
-             * scene.getContext().drawString(""+renderTime/100000, 50, 50); //
-             * scene.getContext().drawString(""+updateTime/100000, 50, 100); //
-             * lastRenderTime = System.nanoTime(); scene.render(scene.getContext());
-             * scene.show(); lastUpdateTime = currentTime; } try { thread.join(); } catch
-             * (InterruptedException exception) { throw new
-             * RuntimeException("Error: Fails to join, the main loop has been interrupted by another thread."
-             * , exception); }
-             */
-            
-            // final float TARGET_FPS = 60f;
-            // final float RENDER_SPEED = 30f / 1000000000f;
-            // final float displayPeriod = 1000000000f / TARGET_FPS;
-              
-            // Scene scene = getScene();
-              
-            // long now = System.nanoTime();
-            // boolean running = true;
-            // long lastUpdateTime = System.nanoTime();
-            // long lastFrameTime = System.nanoTime();
-            // while (running) {
-            //     do {
-            //         now = System.nanoTime();
-            //         scene.update((double) (now - lastUpdateTime) * RENDER_SPEED);
-            //         System.out.println((now - lastUpdateTime));
-            //         //scene.update((float) ((now - lastUpdateTime) * RENDER_SPEED));
-            //         lastUpdateTime = now;
-            //     } while (System.nanoTime() - lastFrameTime < displayPeriod);
-            //     lastFrameTime = System.nanoTime();
-            //     scene.clear();
-            //     scene.render(scene.getContext());
-            //     scene.show(); System.out.println("=> " + (System.nanoTime() - lastFrameTime) +"\n");
-            // }
-
-            
-            // final double RENDER_SPEED = 30f / 1000000000f;
-
-            // Scene scene = getScene();
-
-            // long now = System.nanoTime();
-            // boolean running = true;
-            // long lastUpdateTime = System.nanoTime();
-            // while (running) {
-            //     now = System.nanoTime();
-            //     scene.update((double)(now - lastUpdateTime) * RENDER_SPEED);
-            //     lastUpdateTime = now;
-            //     // scene.update((float) ((now - lastUpdateTime) * RENDER_SPEED));
-            //     scene.clear();
-            //     scene.render(scene.getContext());
-            //     scene.show();
-            // }
-
             final double TARGET_UPS = 60;
             final double DELTA_TIME = 1000 / TARGET_UPS;
             double alpha, accumulator = 0;
@@ -207,11 +141,11 @@ public final class Stage extends Window {
                 long currentTime = System.nanoTime();
                 accumulator += (currentTime - frameStart) / 1000000;
                 frameStart = currentTime;
-                
-                // if (accumulator > 0.2)
-                //     accumulator = 0.2;
-                    
-                while (accumulator > DELTA_TIME) {
+
+                if (accumulator > 50)
+                    accumulator = DELTA_TIME;
+
+                while (accumulator >= DELTA_TIME) {
                     scene.update(DELTA_TIME);
                     accumulator -= DELTA_TIME;
                 }
