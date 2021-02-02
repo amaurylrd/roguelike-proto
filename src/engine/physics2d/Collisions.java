@@ -65,11 +65,13 @@ public class Collisions {
 			Collider a = entry.getKey();
 			for (Manifold contact : entry.getValue()) {
 				Collider b = contact.collider;
-				double correction = Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (a.im + b.im) * PENETRATION_CORRETION;
-				if (a.isDynamic())
-					a.getBounds().translate(Vector.scale(contact.normal, -a.im * correction));
-				if (b.isDynamic())
-					b.getBounds().translate(Vector.scale(contact.normal, b.im * correction));
+				if (a.im + b.im != 0) {
+					double correction = Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (a.im + b.im) * PENETRATION_CORRETION;
+					if (a.isDynamic())
+						a.getBounds().translate(Vector.scale(contact.normal, -a.im * correction));
+					if (b.isDynamic())
+						b.getBounds().translate(Vector.scale(contact.normal, b.im * correction));
+				}
 			}
 		}
 	}

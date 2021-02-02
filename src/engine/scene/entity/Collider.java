@@ -95,7 +95,7 @@ public abstract class Collider extends Component {
     }
     
     public void applyForce(Vector vector) {
-        if (type == CollisionType.DYNAMIC)
+        if (type.equals(CollisionType.DYNAMIC))
             velocity.translate(vector);
     }
 
