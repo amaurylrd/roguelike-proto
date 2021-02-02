@@ -10,6 +10,7 @@ public abstract class Entity extends Collider {
     public Entity(double x, double y, double width, double height, int zindex) {
         super(x, y, width, height, zindex);
         type = CollisionType.DYNAMIC;
+        im = 0.05;
     }
 
     @Override

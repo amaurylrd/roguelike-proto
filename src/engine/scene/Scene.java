@@ -103,8 +103,17 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		List<Collider> bodies = (List<Collider>) (Object) gameObjects.get(0).objects;
-
+		List<Collider> prebodies = (List<Collider>) (Object) gameObjects.get(0).objects;
+		
+		java.util.LinkedList<Collider> bodies = new java.util.LinkedList<>();
+		for (int i = 0; i < prebodies.size(); i++)
+		{
+			Collider a = prebodies.get(i);
+			if (a instanceof engine.scene.entity.Tile)
+				bodies.addLast(a);
+			else
+				bodies.addFirst(a);
+		}
 		//collision detection & manifold generation
 		Collisions.test(bodies);
 
@@ -131,8 +140,8 @@ public abstract class Scene extends Canvas implements Drawable {
 		}
 
 		//Apply constant forces
-		Vector constantForces2 = Vector.scale(Force.GRAVITY, dt);
-		bodies.forEach((body) -> body.applyForce(constantForces2));
+		Vector constantForces2 = Vector.scale(Force.GRAVITY, dts);
+		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		//correction
 		Collisions.corr2();

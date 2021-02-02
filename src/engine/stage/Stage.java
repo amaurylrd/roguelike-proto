@@ -133,6 +133,7 @@ public final class Stage extends Window {
         public void run() {
             final double TARGET_UPS = 60;
             final double DELTA_TIME = 1000 / TARGET_UPS;
+            final double MAX_ACCUMULATOR = 5 * DELTA_TIME;
             double alpha, accumulator = 0;
 
             long frameStart = System.nanoTime();
@@ -142,8 +143,8 @@ public final class Stage extends Window {
                 accumulator += (currentTime - frameStart) / 1000000;
                 frameStart = currentTime;
 
-                if (accumulator > 50)
-                    accumulator = DELTA_TIME;
+                if (accumulator > MAX_ACCUMULATOR)
+                    accumulator = MAX_ACCUMULATOR;
 
                 while (accumulator >= DELTA_TIME) {
                     scene.update(DELTA_TIME);

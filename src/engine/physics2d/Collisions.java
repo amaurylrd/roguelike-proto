@@ -44,15 +44,15 @@ public class Collisions {
 
 				double va = a.velocity.dot(normal), vb = b.velocity.dot(normal);
 				double maxRestitution = Math.max(a.restitution, b.restitution);
-
 				if (a.isDynamic()) {
-					double vf = maxRestitution * (2 * b.mass * vb + (a.mass - b.mass) * va) / (a.mass + b.mass);
+					//double vf = maxRestitution * (2 * b.mass * vb + (a.mass - b.mass) * va) / (a.mass + b.mass);
+					double vf = maxRestitution * (2 * a.im * vb + (b.im - a.im) * va) / (a.im + b.im);
 					a.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - va));
 				}
-
 				if (b.isDynamic()) {
-					double vf = maxRestitution * (2 * a.mass * va + (b.mass - a.mass) * vb) / (a.mass + b.mass);
-					b.updateImpulse(Vector.scale(tangent, (Math.abs(vf) < 0.01 ? 0 : vf) - va));
+					//double vf = maxRestitution * (2 * a.mass * va + (b.mass - a.mass) * vb) / (a.mass + b.mass);
+					double vf = maxRestitution * (2 * b.im * va + (a.im - b.im) * vb) / (a.im + b.im);
+					b.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - vb));
 				}
 			}
 		}
@@ -68,16 +68,16 @@ public class Collisions {
 				if (a.im + b.im != 0) {
 					double correction = Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (a.im + b.im) * PENETRATION_CORRETION;
 					if (a.isDynamic())
-						a.getBounds().translate(Vector.scale(contact.normal, -a.im * correction));
+						a.getBounds().translate(Vector.scale(contact.normal, a.im * correction));
 					if (b.isDynamic())
-						b.getBounds().translate(Vector.scale(contact.normal, b.im * correction));
+						b.getBounds().translate(Vector.scale(contact.normal, -b.im * correction));
 				}
 			}
 		}
 	}
 
 	public static void cle2() {
-		contacts.clear();
+		contacts2.clear();
 	}
 
 	/**

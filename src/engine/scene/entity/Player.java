@@ -21,6 +21,7 @@ public class Player extends Entity { //abstract player à check instance of exte
 		super(x, y, width, height, zindex);
 		restitution = 0.0;
 		friction = 0.0;
+		im = 0.01;
 		//TODO masss
 	}
 
