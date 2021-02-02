@@ -7,14 +7,14 @@ import java.awt.Graphics2D;
  */
 public interface Drawable {
     /**
-     * Called whenever a game object needs to be updated.
+     * Called whenever a game object needs to be updated depending on the UPS.
      * 
-     * @param dt the delta time between updates
+     * @param dt the delta time between updates at render speed
      */
     public abstract void update(double dt);
 
     /**
-     * Called to render a game object into the scene.
+     * Called to render a game object into the scene depending on the FPS.
      * 
      * @param graphics the canvas graphics context
      */

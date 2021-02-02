@@ -45,10 +45,11 @@ public abstract class Scene extends Canvas implements Drawable {
 	public final static int STATIC_LAYER = -1;
 	public final static int KINEMATIC_LAYER = -2;
 
+
 	public Scene() {
-		gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), 0));
-		gameObjects.put(STATIC_LAYER, new Layer(new ArrayList<>(), 0));
-		gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), 0));
+		// gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), 0));
+		// gameObjects.put(STATIC_LAYER, new Layer(new ArrayList<>(), 0));
+		// gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), 0));
 	}
 
 	public void start() {
@@ -102,18 +103,21 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
+		List<Collider> bodies = (List<Collider>) (Object) gameObjects.get(0).objects;
+
+		//collision detection & manifold generation
+		Collisions.test(bodies);
+
+		//integrate forces
+		double dts = dt * 0.5;
+		Vector constantForces = Vector.scale(Force.GRAVITY, dts);
+		bodies.forEach((body) -> body.applyForce(constantForces));
+
+		//resolve collision & apply impulse
+		Collisions.test2();
+		bodies.forEach((body) -> body.applyImpulse());
 		
-		List<Entity> dynamicObjects = (List<Entity>) (Object) gameObjects.get(DYNAMIC_LAYER).objects;
-		Vector constantForces = Vector.scale(Force.GRAVITY, dt);
-		dynamicObjects.forEach((entity) -> entity.applyForce(constantForces));
-
-		List<Collider> kinematicObjects = (List<Collider>) (Object) gameObjects.get(KINEMATIC_LAYER).objects;
-		Collection<Collider> staticObjects = (Collection<Collider>) (Object) gameObjects.get(STATIC_LAYER).objects;
-
-		Collisions.detection(dynamicObjects, kinematicObjects, staticObjects);
-		//Collisions.resolve();
-
-		dynamicObjects.forEach((entity) -> entity.applyImpulse());
+		//Integrate velocities
 		camera.update(dt);
 		for (Layer layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.objects.iterator();
@@ -126,8 +130,18 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		Collisions.correction();
-		Collisions.clear();
+		//Apply constant forces
+		Vector constantForces2 = Vector.scale(Force.GRAVITY, dt);
+		bodies.forEach((body) -> body.applyForce(constantForces2));
+
+		//correction
+		Collisions.corr2();
+		
+		//clear all forces
+		Collisions.cle2();
+
+		//Collisions.correction();
+		//Collisions.clear();
 	}
 
 	 
@@ -135,12 +149,12 @@ public abstract class Scene extends Canvas implements Drawable {
 	@Override
 	public void render(Graphics2D graphics) {
 		final double nthread = Runtime.getRuntime().availableProcessors();
-		AffineTransform transform = graphics.getTransform();
-		graphics.rotate(camera.getRotation(),  camera.getWidth() / 2,  camera.getHeight() / 2);
+		final AffineTransform transform = graphics.getTransform();
+		graphics.rotate(camera.getRotation(), camera.getWidth() / 2, camera.getHeight() / 2);
 		for (Layer layer : gameObjects.values()) {
 			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer.objects), (int) Math.ceil((double) layer.objects.size() / nthread));
 			Thread threads[] = new Thread[batches.size()];
-			for (int i = 0; i < threads.length; i++) {
+			for (int i = 0; i < threads.length; ++i) {
 				List<Component> batch = batches.get(i);
 				threads[i] = new Thread() {
 					@Override

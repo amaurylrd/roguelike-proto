@@ -3,7 +3,7 @@ package engine.scene.entity;
 import engine.physics2d.Vector;
 
 /**
- * The class {@code Collider} a collidable body which are placed under the law of the physics engine.
+ * The class {@code Collider} represents a collidable body which is placed under the law of the physics engine.
  */
 public abstract class Collider extends Component {
     /**
@@ -12,13 +12,18 @@ public abstract class Collider extends Component {
     public Vector velocity = new Vector(0, 0); //TODO: protected
     
     /**
-     * This coefficient sets the elasticity of this body. The value should be in between 0 and 1.
+    * Impulse is a term that quantifies the overall effect of a force acting on this {@Collider} over time.
+    */
+    private Vector impulse = new Vector(0, 0);
+
+    /**
+     * This coefficient between 0 and 1 sets the elasticity of this body. The value should be in between 0 and 1.
      * The higher is {@code restitution}, the more this {@code Collider} is bouncy.
      */
     public double restitution; //TODO: protected
 
     /**
-     * This coefficient sets the resistance to movement that occurs when colliding this surface.
+     * This coefficient between 0 and 1 sets the resistance to movement that occurs when colliding this surface.
      * The higher is {@code friction}, the greater will be the deceleration.
      */
     public double friction; //TODO: protected
@@ -35,6 +40,14 @@ public abstract class Collider extends Component {
     protected boolean traversable = false;
 
     /**
+    * Specifies the density of this {@code Collider}. (must be positiv)
+    * An object with 0 as invert mass have infinite mass.
+    */
+    public double mass; //TODO ca dégage pour l'inverse de la masee
+
+    public double im = 0.0;
+
+    /**
      * Static bodies collide but are immovable.
      * Kinematic bodies are movable but are not be driven by the physics engine.
      * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
@@ -43,10 +56,14 @@ public abstract class Collider extends Component {
         STATIC, KINEMATIC, DYNAMIC
     }
 
-    protected CollisionType type = CollisionType.DYNAMIC;
+    protected CollisionType type = CollisionType.STATIC;
 
     public boolean isDynamic() {
         return type.equals(CollisionType.DYNAMIC);
+    }
+
+    public boolean isStatic() {
+        return type.equals(CollisionType.STATIC);
     }
 
 	public Collider(double x, double y, double width, double height, int zindex) {
@@ -71,6 +88,28 @@ public abstract class Collider extends Component {
      */
     public boolean isSolid() {
         return solid;
+    }
+
+    public void transform(Vector vector) {
+        bounds.translate(vector);
+    }
+    
+    public void applyForce(Vector vector) {
+        if (type == CollisionType.DYNAMIC)
+            velocity.translate(vector);
+    }
+
+    public void applyImpulse() {
+        //velocity += impulse / m;
+        velocity.translate(impulse);
+        impulse.set(0, 0);
+    }
+
+    public void updateImpulse(Vector forces) {
+        if (Math.abs(impulse.getX()) < Math.abs(forces.getX()))
+			impulse.setX(forces.getX());
+		if (Math.abs(impulse.getY()) < Math.abs(forces.getY()))
+			impulse.setY(forces.getY());
     }
 
     public final class Manifold {
