@@ -70,14 +70,12 @@ public class Collisions {
 	 */
 	public static void correction() {
 		for (Manifold contact : contacts) {
-			Collider A = contact.colliderA;
-			Collider B = contact.colliderB;
-
-			double correction = A.im + B.im > 0.0 ? Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (A.im + B.im) * PENETRATION_CORRETION : 0.0;
-			if (A.isDynamic())
-				A.getBounds().translate(Vector.scale(contact.normal, A.im * correction));
-			if (B.isDynamic())
-				B.getBounds().translate(Vector.scale(contact.normal, -B.im * correction));
+			double correction = contact.colliderA.im + contact.colliderB.im > 0.0 ? 
+				Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (contact.colliderA.im + contact.colliderB.im) * PENETRATION_CORRETION : 0.0;
+			if (contact.colliderA.isDynamic())
+				contact.colliderA.getBounds().translate(Vector.scale(contact.normal, contact.colliderA.im * correction));
+			if (contact.colliderB.isDynamic())
+				contact.colliderB.getBounds().translate(Vector.scale(contact.normal, -contact.colliderB.im * correction));
 		}
 	}
 
