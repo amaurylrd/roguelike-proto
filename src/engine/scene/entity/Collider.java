@@ -43,8 +43,6 @@ public abstract class Collider extends Component {
     * Specifies the density of this {@code Collider}. (must be positiv)
     * An object with 0 as invert mass have infinite mass.
     */
-    public double mass; //TODO ca dégage pour l'inverse de la masee
-
     public double im = 0.0;
 
     /**

@@ -41,9 +41,9 @@ public abstract class Scene extends Canvas implements Drawable {
      * Kinematic bodies are movable but are not be driven by the physics engine.
      * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
      */
-	public final static int DYNAMIC_LAYER =  0;
-	public final static int STATIC_LAYER = -1;
-	public final static int KINEMATIC_LAYER = -2;
+	// public final static int DYNAMIC_LAYER =  0;
+	// public final static int STATIC_LAYER = -1;
+	// public final static int KINEMATIC_LAYER = -2;
 
 
 	public Scene() {

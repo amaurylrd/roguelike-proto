@@ -46,19 +46,16 @@ public class LTest extends Level {
 		add(new LateralMovingPlateform(50, 100, 150, 70, 0));
 
 		PhyEntity e = new PhyEntity(200, 0, 100, 100, 0);
-		e.mass = 150;
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
 
 		PhyEntity d = new PhyEntity(350, 100, 100, 100, 0, true);
-		d.mass = 150;
 		d.restitution = 0.8;
 		d.friction = 1;
 		add(d);
 
 		Player p = new Player(150, 300, 100, 100, 0);
-		p.mass = 150;
 		add(p);
 
 		
