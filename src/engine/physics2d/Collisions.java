@@ -10,163 +10,80 @@ import engine.scene.entity.Collider.Manifold;
 import engine.scene.entity.Collider;
 
 public class Collisions {
-	private static Map<Entity, Collection<Manifold>> contacts = new java.util.Hashtable<Entity, Collection<Manifold>>();
+	private static List<Manifold> contacts = new ArrayList<Manifold>();
 
-	private static Map<Collider, Collection<Manifold>> contacts2 = new java.util.Hashtable<Collider, Collection<Manifold>>();
-	//TODO: map to list et manifold A
-	
-	//collision quand pas isRemovable()
-	public static void test(List<Collider> list) {
+	/**
+	 * This method stores each collision {@code Manifold}.
+	 * 
+	 * @param list the list of objects
+	 */
+	public static void detection(List<Collider> list) {
 		for (int i = 0; i < list.size(); ++i) {
-			Collider a = list.get(i);
-			Collection<Manifold> collisions = new ArrayList<>();
-			for (int j = i + 1; j < list.size(); ++j) {
-				if (!a.isStatic() || !list.get(j).isStatic()) {
-					Manifold collision = a.collides(list.get(j));
-					if (collision.collides) {
-						collisions.add(collision);
+			if (list.get(i).isSolid()) {
+				for (int j = i + 1; j < list.size(); ++j) {
+					if (!list.get(i).isStatic() || !list.get(j).isStatic() && list.get(j).isSolid()) {
+						Manifold collision = list.get(i).collides(list.get(j));
+						if (collision.collides)
+							contacts.add(collision);
 					}
 				}
 			}
-			if (!collisions.isEmpty())
-				contacts2.put(a, collisions);
 		}
-	}
-
-	public static void test2() {
-		for (Map.Entry<Collider, Collection<Manifold>> entry : contacts2.entrySet()) {
-			Collider a = entry.getKey();
-			for (Manifold contact : entry.getValue()) {
-				final Vector normal = contact.normal;
-				final Vector tangent = new Vector(-normal.getY(), normal.getX());
-				
-				Collider b = contact.collider;
-
-				double va = a.velocity.dot(normal), vb = b.velocity.dot(normal);
-				double maxRestitution = Math.max(a.restitution, b.restitution);
-				if (a.isDynamic()) {
-					//double vf = maxRestitution * (2 * b.mass * vb + (a.mass - b.mass) * va) / (a.mass + b.mass);
-					double vf = maxRestitution * (2 * a.im * vb + (b.im - a.im) * va) / (a.im + b.im);
-					a.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - va));
-				}
-				if (b.isDynamic()) {
-					//double vf = maxRestitution * (2 * a.mass * va + (b.mass - a.mass) * vb) / (a.mass + b.mass);
-					double vf = maxRestitution * (2 * b.im * va + (a.im - b.im) * vb) / (a.im + b.im);
-					b.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - vb));
-				}
-			}
-		}
-	}
-
-	public static void corr2() {
-		final double PENETRATION_ALLOWANCE = 0.05; //en variable static Penetration allowance
-		final double PENETRATION_CORRETION = 0.4; //en variable static Penetration percentage to correct
-		for (Map.Entry<Collider, Collection<Manifold>> entry : contacts2.entrySet()) {
-			Collider a = entry.getKey();
-			for (Manifold contact : entry.getValue()) {
-				Collider b = contact.collider;
-				if (a.im + b.im != 0) {
-					double correction = Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (a.im + b.im) * PENETRATION_CORRETION;
-					if (a.isDynamic())
-						a.getBounds().translate(Vector.scale(contact.normal, a.im * correction));
-					if (b.isDynamic())
-						b.getBounds().translate(Vector.scale(contact.normal, -b.im * correction));
-				}
-			}
-		}
-	}
-
-	public static void cle2() {
-		contacts2.clear();
 	}
 
 	/**
-	 * This method manages collision detection. It stores each collision and resolves collision response.
-	 * 
-	 * @param dynamicObjects
-	 * @param kinematicObjects
-	 * @param staticObjects
+	 * This method handles the collision's response and resolves each contact.
 	 */
-	public static void detection(List<Entity> dynamicObjects, List<Collider> kinematicObjects, Collection<Collider> staticObjects) {
-		for (int i = 0; i < dynamicObjects.size(); ++i) {
-			Entity entity = dynamicObjects.get(i);
-			Collection<Manifold> collisions = new ArrayList<>();
-			for (int j = i + 1; j < dynamicObjects.size(); ++j) {
-				Manifold collision = entity.collides(dynamicObjects.get(j));
-				if (collision.collides) {
-					collisions.add(collision);
-					entity.applyCollision(collision);
-					//collision.collider.applyCollision(collision);
-				}
-			}
-			for (Collider kinematicObject : kinematicObjects) {
-				Manifold collision = entity.collides(kinematicObject);
-				if (collision.collides) {
-					collisions.add(collision);
-					final Vector normal = collision.normal;
-					final Vector tangent = new Vector(-normal.getY(), normal.getX());
-					double restitution = Math.max(entity.restitution, collision.collider.restitution) * entity.velocity.dot(normal);
-					if (Math.abs(restitution) < 0.01)
-						restitution = 0;
-					double friction = 50 / entity.mass * Math.min(entity.friction, collision.collider.friction) * entity.velocity.dot(tangent);
-					entity.updateImpulse(Vector.sub(Vector.scale(normal, -entity.velocity.dot(normal) - restitution), Vector.scale(tangent, friction)));
-					
-					//vole le momentum de la plateform
+	public static void resolution() {
+		for (Manifold contact : contacts) {
+			final Vector normal = contact.normal;
+			final Vector tangent = new Vector(-normal.getY(), normal.getX());
 
-					//kinematicObjects.get(j).handleCollision(entity);
-				}
-			}
-			for (Collider staticObject : staticObjects) {
-				Manifold collision = entity.collides(staticObject);
-				if (collision.collides) {
-					collisions.add(collision);
-					final Vector normal = collision.normal;
-					final Vector tangent = new Vector(-normal.getY(), normal.getX());
-					double restitution = Math.max(entity.restitution, collision.collider.restitution) * entity.velocity.dot(normal);
-					if (Math.abs(restitution) < 0.01)
-						restitution = 0;
-					double friction = 50 / entity.mass * Math.min(entity.friction, collision.collider.friction) * entity.velocity.dot(tangent);
-					entity.updateImpulse(Vector.sub(Vector.scale(normal, -entity.velocity.dot(normal) - restitution), Vector.scale(tangent, friction)));
-				}
-			}
-			if (!collisions.isEmpty())
-				contacts.put(entity, collisions);
-		}
+			Collider A = contact.colliderA;
+			Collider B = contact.colliderB;
 
-		for (int i = 0; i < kinematicObjects.size(); ++i) {
-			Collection<Manifold> collisions = new ArrayList<>();
-			for (int j = i + 1; j < kinematicObjects.size(); ++j) {
-				Manifold collision = kinematicObjects.get(i).collides(kinematicObjects.get(j));
-				if (collision.collides) {
-					//kinematicObjects.get(j).handleCollision(entity);
-					//kinematicObjects.get(i).handleCollision(entity);
-				}
+			double va = A.velocity.dot(normal), vb = B.velocity.dot(normal);
+			double bouciness = Math.max(A.restitution, B.restitution);
+			if (A.isDynamic()) {
+				double vf = bouciness * (2 * A.im * vb + (B.im - A.im) * va) / (A.im + B.im);
+				A.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - va));
 			}
-
-			for (Collider staticObject : staticObjects) {
-				Manifold collision = kinematicObjects.get(i).collides(staticObject);
-				if (collision.collides) {
-					//kinematicObjects.get(i).handleCollision(entity);
-				}
+			if (B.isDynamic()) {
+				double vf = bouciness * (2 * B.im * va + (A.im - B.im) * vb) / (A.im + B.im);
+				B.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01 ? 0 : vf) - vb));
 			}
 		}
 	}
 
+	/**
+	 * The penetration allowance.
+	 */
+	private static final double PENETRATION_ALLOWANCE = 0.05;
+
+	/**
+	 * The penetration percentage to correct
+	 */
+	private static final double PENETRATION_CORRETION = 0.9; 
+
+	/**
+	 * This applies a positional correction for each contact.
+	 */
 	public static void correction() {
-		java.util.Set<Entity> set = new java.util.HashSet<>();
+		for (Manifold contact : contacts) {
+			Collider A = contact.colliderA;
+			Collider B = contact.colliderB;
 
-		for (Map.Entry<Entity, Collection<Manifold>> entry : contacts.entrySet()) {
-			for (Manifold contact : entry.getValue()) {
-				set.add(entry.getKey());
-				entry.getKey().getBounds().translate(Vector.scale(contact.normal, 0.8 * contact.penetration));
-				if (contact.collider.isDynamic()) {
-					contact.collider.getBounds().translate(Vector.scale(contact.normal, -0.8 * contact.penetration));
-					//set.add(contact.collider);
-				}
-			}
+			double correction = A.im + B.im > 0.0 ? Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0.0) / (A.im + B.im) * PENETRATION_CORRETION : 0.0;
+			if (A.isDynamic())
+				A.getBounds().translate(Vector.scale(contact.normal, A.im * correction));
+			if (B.isDynamic())
+				B.getBounds().translate(Vector.scale(contact.normal, -B.im * correction));
 		}
 	}
 
+	/**
+	 * This method removes all elements from the list of collisions.
+	 */
 	public static void clear() {
 		contacts.clear();
 	}

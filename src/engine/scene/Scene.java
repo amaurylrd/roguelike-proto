@@ -115,7 +115,7 @@ public abstract class Scene extends Canvas implements Drawable {
 				bodies.addFirst(a);
 		}
 		//collision detection & manifold generation
-		Collisions.test(bodies);
+		Collisions.detection(bodies);
 
 		//integrate forces
 		double dts = dt * 0.5;
@@ -123,7 +123,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		//resolve collision & apply impulse
-		Collisions.test2();
+		Collisions.resolution();
 		bodies.forEach((body) -> body.applyImpulse());
 		
 		//Integrate velocities
@@ -144,13 +144,8 @@ public abstract class Scene extends Canvas implements Drawable {
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		//correction
-		Collisions.corr2();
-		
-		//clear all forces
-		Collisions.cle2();
-
-		//Collisions.correction();
-		//Collisions.clear();
+		Collisions.correction();
+		Collisions.clear();
 	}
 
 	 

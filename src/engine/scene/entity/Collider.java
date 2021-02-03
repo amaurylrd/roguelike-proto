@@ -113,7 +113,8 @@ public abstract class Collider extends Component {
     }
 
     public final class Manifold {
-        public Collider collider;
+        public Collider colliderA;
+        public Collider colliderB;
         public boolean collides;
         public Vector normal;
         public double penetration;
@@ -122,15 +123,13 @@ public abstract class Collider extends Component {
     public Manifold collides(Collider collider) {
         Manifold collision = new Manifold();
         if (collision.collides = bounds.intersects(collider.bounds)) {
-            collision.collider = collider;
-
             Vector center = bounds.center();
             Vector center2 = collider.bounds.center();
     
             double x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
             double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
             
-            if (collider.traversable) //&& center.getY() - center2.getY() > y - 20
+            if (collider.traversable)
                 collision.normal = (collision.collides = velocity.getY() > 0) ? new Vector(0, 1) : new Vector(0, 0);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
@@ -155,6 +154,9 @@ public abstract class Collider extends Component {
                     collision.penetration = Math.signum(center.getX() - center2.getX()) * (x - Math.abs(center2.getX() - center.getX()));
                 else if (collision.normal.getY() == 1)
                     collision.penetration = Math.signum(center.getY() - center2.getY()) * (y - Math.abs(center2.getY() - center.getY()));
+                
+                collision.colliderA = this;
+                collision.colliderB = collider;
             }
         }
         return collision;

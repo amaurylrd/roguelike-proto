@@ -25,7 +25,7 @@ public abstract class Entity extends Collider {
     //TODO applyCol(Vector normal, Component ta mère)
     public void applyCollision(Manifold manifold) {
         final Vector normal = manifold.normal;
-        Entity collider = (Entity) manifold.collider;
+        Entity collider = (Entity) manifold.colliderB;
 
         double v1 = velocity.dot(normal), v2 = collider.velocity.dot(normal);
         double maxRestitution = Math.max(restitution, collider.restitution);
