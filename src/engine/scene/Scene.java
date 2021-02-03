@@ -26,30 +26,25 @@ public abstract class Scene extends Canvas implements Drawable {
 		public double depth;
 		public Collection<Component> objects;
 
-		public Layer(Collection<Component> components, double d) {
+		public Layer(Collection<Component> components, double depth) {
 			objects = components;
-			depth = d;
+			this.depth = depth;
 		}
 	}
 
+	public static final Integer TILES_LAYER = Integer.valueOf(-1);
+	public static final Integer ENTITIES_LAYER = Integer.valueOf(0);
+
 	private Map<Integer, Layer> gameObjects = new TreeMap<Integer, Layer>();
+
 	protected Player player;
 	protected Camera camera;
 	
-	 /**
-     * Static bodies collide but are immovable.
-     * Kinematic bodies are movable but are not be driven by the physics engine.
-     * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
-     */
-	// public final static int DYNAMIC_LAYER =  0;
-	// public final static int STATIC_LAYER = -1;
-	// public final static int KINEMATIC_LAYER = -2;
-
+	
 
 	public Scene() {
-		// gameObjects.put(DYNAMIC_LAYER, new Layer(new ArrayList<>(), 0));
-		// gameObjects.put(STATIC_LAYER, new Layer(new ArrayList<>(), 0));
-		// gameObjects.put(KINEMATIC_LAYER, new Layer(new ArrayList<>(), 0));
+		gameObjects.put(TILES_LAYER, new Layer(new ArrayList<>(), 0.0));
+		gameObjects.put(ENTITIES_LAYER, new Layer(new ArrayList<>(), 0.0));
 	}
 
 	public void start() {
@@ -88,14 +83,13 @@ public abstract class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(double dt) {
-		//dt *= 1.1;
 		//abstract handleInputs()
 		if (player != null) {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
 			
 			double targetvelocity = left * 0.2 + right * 0.2;
-			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1); //damping
+			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
 			if (Input.isPressed(Input.JUMP)) {
 				//camera.addTrauma(0.8);
@@ -103,30 +97,18 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		List<Collider> prebodies = (List<Collider>) (Object) gameObjects.get(0).objects;
-		
-		java.util.LinkedList<Collider> bodies = new java.util.LinkedList<>();
-		for (int i = 0; i < prebodies.size(); i++)
-		{
-			Collider a = prebodies.get(i);
-			if (a instanceof engine.scene.entity.Tile)
-				bodies.addLast(a);
-			else
-				bodies.addFirst(a);
-		}
-		//collision detection & manifold generation
+		Collection<Component> prebodies = new ArrayList<Component>(gameObjects.get(ENTITIES_LAYER).objects);
+		prebodies.addAll(gameObjects.get(TILES_LAYER).objects);
+		List<Collider> bodies = (List<Collider>) (Object) prebodies;
+
 		Collisions.detection(bodies);
 
-		//integrate forces
-		double dts = dt * 0.5;
-		Vector constantForces = Vector.scale(Force.GRAVITY, dts);
+		Vector constantForces = Vector.scale(Force.GRAVITY, dt * 0.5);
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
-		//resolve collision & apply impulse
 		Collisions.resolution();
 		bodies.forEach((body) -> body.applyImpulse());
 		
-		//Integrate velocities
 		camera.update(dt);
 		for (Layer layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.objects.iterator();
@@ -139,11 +121,8 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 
-		//Apply constant forces
-		Vector constantForces2 = Vector.scale(Force.GRAVITY, dts);
 		bodies.forEach((body) -> body.applyForce(constantForces));
-
-		//correction
+		
 		Collisions.correction();
 		Collisions.clear();
 	}

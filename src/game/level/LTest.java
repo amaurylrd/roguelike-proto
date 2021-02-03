@@ -37,25 +37,25 @@ public class LTest extends Level {
 
 		for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
-				add(new BoxTest(i*100, 250, 100, 10, 0, true)); //plafond banane
+				add(new BoxTest(i*100, 250, 100, 10, Scene.TILES_LAYER, true)); //plafond banane
 				add(new BoxTest(i*100, j*100 + 500, 100, 100, -3)); //background -3
-				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, 0)); //sol banane test
+				add(new BoxTest(i*100+100, j*100 + 500, 100, 100, Scene.TILES_LAYER)); //sol banane test
 			}
 		}
-		add(new VerticalMovingPlateform(-200, 500, 150, 70, 0));
-		add(new LateralMovingPlateform(50, 100, 150, 70, 0));
+		add(new VerticalMovingPlateform(-200, 500, 150, 70, Scene.TILES_LAYER));
+		add(new LateralMovingPlateform(50, 100, 150, 70, Scene.TILES_LAYER));
 
-		PhyEntity e = new PhyEntity(200, 0, 100, 100, 0);
+		PhyEntity e = new PhyEntity(200, 0, 100, 100, Scene.ENTITIES_LAYER);
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
 
-		PhyEntity d = new PhyEntity(350, 100, 100, 100, 0, true);
+		PhyEntity d = new PhyEntity(350, 100, 100, 100, Scene.TILES_LAYER, true);
 		d.restitution = 0.8;
 		d.friction = 1;
 		add(d);
 
-		Player p = new Player(150, 300, 100, 100, 0);
+		Player p = new Player(150, 300, 100, 100, Scene.ENTITIES_LAYER);
 		add(p);
 
 		
