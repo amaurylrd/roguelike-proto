@@ -69,7 +69,10 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
      * @param event the event to be processed
      */
     @Override
-    public void windowLostFocus(WindowEvent event) {}
+    public void windowLostFocus(WindowEvent event) {
+        System.out.println(this.getContentPane());
+        getContentPane().setLocation(10, 10);
+    }
 
 
     /**

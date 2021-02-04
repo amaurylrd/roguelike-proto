@@ -23,7 +23,8 @@ public abstract class Canvas {
         
         offscreenImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         offscreen = offscreenImage.createGraphics();
-        offscreen.setColor(Color.BLACK);
+        //offscreen.setColor(Color.BLACK);
+        offscreen.setColor(Color.BLUE);
         offscreen.fillRect(0, 0, width, height);
         offscreen.setColor(Color.WHITE);
         
