@@ -58,7 +58,7 @@ public abstract class Scene extends Canvas implements Drawable {
 	public void add(Component... components) {
 		for (Component component : components) {
 			if (component != null) {
-				if (component instanceof Player && player == null)
+				if (component instanceof Player && player == null) //TODO addPlayer ?
 					player = (Player) component;
 				Layer layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new Layer(new ArrayList<Component>(), k));
 				layer.objects.add(component);
@@ -84,17 +84,32 @@ public abstract class Scene extends Canvas implements Drawable {
 	@Override
 	public void update(double dt) {
 		//abstract handleInputs()
+
 		if (player != null) {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
 			
-			double targetvelocity = left * 0.2 + right * 0.2;
+			double targetvelocity = left * 0.2 + right * 0.2 + player.groundedVelocityX;
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
-			if (Input.isPressed(Input.JUMP)) {
-				//camera.addTrauma(0.8);
-				player.velocity.setY(-0.2);
+			
+			
+			player.grounded = false;
+			for (Component tiles : gameObjects.get(TILES_LAYER).objects) {
+				if (tiles.getBounds().intersects(player.feet)) {
+					player.grounded = true;
+					player.groundedVelocityX = ((Collider) tiles).velocity.getX();
+				}
 			}
+
+			if (player.grounded || true) {
+				//recharge
+				if (Input.isPressed(Input.JUMP)) {
+					//camera.addTrauma(0.8);
+					player.velocity.setY(-0.2);
+				}
+			}
+			
 		}
 
 		Collection<Component> prebodies = new ArrayList<Component>(gameObjects.get(ENTITIES_LAYER).objects);
@@ -122,7 +137,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		}
 
 		bodies.forEach((body) -> body.applyForce(constantForces));
-		
+
 		Collisions.correction();
 		Collisions.clear();
 	}

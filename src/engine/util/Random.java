@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * The class {@code Random} is used to generate pseudo-random numbers.
  */
 public class Random {
-    //TODO CA PEUE LA PERDE
     private static java.util.Random rand = ThreadLocalRandom.current();
 
     private Random() {}

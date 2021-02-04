@@ -62,9 +62,9 @@ public class Camera extends Rectangle {
 	public void update(double dt) {
 		rotation = rotation * 0.9;
 		if (scene.player != null) {
-			Rectangle player = scene.player.getBounds();
-			double targetX = player.getX() + player.getWidth() / 2.0 - scene.getWidth() / 2.3;
-			double targetY = player.getY() + player.getHeight() / 2.0 - scene.getHeight() / 2.0;
+			Rectangle playerBounds = scene.player.getBounds();
+			double targetX = playerBounds.getX() + playerBounds.getWidth() / 2.0 - scene.getWidth() / 2.3;
+			double targetY = playerBounds.getY() + playerBounds.getHeight() / 2.0 - scene.getHeight() / 2.0;
 			translate((targetX - getX()) * 0.1, (targetY - getY()) * 0.02);
 		}
 		

@@ -63,7 +63,8 @@
 		<delete dir="${doc.dir}"/>
 	</target>
 	
-	<target name="javadoc" depends="compile">
+	<!-- TODO failed to create task or type classpath -->
+	<target name="javadoc" depends="compile"> 
 		<delete dir="${doc.dir}"/>
 		<mkdir dir="${doc.dir}"/>
 		<classpath  refid="java.classpath"/>

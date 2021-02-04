@@ -22,12 +22,28 @@ public class Player extends Entity { //abstract player à check instance of exte
 		restitution = 0.0;
 		friction = 0.0;
 		im = 0.01;
-		//TODO masss
 	}
+
+	public engine.geom.shape.Rectangle feet = new engine.geom.shape.Rectangle(bounds.getX() + bounds.getWidth() * 0.2, bounds.getY() + bounds.getHeight(), bounds.getWidth() * 0.6, 10);
+	
+	@Override
+	public void update(double dt) {
+		feet.translate(bounds.getX() + bounds.getWidth() * 0.2 - feet.getX(), bounds.getY() + bounds.getHeight() - feet.getY());
+		super.update(dt);
+	}
+	
+	
+
+	public boolean grounded = false;
+	public double groundedVelocityX = 0.0;
+	// public boolean isGrounded() {
+	// 	return grounded;
+	// }
 
 	@Override
 	protected void draw(Graphics2D graphics) {
 		graphics.fill(bounds.stroke());
+		graphics.fill(feet.stroke());
 	}
 
 	@Override

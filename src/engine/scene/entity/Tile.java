@@ -10,7 +10,6 @@ public abstract class Tile extends Collider {
 
 	public Tile(String ressourceName, double x, double y, double width, double height, int zindex) {
 		super(x, y, width, height, zindex);
-		type = CollisionType.STATIC;
 		texture = Ressources.ressource(ressourceName);
 	}
 

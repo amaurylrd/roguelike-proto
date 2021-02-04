@@ -17,7 +17,7 @@ public class BoxTest extends Tile {
 		super("banana", x, y, width, height, zindex);
 		traversable = test;
 		restitution = 0.5;
-		friction = 0.01;
+		friction = 1;
 	}
 
 	@Override

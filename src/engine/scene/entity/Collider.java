@@ -66,7 +66,12 @@ public abstract class Collider extends Component {
 
 	public Collider(double x, double y, double width, double height, int zindex) {
         super(x, y, width, height, zindex);
-	}
+    }
+
+    //TODO
+    // public void init(boolean solid, double im, double friction, double restituion, CollisionType type) {
+        
+    // }
 
 	/**
      * Specifies whether this {@code Collider} is solid or not.

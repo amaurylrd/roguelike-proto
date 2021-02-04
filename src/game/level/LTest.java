@@ -1,6 +1,9 @@
 package game.level;
 
 import java.util.List;
+
+import com.aspose.psd.internal.B.f;
+
 import java.util.ArrayList;
 
 import engine.scene.Scene;
@@ -49,6 +52,11 @@ public class LTest extends Level {
 		e.restitution = 0.8;
 		e.friction = 1;
 		add(e);
+
+		PhyEntity f = new PhyEntity(75, 0, 100, 100, Scene.ENTITIES_LAYER);
+		f.restitution = 0.8;
+		f.friction = 1;
+		add(f);
 
 		PhyEntity d = new PhyEntity(350, 100, 100, 100, Scene.TILES_LAYER, true);
 		d.restitution = 0.8;

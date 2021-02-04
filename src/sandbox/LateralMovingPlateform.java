@@ -8,6 +8,7 @@ public class LateralMovingPlateform extends Tile {
 		super("banana", x, y, width, height, zindex);
 		velocity.setX(0.1);
 		type = CollisionType.KINEMATIC;
+		friction = 1;
 	}
 
 	@Override
