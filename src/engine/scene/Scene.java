@@ -3,7 +3,6 @@ package engine.scene;
 import engine.stage.Input;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
-import engine.scene.entity.Entity;
 import engine.scene.entity.Collider;
 import engine.scene.entity.Player;
 import engine.physics2d.Force;
@@ -22,13 +21,30 @@ import java.awt.geom.AffineTransform;
 
 @SuppressWarnings("unchecked")
 public abstract class Scene extends Canvas implements Drawable {
+	/**
+	 * The class {@code Layer} stores a depth for a collection of {@code Component}.
+	 */
 	private class Layer {
+		/**
+		 * This attribut represents the distance from the foreground.
+		 */
 		public double depth;
+
+		/**
+		 * The collection of objects in this {@code Layer}.
+		 */
 		public Collection<Component> objects;
 
-		public Layer(Collection<Component> components, double depth) {
+		/**
+		 * This class separates different elements of the {@code Scene}.
+		 * Layers are superimposed on another one.
+		 * 
+		 * @param components the list of components
+		 * @param distance the depth of this {@code Layer}
+		 */
+		public Layer(Collection<Component> components, double distance) {
 			objects = components;
-			this.depth = depth;
+			depth = distance;
 		}
 	}
 
@@ -38,9 +54,9 @@ public abstract class Scene extends Canvas implements Drawable {
 	private Map<Integer, Layer> gameObjects = new TreeMap<Integer, Layer>();
 
 	protected Player player;
+	//TODO: list d'ia player
+	
 	protected Camera camera;
-	
-	
 
 	public Scene() {
 		gameObjects.put(TILES_LAYER, new Layer(new ArrayList<>(), 0.0));
@@ -92,7 +108,6 @@ public abstract class Scene extends Canvas implements Drawable {
 			double targetvelocity = left * 0.2 + right * 0.2 + player.groundedVelocityX;
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
 
-			
 			
 			player.grounded = false;
 			for (Component tiles : gameObjects.get(TILES_LAYER).objects) {

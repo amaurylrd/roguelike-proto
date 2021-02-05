@@ -3,7 +3,6 @@ package engine.geom.shape;
 import engine.geom.Dimension;
 import engine.physics2d.Vector;
 
-
 /**
  * The class {@code Rectangle} specifies an area in space.
  */
