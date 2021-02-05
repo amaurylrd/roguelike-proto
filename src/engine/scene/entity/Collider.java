@@ -30,7 +30,6 @@ public abstract class Collider extends Component {
 
     /**
      * This flag tells if this body is solid or not.
-     * If set to <i>true</i> objetcs will go through this {@collider Collider}.
      */
     protected boolean solid = true;
 

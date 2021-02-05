@@ -100,6 +100,9 @@ public class Rectangle extends Polygon {
     /**
      * Gets the rotation of any rectangle in radians.
      * 
+     * @param x 
+     * @param oppositeX
+     * @param oppositeY
      * @return the rotation theta
      */
     public static float getRotation(double x, double y, double oppositeX, double oppositeY) {
@@ -202,12 +205,10 @@ public class Rectangle extends Polygon {
     }
 
     /**
-     * Sets the size of the rectangle to the specified {@code width} and
-     * {@code height}.
+     * Sets the size of the rectangle to the specified {@code dimension}.
      *
-     * @param width  the specified width
-     * @param height the specified height
-     * @see getSize
+     * @param dimension the specified dimension
+     * @see getSize()
      */
     public void setSize(Dimension dimension) {
         setSize(dimension.width, dimension.height);

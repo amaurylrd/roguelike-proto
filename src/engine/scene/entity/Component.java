@@ -39,9 +39,9 @@ public abstract class Component implements Drawable {
     /**
      * The render method is called to draw this {@code Component}.
      * 
-     * @param graphics 
-     * @see draw
-     * @see isRemovable
+     * @param graphics the canvas graphics context
+     * @see draw(Graphics2D graphics)
+     * @see isRemovable()
      */
     @Override
     public void render(Graphics2D graphics) {
@@ -85,7 +85,6 @@ public abstract class Component implements Drawable {
      * Gets the z-index of this {@code Component}.
      * 
      * @return the z-index
-     * @see setLayer(int zindex)
      */
     public int getLayer() {
         return layer;

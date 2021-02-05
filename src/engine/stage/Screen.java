@@ -50,7 +50,7 @@ public final class Screen {
      * Returns the default screen {@code GraphicsDevice} of the local {@code GraphicsEnvironment}.
      * 
      * @return the default screen
-     * @throws HeadlessException - if {@link isHeadless()} returns {@value true}
+     * @throws HeadlessException - if is headless returns <i>true</i>
      */
     public static GraphicsDevice getDefaultScreen() {
         try {

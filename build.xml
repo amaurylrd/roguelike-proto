@@ -63,13 +63,12 @@
 		<delete dir="${doc.dir}"/>
 	</target>
 	
-	<!-- TODO failed to create task or type classpath -->
 	<target name="javadoc" depends="compile"> 
 		<delete dir="${doc.dir}"/>
 		<mkdir dir="${doc.dir}"/>
-		<classpath  refid="java.classpath"/>
-		<javadoc destdir="${doc.dir}" version="true" deprecation="yes" unchecked="yes">
-			<fileset dir="${src.dir}"/>
+		<javadoc destdir="${doc.dir}" version="true" linksource="yes">
+			<fileset dir="${src.dir}" includes="**/*.java"/>
+			<classpath refid="java.classpath"/>
 		</javadoc>
 	</target>
 

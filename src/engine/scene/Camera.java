@@ -82,7 +82,7 @@ public class Camera extends Rectangle {
 	 * Returns if the specified {@code component} should be painted.
 	 * 
 	 * @param component the specified component to intersect
-	 * @return <true> if the {@code component} is contained in the camera's viewport
+	 * @return <i>true</i> if the {@code component} is contained in the camera's viewport
 	 */
 	public boolean focuses(Component component) {
 		return viewport.intersects(component.getBounds());

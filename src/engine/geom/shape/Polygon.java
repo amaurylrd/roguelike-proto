@@ -38,7 +38,7 @@ public class Polygon extends Shape {
 	}
 
 	/**
-     * Checks the coordinates and throws an {@code Exception} if a value is either <i>NaN</i>, infinite or <i>null</i>.
+     * Checks the {@code coordinates} and throws an {@code Exception} if any value is either <i>NaN</i>, infinite or <i>null</i>.
      * 
      * @param coordinates the specified coordinates
      * @param name the name of the variables
@@ -57,7 +57,7 @@ public class Polygon extends Shape {
 	}
 
 	/**
-     * Checks the specified coordinate and throws an {@code Exception} if a value is either <i>NaN</i> or infinite.
+     * Checks the specified {@code coordinate} and throws an {@code Exception} if a value is either <i>NaN</i> or infinite.
      * 
      * @param coordinate the specified coordinate
      * @param name the name of the variable
