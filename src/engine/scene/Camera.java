@@ -1,5 +1,6 @@
 package engine.scene;
 
+import engine.application.Properties;
 import engine.geom.shape.Rectangle;
 import engine.scene.entity.Component;
 import engine.util.Random;
@@ -40,7 +41,7 @@ public class Camera extends Rectangle {
 	public double decay = 0.6;
 
 	/**
-	 * This value represents the amplitude of shakes.
+	 * This value represents the amplitude of shakes (should be possitiv).
 	 */
 	public double amplitude = 0.2;
 
@@ -69,11 +70,13 @@ public class Camera extends Rectangle {
 		}
 		
 		if (trauma > 0) {
-			double magnitude = amplitude * trauma * trauma * trauma;
-			double offsetX = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
-			double offsetY = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
-			translate(offsetX, offsetY);
-			rotation -= Random.nextDouble(-1.0, 1.0) * magnitude * Math.PI / 50.0;
+			if (Properties.evaluate("camera.shake")) {
+				double magnitude = amplitude * trauma * trauma * trauma;
+				double offsetX = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
+				double offsetY = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
+				translate(offsetX, offsetY);
+				rotation -= Random.nextDouble(-1.0, 1.0) * magnitude * Math.PI / 50.0;
+			}
 			trauma -= Math.min((trauma + 0.3) * decay * dt / 1000.0, trauma);
 		}
 	}

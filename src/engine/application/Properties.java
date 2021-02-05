@@ -8,6 +8,9 @@ import java.io.InputStream;
  * The class {@code Properties} retrives all the application's properties.
  */
 public final class Properties {
+	/**
+	 * The map of properties for this {@code Application}.
+	 */
 	private static java.util.Properties properties = null;
 
 	private Properties() {}
@@ -46,11 +49,32 @@ public final class Properties {
 	}
 
 	/**
+	 * Puts in the map of properties the specified {@code name} to the specified {@code value}.
+	 * 
+	 * @param name the specified key property to add or replace
+	 * @param value the specified value for this key
+	 */
+	public static void store(String name, String value) {
+		if (properties != null)
+			properties.setProperty(name, value);
+	}
+
+	/**
 	 * Returns a {@code String} representing this property list.
 	 * 
 	 * @return the property list
 	 */
-	public String properties() {
-		return properties.toString();
+	public static String properties() {
+		return properties != null ? properties.toString() : "{}";
+	}
+
+	/**
+	 * Returns the boolean value for the speciefied the property's {@code name}.
+	 * 
+	 * @param name the specified property to evaluate
+	 * @return the boolean value
+	 */
+	public static boolean evaluate(String name) {
+		return Boolean.parseBoolean(Properties.property(name));
 	}
 }
