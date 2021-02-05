@@ -15,10 +15,16 @@ import engine.scene.Scene;
  * The class {@code Stage} is the top level container of the application.
  */
 @SuppressWarnings("serial")
-public final class Stage extends Window {
+public final class Stage extends Window implements Runnable {
+    /**
+     * The map of scenes that contain graphical {@code Component}.
+     */
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
-    private String currentScene = "";
-    private String deepcopy = "";
+    
+    /**
+     * The current scene's name in the map.
+     */
+    private Scene currentScene = null;
 
     /**
      * The instance of this singleton.
@@ -62,7 +68,7 @@ public final class Stage extends Window {
     public boolean setScene(String name) {
         if (!scenes.containsKey(name))
             return false;
-        currentScene = name;
+        currentScene = scenes.get(name);
         return true;
     }
 
@@ -73,8 +79,39 @@ public final class Stage extends Window {
      * @see setScene(String name)
      */
     public Scene getScene() {
-        return !scenes.containsKey(currentScene) ? null : scenes.get(currentScene);
+        return currentScene;
     }
+
+    @Override
+    public void run() {
+        final double TARGET_UPS = 60;
+        final double DELTA_TIME = 1000 / TARGET_UPS;
+        final double MAX_ACCUMULATOR = 5 * DELTA_TIME;
+
+        double alpha, accumulator = 0;
+        long frameStart = System.nanoTime();
+        while (true) {
+            long currentTime = System.nanoTime();
+            accumulator += (currentTime - frameStart) / 1000000;
+            frameStart = currentTime;
+
+            if (accumulator > MAX_ACCUMULATOR)
+                accumulator = MAX_ACCUMULATOR;
+
+            while (accumulator >= DELTA_TIME) {
+                currentScene.update(DELTA_TIME);
+                accumulator -= DELTA_TIME;
+            }
+        
+            alpha = accumulator / DELTA_TIME;
+            currentScene.clear();
+            currentScene.render(currentScene.getContext());
+            currentScene.show();
+        }
+    }
+
+
+    private String deepcopy = "";
 
     public void save() {
         // TODO: debug saving game
@@ -124,47 +161,4 @@ public final class Stage extends Window {
     private boolean saveExists() {
         return new File(deepcopy).exists();
     }
-
-    private volatile boolean running = false;
-    private volatile boolean paused = false;
-
-    public Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            final double TARGET_UPS = 60;
-            final double DELTA_TIME = 1000 / TARGET_UPS;
-            final double MAX_ACCUMULATOR = 5 * DELTA_TIME;
-            double alpha, accumulator = 0;
-
-            long frameStart = System.nanoTime();
-            Scene scene = getScene();
-            while (true) {
-                long currentTime = System.nanoTime();
-                accumulator += (currentTime - frameStart) / 1000000;
-                frameStart = currentTime;
-
-                if (accumulator > MAX_ACCUMULATOR)
-                    accumulator = MAX_ACCUMULATOR;
-
-                while (accumulator >= DELTA_TIME) {
-                    scene.update(DELTA_TIME);
-                    accumulator -= DELTA_TIME;
-                }
-            
-                alpha = accumulator / DELTA_TIME;
-                scene.clear();
-                scene.render(scene.getContext());
-                scene.show();
-            }
-        }
-
-
-        public void stop() {
-            running = false;
-        }
-
-        public void pause() {
-            paused = !paused;
-        }
-    });
 }

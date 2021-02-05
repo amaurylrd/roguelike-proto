@@ -28,8 +28,8 @@ public abstract class Application implements Launchable {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		String classdName = Application.class.getName();
 		Plateform.trace("Debug: Method " + methodName + " in " + classdName + " was called.");
+
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		
 		boolean classFound = false;
 		for (int i = 0; i < stackTrace.length || !classFound; ++i) {
 			StackTraceElement e = stackTrace[i];
@@ -82,6 +82,8 @@ public abstract class Application implements Launchable {
 			}
 		});
 		start(primaryStage);
+		new Thread(primaryStage, "game_loop_thread").start();
+		Plateform.trace("Debug: The game loop starts now.");
 		primaryStage.pack();
 		primaryStage.requestFocusInWindow();
 		primaryStage.requestFocus();
