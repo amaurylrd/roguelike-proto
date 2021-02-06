@@ -92,7 +92,6 @@ public class Vector {
 			scale(1 / length);
 	}
 
-	//TODO test
 	public void rotate(double radians) {
 		double cos = Math.cos(radians);
 		double sin = Math.sin(radians);

@@ -79,4 +79,9 @@ public final class Properties {
 	}
 
 	//TODO save
+	/*
+		FileOutputStream fr = new FileOutputStream(file);
+        p.store(fr, "Properties");
+        fr.close();
+	*/
 }
