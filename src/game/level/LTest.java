@@ -1,9 +1,6 @@
 package game.level;
 
 import java.util.List;
-
-import com.aspose.psd.internal.B.f;
-
 import java.util.ArrayList;
 
 import engine.scene.Scene;
