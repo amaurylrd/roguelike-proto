@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import engine.scene.Scene;
+import jdk.jfr.Threshold;
 
 /**
  * The class {@code Stage} is the top level container of the application.
@@ -88,11 +89,15 @@ public final class Stage extends Window implements Runnable {
         final double DELTA_TIME = 1000 / TARGET_UPS;
         final double MAX_ACCUMULATOR = 5 * DELTA_TIME;
 
-        double alpha, accumulator = 0;
-        long frameStart = System.nanoTime();
+        double fps, alpha, accumulator = 0;
+        long currentTime, frameStart = System.nanoTime();
         while (true) {
-            long currentTime = System.nanoTime();
+            currentTime = System.nanoTime();
             accumulator += (currentTime - frameStart) / 1000000;
+            if (currentTime - frameStart > 1000) {
+                fps = 1000000000 / (currentTime - frameStart);
+                currentScene.getCamera().updateFPS(fps);
+            }
             frameStart = currentTime;
 
             if (accumulator > MAX_ACCUMULATOR)
@@ -102,8 +107,6 @@ public final class Stage extends Window implements Runnable {
                 currentScene.update(DELTA_TIME);
                 accumulator -= DELTA_TIME;
             }
-            int fps = 50;
-            currentScene.getCamera().updateFPS(fps);
 
             alpha = accumulator / DELTA_TIME;
             currentScene.clear();

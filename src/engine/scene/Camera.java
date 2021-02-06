@@ -113,7 +113,12 @@ public class Camera extends Rectangle implements Drawable {
 	/**
 	 * The frequency at which frames appear on screen. (in seconds)
 	 */
-	private int framePerSecond = 0;
+	private double[] frameRateValues = new double[100];
+
+	/**
+	 * The current index in the array {@code FPS_VALUES}.
+	 */
+	private int currentIndex = 0;
 
 	/**
 	 * Represents the gap between text and the top edge. (in pixels)
@@ -131,7 +136,7 @@ public class Camera extends Rectangle implements Drawable {
 			Color penColor = graphics.getColor();
 			graphics.setColor(new Color(209, 209, 209, 180));
 			FontMetrics metric = graphics.getFontMetrics(graphics.getFont());
-			String text = "FPS: " + framePerSecond;
+			String text = "FPS: " + (int) averageFPS();
 			int x = (int) (viewport.getX() + viewport.getWidth()) - MARGIN_LEFT - metric.stringWidth(text);
 			int y = (int) viewport.getY() + MARGIN_TOP + metric.getHeight();
 			graphics.drawString(text, x, y);
@@ -139,7 +144,16 @@ public class Camera extends Rectangle implements Drawable {
 		}
 	}
 
-	public void updateFPS(int frameRate) {
-		this.framePerSecond = frameRate;
+	public void updateFPS(double frameRate) {
+		frameRateValues[currentIndex] = frameRate;
+		currentIndex = (currentIndex + 1) % frameRateValues.length;
+	}
+
+	private double averageFPS() {
+		double average = 0.0;
+		int i;
+		for (i = 0; i < frameRateValues.length && frameRateValues[i] != 0; ++i)
+			average += frameRateValues[i];
+		return average / i;
 	}
 }

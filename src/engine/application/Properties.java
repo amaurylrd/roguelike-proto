@@ -77,4 +77,6 @@ public final class Properties {
 	public static boolean evaluate(String name) {
 		return Boolean.parseBoolean(Properties.property(name));
 	}
+
+	//TODO save
 }
