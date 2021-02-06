@@ -157,7 +157,6 @@ public abstract class Scene extends Canvas implements Drawable {
 		Collisions.clear();
 	}
 
-	 
 	//flickering setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
@@ -193,5 +192,15 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 		}
 		graphics.setTransform(transform);
+		camera.render(graphics);
+	}
+
+	/**
+	 * Returns the {@code Camera} linked to this {@code Scene}.
+	 * 
+	 * @return the camera
+	 */
+	public Camera getCamera() {
+		return camera;
 	}
 }

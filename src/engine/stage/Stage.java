@@ -102,7 +102,9 @@ public final class Stage extends Window implements Runnable {
                 currentScene.update(DELTA_TIME);
                 accumulator -= DELTA_TIME;
             }
-        
+            int fps = 50;
+            currentScene.getCamera().updateFPS(fps);
+
             alpha = accumulator / DELTA_TIME;
             currentScene.clear();
             currentScene.render(currentScene.getContext());
