@@ -20,7 +20,7 @@ public class Random {
     public static double nextDouble(double min, double max) {
         if (min > max)
             throw new IllegalArgumentException("boundaries must be like min <= max");
-        return min + (max - min)*rand.nextDouble();
+        return min + (max - min) * rand.nextDouble();
     }
 
     public static double nextDouble() {
@@ -28,7 +28,7 @@ public class Random {
     }
 
     public static double nextDouble(double max) {
-        return max*rand.nextDouble();
+        return max * rand.nextDouble();
     }
 
     /**
@@ -41,13 +41,24 @@ public class Random {
     public static float nextFloat(float min, float max) {
         if (min > max)
             throw new IllegalArgumentException("boundaries must be like min <= max");
-        return min + (max - min)*rand.nextFloat();
+        return min + (max - min) * rand.nextFloat();
     }
 
+    /**
+     * Returns a float value between 0 and {@code max}.
+     * 
+     * @param max the max value
+     * @return a pseudo-random between 0 and {@code max}
+     */
     public static float nextFloat() {
         return rand.nextFloat();
     }
 
+    /**
+     * Returns a float value between 0 and 1.
+     * 
+     * @return a pseudo-random between 0 and 1
+     */
     public static float nextFloat(float max) {
         return max*rand.nextFloat();
     }
@@ -62,14 +73,25 @@ public class Random {
     public static int nextInt(int min, int max) {
         if (min > max)
             throw new IllegalArgumentException("boundaries must be like min <= max");
-        return min + (max - min)*rand.nextInt();
+        return min + (max - min) * rand.nextInt();
     }
 
+    /**
+     * Returns an integer between 0 and 1.
+     * 
+     * @return a pseudo-random between 0 and 1
+     */
     public static int nextInt() {
         return rand.nextInt();
     }
 
+    /**
+     * Returns an integer between 0 and {@code max}.
+     * 
+     * @param max the max value
+     * @return a pseudo-random between 0 and {@code max}
+     */
     public static int nextInt(int max) {
-        return (int) (max*rand.nextDouble());
+        return (int) (max * rand.nextDouble());
     }
 }
