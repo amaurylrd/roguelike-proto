@@ -100,6 +100,7 @@ public abstract class Application implements Launchable {
 	public void onstop() {
 		stop();
 		primaryStage.setVisible(false);
+		Properties.save();
 		//primaryStage.save();
 		primaryStage.dispose();
 		System.exit(0);

@@ -1,6 +1,7 @@
 package engine.application;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -13,22 +14,29 @@ public final class Properties {
 	 */
 	private static java.util.Properties properties = null;
 
+	/**
+	 * The name of the configurations file at the root of this project.
+	 */
+	private final static String CONFIGURATION_PROPERTIES_FILE = "config.properties";
+	
 	private Properties() {}
 
 	/**
 	 * Loads the property list.
+	 * 
+	 * @throws NullPointerException if the property file did not exist
+	 * @throws IOException on I/O errors while reading, opening or closing the stream
 	 */
 	public static void load() {
 		if (properties == null) {
-			final String propertyFile = "config.properties";
-			Plateform.trace("Debug: " + Properties.class.getName() + " loads properties from " + propertyFile + ".");
+			Plateform.trace("Debug: " + Properties.class.getName() + " loads properties from " + CONFIGURATION_PROPERTIES_FILE + ".");
 			try {
-				InputStream propertyList = new FileInputStream(propertyFile);
+				InputStream propertyList = new FileInputStream(CONFIGURATION_PROPERTIES_FILE);
 				properties = new java.util.Properties();
 				try {
 					properties.load(propertyList);
 				} catch (NullPointerException exception) {
-					throw new RuntimeException("Error: Property file " + propertyFile + " not found in the classpath.", exception);
+					throw new RuntimeException("Error: Property file " + CONFIGURATION_PROPERTIES_FILE + " not found in the classpath.", exception);
 				}
 				propertyList.close();
 			} catch (IOException exception) {
@@ -78,10 +86,18 @@ public final class Properties {
 		return Boolean.parseBoolean(Properties.property(name));
 	}
 
-	//TODO save
-	/*
-		FileOutputStream fr = new FileOutputStream(file);
-        p.store(fr, "Properties");
-        fr.close();
-	*/
+	/**
+	 * Saves the property map to the property file.
+	 * 
+	 * @throws IOException on I/O errors while reading, opening or closing the stream
+	 */
+	public static void save() {
+		try {
+			FileOutputStream propertyList = new FileOutputStream(CONFIGURATION_PROPERTIES_FILE);
+			properties.store(propertyList, null);
+			propertyList.close();
+		} catch (IOException exception) {
+			throw new RuntimeException("Error: I/O error occurs when trying to open the property file " + CONFIGURATION_PROPERTIES_FILE + ".", exception);
+		}
+	}
 }
