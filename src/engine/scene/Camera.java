@@ -40,18 +40,18 @@ public class Camera extends Rectangle implements Drawable {
 	 * The {@code trauma} represents the turbulence of this {@code Camera} (between
 	 * 0 and 1).
 	 */
-	public double trauma = 0.0;
+	public float trauma = 0;
 
 	/**
 	 * The {@code decay} value represents how quickly the shaking stops (between 0
 	 * and 1).
 	 */
-	public double decay = 0.6;
+	public float decay = 0.6f;
 
 	/**
 	 * This value represents the amplitude of shakes (should be possitiv).
 	 */
-	public double amplitude = 0.2;
+	public float amplitude = 0.2f;
 
 	/**
 	 * Adds the specified value to the total {@code trauma}. Trauma applies
@@ -60,8 +60,8 @@ public class Camera extends Rectangle implements Drawable {
 	 * 
 	 * @param amount the specified value to add
 	 */
-	public void addTrauma(double amount) {
-		trauma = Math.min(trauma + amount, 1.0);
+	public void addTrauma(float amount) {
+		trauma = Math.min(trauma + amount, 1);
 	}
 
 	/**
@@ -70,24 +70,24 @@ public class Camera extends Rectangle implements Drawable {
 	 * @param dt the delta time between updates at render speed
 	 */
 	@Override
-	public void update(double dt) {
-		rotation = rotation * 0.9;
+	public void update(float dt) {
+		rotation = rotation * 0.9f;
 		if (scene.player != null) {
 			Rectangle playerBounds = scene.player.getBounds();
-			double targetX = playerBounds.getX() + playerBounds.getWidth() / 2.0 - scene.getWidth() / 2.3;
-			double targetY = playerBounds.getY() + playerBounds.getHeight() / 2.0 - scene.getHeight() / 2.0;
-			translate((targetX - getX()) * 0.1, (targetY - getY()) * 0.02);
+			float targetX = playerBounds.getX() + playerBounds.getWidth() / 2 - scene.getWidth() / 2.3f;
+			float targetY = playerBounds.getY() + playerBounds.getHeight() / 2 - scene.getHeight() / 2;
+			translate((targetX - getX()) * 0.1f, (targetY - getY()) * 0.02f);
 		}
 
 		if (trauma > 0) {
 			if (Properties.evaluate("enable_camera_shake")) {
-				double magnitude = amplitude * trauma * trauma * trauma;
-				double offsetX = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
-				double offsetY = Random.nextDouble(-1.0, 1.0) * magnitude * 50.0;
+				float magnitude = amplitude * trauma * trauma * trauma;
+				float offsetX = Random.nextFloat(-1, 1) * magnitude * 50;
+				float offsetY = Random.nextFloat(-1, 1) * magnitude * 50;
 				translate(offsetX, offsetY);
-				rotation -= Random.nextDouble(-1.0, 1.0) * magnitude * Math.PI / 50.0;
+				rotation -= Random.nextFloat(-1, 1) * magnitude * Math.PI / 50;
 			}
-			trauma -= Math.min((trauma + 0.3) * decay * dt / 1000.0, trauma);
+			trauma -= Math.min((trauma + 0.3f) * decay * dt / 1000, trauma);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class Camera extends Rectangle implements Drawable {
 	/**
 	 * The frequency at which frames appear on screen. (in seconds)
 	 */
-	private double[] frameRateValues = new double[100];
+	private float[] frameRateValues = new float[100];
 
 	/**
 	 * The current index in the array {@code FPS_VALUES}.
@@ -144,13 +144,13 @@ public class Camera extends Rectangle implements Drawable {
 		}
 	}
 
-	public void updateFPS(double frameRate) {
+	public void updateFPS(float frameRate) {
 		frameRateValues[currentIndex] = frameRate;
 		currentIndex = (currentIndex + 1) % frameRateValues.length;
 	}
 
-	private double averageFPS() {
-		double average = 0.0;
+	private float averageFPS() {
+		float average = 0;
 		int i;
 		for (i = 0; i < frameRateValues.length && frameRateValues[i] != 0; ++i)
 			average += frameRateValues[i];

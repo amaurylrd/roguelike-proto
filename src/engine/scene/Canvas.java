@@ -56,11 +56,11 @@ public abstract class Canvas {
         return offscreen;
     }
 
-    public double getWidth() {
-        return rootPane == null ? 0.0 : (double) rootPane.getWidth();
+    public float getWidth() {
+        return rootPane == null ? 0 : (float) rootPane.getWidth();
     }
 
-    public double getHeight() {
-        return rootPane == null ? 0.0 : (double) rootPane.getHeight();
+    public float getHeight() {
+        return rootPane == null ? 0 : (float) rootPane.getHeight();
     }
 }

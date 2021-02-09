@@ -1,9 +1,9 @@
 package engine.physics2d;
 
 public class Vector {
-	private double x, y;
+	private float x, y;
 
-	public Vector(double x, double y) {
+	public Vector(float x, float y) {
 		set(x, y);
 	}
 
@@ -15,7 +15,7 @@ public class Vector {
 		set(vector.x, vector.y);
 	}
 
-	public void set(double x, double y) {
+	public void set(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -24,31 +24,31 @@ public class Vector {
 		set(vector.x, vector.y);
 	}
 
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
-	public void translateX(double dx) {
+	public void translateX(float dx) {
 		translate(dx, 0);
 	}
 
-	public void translateY(double dy) {
+	public void translateY(float dy) {
 		translate(0, dy);
 	}
 
-	public void translate(double dx, double dy) {
+	public void translate(float dx, float dy) {
 		set(x + dx, y + dy);
 	}
 
@@ -61,19 +61,19 @@ public class Vector {
 		return new Vector(x, y);
 	}
 
-	public static double magnitude(Vector vector) {
+	public static float magnitude(Vector vector) {
 		return vector.magnitude();
 	}
 
-	public double magnitude() {
-		return Math.sqrt(length());
+	public float magnitude() {
+		return (float) Math.sqrt(length());
 	}
 
-	public static double length(Vector vector) {
+	public static float length(Vector vector) {
 		return vector.length();
 	}
 
-	public double length() {
+	public float length() {
 		return x * x + y * y;
 	}
 
@@ -87,38 +87,38 @@ public class Vector {
 	 * Normalises this {@code Vector}, making it a unit vector.
 	 */
 	public void normalize() {
-		double length = magnitude();
+		float length = magnitude();
 		if (length > 0)
 			scale(1 / length);
 	}
 
-	public void rotate(double radians) {
-		double cos = Math.cos(radians);
-		double sin = Math.sin(radians);
+	public void rotate(float radians) {
+		float cos = (float) Math.cos(radians);
+		float sin = (float) Math.sin(radians);
 		set(x * cos - y * sin, x * sin + y * cos);
 	}
 
-	public static Vector scale(Vector vector, double factor) {
+	public static Vector scale(Vector vector, float factor) {
 		return new Vector(vector.x * factor, vector.y * factor);
 	}
 
-	public void scale(double factor) {
+	public void scale(float factor) {
 		set(x * factor, y * factor);
 	}
 
-	public void scaleX(double factor) {
+	public void scaleX(float factor) {
 		set(x * factor, y);
 	}
 
-	public void scaleY(double factor) {
+	public void scaleY(float factor) {
 		set(x, y * factor);
 	}
 
-	public static double dot(Vector v1, Vector v2) {
+	public static float dot(Vector v1, Vector v2) {
 		return v1.dot(v2);
 	}
 
-	public double dot(Vector vector) {
+	public float dot(Vector vector) {
 		return x * vector.x + y * vector.y;
 	}
 

@@ -7,14 +7,14 @@ public abstract class Entity extends Collider {
     //private Map<String, Sprite> sprites;
     //private String currentSprite;
 
-    public Entity(double x, double y, double width, double height, int zindex) {
+    public Entity(float x, float y, float width, float height, int zindex) {
         super(x, y, width, height, zindex);
         type = CollisionType.DYNAMIC;
-        im = 0.05;
+        im = 0.05f;
     }
 
     @Override
-	public void update(double dt) {
+	public void update(float dt) {
         transform(Vector.scale(velocity, dt));
     }
 

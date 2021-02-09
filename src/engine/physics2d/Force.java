@@ -7,5 +7,5 @@ public final class Force {
 	/**
 	 * The {@code gravity} applied to all bodies in the {@code Scene}.
 	 */
-	public static Vector GRAVITY = new Vector(0, 0.0001);
+	public static Vector GRAVITY = new Vector(0, 0.0001f);
 }

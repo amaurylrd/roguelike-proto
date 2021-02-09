@@ -46,17 +46,17 @@ public class LTest extends Level {
 		add(new LateralMovingPlateform(50, 100, 150, 70, Scene.TILES_LAYER));
 
 		PhyEntity e = new PhyEntity(200, 0, 100, 100, Scene.ENTITIES_LAYER);
-		e.restitution = 0.8;
+		e.restitution = 0.8f;
 		e.friction = 1;
 		add(e);
 
 		PhyEntity f = new PhyEntity(75, 0, 100, 100, Scene.ENTITIES_LAYER);
-		f.restitution = 0.8;
+		f.restitution = 0.8f;
 		f.friction = 1;
 		add(f);
 
 		PhyEntity d = new PhyEntity(350, 100, 100, 100, Scene.TILES_LAYER, true);
-		d.restitution = 0.8;
+		d.restitution = 0.8f;
 		d.friction = 1;
 		add(d);
 

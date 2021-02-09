@@ -7,21 +7,21 @@ import engine.scene.entity.Tile;
 
 public class BoxTest extends Tile {
 
-	public BoxTest(double x, double y, double width, double height, int zindex) {
+	public BoxTest(float x, float y, float width, float height, int zindex) {
 		super("banana", x, y, width, height, zindex);
-		restitution = 0.5;
-		friction = 0.01;
+		restitution = 0.5f;
+		friction = 0.01f;
 	}
 
-	public BoxTest(double x, double y, double width, double height, int zindex, boolean test) {
+	public BoxTest(float x, float y, float width, float height, int zindex, boolean test) {
 		super("banana", x, y, width, height, zindex);
 		traversable = test;
-		restitution = 0.5;
+		restitution = 0.5f;
 		friction = 1;
 	}
 
 	@Override
-	public void update(double dt) {
+	public void update(float dt) {
 		
 		
 	}

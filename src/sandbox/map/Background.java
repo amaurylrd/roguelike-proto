@@ -13,7 +13,7 @@ public class Background extends Component {
 	}
 
 	@Override
-	public void update(double dt) {}
+	public void update(float dt) {}
 
 	@Override
 	protected void draw(Graphics2D graphics) {
@@ -24,7 +24,6 @@ public class Background extends Component {
 
 	@Override
 	public boolean isRemovable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

@@ -9,7 +9,7 @@ public abstract class Shape {
 	/**
      * The rotation in radians applied to this {@code Shape}. 
      */
-	protected double rotation = 0f;
+	protected float rotation = 0;
 
 	/**
      * Rotates the Z axis of this {@code Shape} in counter-clockwise direction.
@@ -17,14 +17,14 @@ public abstract class Shape {
      * 
      * @param theta the angle of rotation in radians
      */
-	public abstract void rotate(double theta);
+	public abstract void rotate(float theta);
 
 	/**
      * Gets the rotation of this {@code Shape} in radians.
      * 
      * @return the rotation theta
      */
-    public double getRotation() {
+    public float getRotation() {
         return rotation;
 	}
 	
@@ -34,7 +34,7 @@ public abstract class Shape {
 	 * @param dx the x coordinate to be added
 	 * @param dy the y coordinate to be added
 	 */
-	public void translate(double dx, double dy) {
+	public void translate(float dx, float dy) {
         translateX(dx);
         translateY(dy);
 	}
@@ -55,7 +55,7 @@ public abstract class Shape {
      * @param dx the x coordinate to be added
 	 * @throws ArithmeticException if {@code dx} is either <i>NaN</i> or infinite
      */
-	public abstract void translateX(double dx);
+	public abstract void translateX(float dx);
 
 	/**
      * Translates this point, at location (x, y) by {@code dy} along the Y axis.
@@ -64,7 +64,7 @@ public abstract class Shape {
      * @param dy the y coordinate to be added
 	 * @throws ArithmeticException if {@code dy} is either <i>NaN</i> or infinite
      */
-	public abstract void translateY(double dy);
+	public abstract void translateY(float dy);
 
 	/**
 	 * Returns the path of this {@code Shape} for draw calls.
@@ -78,7 +78,7 @@ public abstract class Shape {
 	 * 
 	 * @return the area
 	 */
-	public abstract double area();
+	public abstract float area();
 
 	/**
      * Returns the graphical center of this {@code Shape}.
@@ -101,7 +101,7 @@ public abstract class Shape {
      * @param y the specified y coordinate
      * @return <i>true</i> if the point (x, y) is inside this {@code Shape}, <i>false</i> otherwise
      */
-	public abstract boolean contains(double x, double y);
+	public abstract boolean contains(float x, float y);
 
 	/**
      * Checks whether or not this {@code Shape} contains the point at the specified location (x, y).
@@ -121,7 +121,7 @@ public abstract class Shape {
 	 * @param b the second number
 	 * @return <i>true</i> if {@code x} is inside the first and second number, <i>false</i> otherwise
 	 */
-	protected boolean inside(double x, double a, double b) {
+	protected boolean inside(float x, float a, float b) {
 		if (a < b)
 			return a <= x && x <= b;
 		return b < a ? a >= x && x >= b : a == x;

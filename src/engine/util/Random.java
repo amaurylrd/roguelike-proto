@@ -11,35 +11,35 @@ public final class Random {
     private Random() {}
 
     /**
-     * Returns a double value between {@code min} and {@code max}.
+     * Returns a float value between {@code min} and {@code max}.
      * 
      * @param min the lower bound
      * @param max the higher bound
      * @return a pseudo-random between {@code min} and {@code max}
      */
-    public static double nextDouble(double min, double max) {
+    public static float nextFloat(float min, float max) {
         if (min > max)
             throw new IllegalArgumentException("boundaries must be like min <= max");
-        return min + (max - min) * rand.nextDouble();
+        return min + (max - min) * rand.nextFloat();
     }
 
     /**
-     * Returns a double value between 0 and 1.
+     * Returns a float value between 0 and 1.
      * 
      * @return a pseudo-random between 0 and 1
      */
-    public static double nextDouble() {
-        return rand.nextDouble();
+    public static float nextFloat() {
+        return rand.nextFloat();
     }
 
     /**
-     * Returns a double value between 0 and {@code max}.
+     * Returns a float value between 0 and {@code max}.
      * 
      * @param max the value value
      * @return a pseudo-random between 0 and {@code max}
      */
-    public static double nextDouble(double max) {
-        return max * rand.nextDouble();
+    public static float nextFloat(float max) {
+        return max * rand.nextFloat();
     }
 
     /**

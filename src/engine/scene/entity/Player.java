@@ -17,25 +17,25 @@ public class Player extends Entity { //abstract player à check instance of exte
 	 * @param height the height of the bounding {@code Rectangle}
 	 * @param zindex the z-index of this {@code Component}
 	 */
-	public Player(double x, double y, double width, double height, int zindex) {
+	public Player(float x, float y, float width, float height, int zindex) {
 		super(x, y, width, height, zindex);
-		restitution = 0.0;
-		friction = 0.0;
-		im = 0.01;
+		restitution = 0;
+		friction = 0;
+		im = 0.01f;
 	}
 
-	public engine.geom.shape.Rectangle feet = new engine.geom.shape.Rectangle(bounds.getX() + bounds.getWidth() * 0.2, bounds.getY() + bounds.getHeight(), bounds.getWidth() * 0.6, 10);
+	public engine.geom.shape.Rectangle feet = new engine.geom.shape.Rectangle(bounds.getX() + bounds.getWidth() * 0.2f, bounds.getY() + bounds.getHeight(), bounds.getWidth() * 0.6f, 10f);
 	
 	@Override
-	public void update(double dt) {
-		feet.translate(bounds.getX() + bounds.getWidth() * 0.2 - feet.getX(), bounds.getY() + bounds.getHeight() - feet.getY());
+	public void update(float dt) {
+		feet.translate(bounds.getX() + bounds.getWidth() * 0.2f - feet.getX(), bounds.getY() + bounds.getHeight() - feet.getY());
 		super.update(dt);
 	}
 	
 	
 
 	public boolean grounded = false;
-	public double groundedVelocityX = 0.0;
+	public float groundedVelocityX = 0;
 	// public boolean isGrounded() {
 	// 	return grounded;
 	// }

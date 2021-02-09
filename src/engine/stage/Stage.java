@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import engine.scene.Scene;
-import jdk.jfr.Threshold;
 
 /**
  * The class {@code Stage} is the top level container of the application.
@@ -85,11 +84,11 @@ public final class Stage extends Window implements Runnable {
 
     @Override
     public void run() {
-        final double TARGET_UPS = 60;
-        final double DELTA_TIME = 1000 / TARGET_UPS;
-        final double MAX_ACCUMULATOR = 5 * DELTA_TIME;
+        final float TARGET_UPS = 60;
+        final float DELTA_TIME = 1000 / TARGET_UPS;
+        final float MAX_ACCUMULATOR = 5 * DELTA_TIME;
 
-        double fps, alpha, accumulator = 0;
+        float fps, alpha, accumulator = 0;
         long currentTime, frameStart = System.nanoTime();
         while (true) {
             currentTime = System.nanoTime();
@@ -114,7 +113,6 @@ public final class Stage extends Window implements Runnable {
             currentScene.show();
         }
     }
-
 
     private String deepcopy = "";
 

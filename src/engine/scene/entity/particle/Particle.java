@@ -10,9 +10,9 @@ public abstract class Particle extends Entity {
     private int rgb = 0xffffffff;
     private int alpha = 255;
 
-    public Particle(double x, double y, double size, int zindex) {
+    public Particle(float x, float y, float size, int zindex) {
         super(x, y, size, size, zindex);
-        velocity.set(Random.nextDouble(-1, 1), Random.nextDouble(-1, 1));
+        velocity.set(Random.nextFloat(-1, 1), Random.nextFloat(-1, 1));
     }
 
     public void setColor(int r, int g, int b) {
@@ -25,17 +25,17 @@ public abstract class Particle extends Entity {
     }
 
     @Override
-    public void update(double dt) {
-        bounds.setX(bounds.getX() + velocity.getX()*dt);
-        bounds.setY(bounds.getY() + velocity.getY()*dt);
+    public void update(float dt) {
+        bounds.setX(bounds.getX() + velocity.getX() * dt);
+        bounds.setY(bounds.getY() + velocity.getY() * dt);
         alpha -= 1; //fade
     }
 
     @Override
     public void draw(Graphics2D graphics) {
         graphics.setColor(getColor());
-        double size = bounds.getSize().width;
-        graphics.fill(new java.awt.geom.Ellipse2D.Double(bounds.getX(), bounds.getY(), size, size));
+        float size = bounds.getSize().width;
+        graphics.fill(new java.awt.geom.Ellipse2D.Float(bounds.getX(), bounds.getY(), size, size));
     }
 
     @Override

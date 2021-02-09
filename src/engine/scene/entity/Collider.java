@@ -20,13 +20,13 @@ public abstract class Collider extends Component {
      * This coefficient between 0 and 1 sets the elasticity of this body. The value should be in between 0 and 1.
      * The higher is {@code restitution}, the more this {@code Collider} is bouncy.
      */
-    public double restitution; //TODO: protected
+    public float restitution; //TODO: protected  + default value
 
     /**
      * This coefficient between 0 and 1 sets the resistance to movement that occurs when colliding this surface.
      * The higher is {@code friction}, the greater will be the deceleration.
      */
-    public double friction; //TODO: protected
+    public float friction; //TODO: protected + default value
 
     /**
      * This flag tells if this body is solid or not.
@@ -42,7 +42,7 @@ public abstract class Collider extends Component {
     * Specifies the density of this {@code Collider}. (must be positiv)
     * An object with 0 as invert mass have infinite mass.
     */
-    public double im = 0.0;
+    public float im = 0;
 
     /**
      * Static bodies collide but are immovable.
@@ -63,7 +63,7 @@ public abstract class Collider extends Component {
         return type.equals(CollisionType.STATIC);
     }
 
-	public Collider(double x, double y, double width, double height, int zindex) {
+	public Collider(float x, float y, float width, float height, int zindex) {
         super(x, y, width, height, zindex);
     }
 
@@ -119,7 +119,7 @@ public abstract class Collider extends Component {
         public Collider colliderB;
         public boolean collides;
         public Vector normal;
-        public double penetration;
+        public float penetration;
     }
 
     public Manifold collides(Collider collider) {
@@ -128,8 +128,8 @@ public abstract class Collider extends Component {
             Vector center = bounds.center();
             Vector center2 = collider.bounds.center();
     
-            double x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
-            double y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
+            float x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
+            float y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
             
             if (collider.traversable)
                 collision.normal = (collision.collides = velocity.getY() > 0) ? new Vector(0, 1) : new Vector(0, 0);

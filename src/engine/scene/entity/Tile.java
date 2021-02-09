@@ -8,7 +8,7 @@ import engine.application.Ressources;
 public abstract class Tile extends Collider {
 	protected BufferedImage texture;
 
-	public Tile(String ressourceName, double x, double y, double width, double height, int zindex) {
+	public Tile(String ressourceName, float x, float y, float width, float height, int zindex) {
 		super(x, y, width, height, zindex);
 		texture = Ressources.ressource(ressourceName);
 	}

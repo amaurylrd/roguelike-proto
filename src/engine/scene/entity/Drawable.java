@@ -11,7 +11,7 @@ public interface Drawable {
      * 
      * @param dt the delta time between updates at render speed
      */
-    public abstract void update(double dt);
+    public abstract void update(float dt);
 
     /**
      * Called to render a game object into the scene depending on the FPS.

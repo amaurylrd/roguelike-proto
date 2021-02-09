@@ -21,8 +21,8 @@ public class Rectangle extends Polygon {
      * @param width the width of the rectangle
      * @param height the height of the rectangle
      */
-    public Rectangle(double x, double y, double width, double height) {
-        super(new double[] {x, x + width, x + width, x}, new double[] {y, y, y + height, y + height});
+    public Rectangle(float x, float y, float width, float height) {
+        super(new float[] {x, x + width, x + width, x}, new float[] {y, y, y + height, y + height});
         size = new Dimension(width, height);
     }
     
@@ -32,7 +32,7 @@ public class Rectangle extends Polygon {
      * @return the x coordinate
      * @see setX
      */
-    public double getX() {
+    public float getX() {
         return points[0].x;
     }
 
@@ -42,7 +42,7 @@ public class Rectangle extends Polygon {
      * @return the y coordinate
      * @see setY
      */
-    public double getY() {
+    public float getY() {
         return points[0].y;
     }
 
@@ -52,7 +52,7 @@ public class Rectangle extends Polygon {
      * @return the width of the dimension
      * @see setWidth
      */
-    public double getWidth() {
+    public float getWidth() {
         return size.getWidth();
     }
 
@@ -62,7 +62,7 @@ public class Rectangle extends Polygon {
      * @return the height of the dimension
      * @see setHeight
      */
-    public double getHeight() {
+    public float getHeight() {
         return size.getHeight();
     }
 
@@ -104,7 +104,7 @@ public class Rectangle extends Polygon {
      * @param oppositeY
      * @return the rotation theta
      */
-    public static float getRotation(double x, double y, double oppositeX, double oppositeY) {
+    public static float getRotation(float x, float y, float oppositeX, float oppositeY) {
         return (float) Math.atan((x - oppositeX) / (y - oppositeY));
     }
 
@@ -114,9 +114,9 @@ public class Rectangle extends Polygon {
      * @param x the new x coordinate
      * @see getX
      */
-    public void setX(double x) {
+    public void setX(float x) {
         validate(x, "x");
-        double offsetX = Math.abs(x - points[0].x);
+        float offsetX = Math.abs(x - points[0].x);
         translateX(offsetX);
     }
 
@@ -126,9 +126,9 @@ public class Rectangle extends Polygon {
      * @param y the new x coordinate
      * @see getY
      */
-    public void setY(double y) {
+    public void setY(float y) {
         validate(y, "y");
-        double offsetY = Math.abs(y - points[0].y);
+        float offsetY = Math.abs(y - points[0].y);
         translateY(offsetY);
     }
 
@@ -140,8 +140,8 @@ public class Rectangle extends Polygon {
      * @throws IllegalArgumentException if the width is negative
      * @see getWidth
      */
-    public void setWidth(double width) {
-        double offset = Math.abs(width - getWidth());
+    public void setWidth(float width) {
+        float offset = Math.abs(width - getWidth());
         points[1].x += offset;
         points[2].x += offset;
         size.setWidth(width);
@@ -155,8 +155,8 @@ public class Rectangle extends Polygon {
      * @throws IllegalArgumentException if the height is negative
      * @see getHeight
      */
-    public void setHeight(double height) {
-        double offset = Math.abs(height - getHeight());
+    public void setHeight(float height) {
+        float offset = Math.abs(height - getHeight());
         points[2].y += offset;
         points[3].y += offset;
         size.setHeight(height);
@@ -173,7 +173,7 @@ public class Rectangle extends Polygon {
      * @see setSize
      * @see setLocation
      */
-    public void setBounds(double x, double y, double width, double height) {
+    public void setBounds(float x, float y, float width, float height) {
         setSize(width, height);
         setLocation(x, y);
     }
@@ -185,7 +185,7 @@ public class Rectangle extends Polygon {
      * @param y the new y coordinate
      * @see getLocation()
      */
-    public void setLocation(double x, double y) {
+    public void setLocation(float x, float y) {
         setX(x);
         setY(y);
     }
@@ -198,7 +198,7 @@ public class Rectangle extends Polygon {
      * @param height the specified height
      * @see getSize
      */
-    public void setSize(double width, double height) {
+    public void setSize(float width, float height) {
         setWidth(width);
         setHeight(height);
     }
@@ -226,8 +226,8 @@ public class Rectangle extends Polygon {
     @Override
     public boolean intersects(Polygon polygon) {
         Rectangle rectangle = (Rectangle) polygon;
-        double dx = Math.abs(center().getX() - rectangle.center().getX());
-        double dy = Math.abs(center().getY() - rectangle.center().getY());
+        float dx = Math.abs(center().getX() - rectangle.center().getX());
+        float dy = Math.abs(center().getY() - rectangle.center().getY());
         return dx + dx < getWidth() + rectangle.getWidth() && dy + dy < this.getHeight() + rectangle.getHeight();
     }
 }

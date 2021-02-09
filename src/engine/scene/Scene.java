@@ -28,7 +28,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		/**
 		 * This attribut represents the distance from the foreground.
 		 */
-		public double depth;
+		public float depth;
 
 		/**
 		 * The collection of objects in this {@code Layer}.
@@ -42,7 +42,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		 * @param components the list of components
 		 * @param distance the depth of this {@code Layer}
 		 */
-		public Layer(Collection<Component> components, double distance) {
+		public Layer(Collection<Component> components, float distance) {
 			objects = components;
 			depth = distance;
 		}
@@ -59,15 +59,15 @@ public abstract class Scene extends Canvas implements Drawable {
 	protected Camera camera;
 
 	public Scene() {
-		gameObjects.put(TILES_LAYER, new Layer(new ArrayList<>(), 0.0));
-		gameObjects.put(ENTITIES_LAYER, new Layer(new ArrayList<>(), 0.0));
+		gameObjects.put(TILES_LAYER, new Layer(new ArrayList<>(), 0));
+		gameObjects.put(ENTITIES_LAYER, new Layer(new ArrayList<>(), 0));
 	}
 
 	public void start() {
 		camera = new Camera(this);
 	}
 
-	public void setLayer(int zindex, double depth) {
+	public void setLayer(int zindex, float depth) {
 		gameObjects.computeIfAbsent(zindex, k -> new Layer(new ArrayList<>(), depth));
 	}
 
@@ -98,15 +98,15 @@ public abstract class Scene extends Canvas implements Drawable {
 	}
 
 	@Override
-	public void update(double dt) {
+	public void update(float dt) {
 		//abstract handleInputs()
 
 		if (player != null) {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
 			
-			double targetvelocity = left * 0.2 + right * 0.2 + player.groundedVelocityX;
-			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1);
+			float targetvelocity = left * 0.2f + right * 0.2f + player.groundedVelocityX;
+			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1f);
 
 			
 			player.grounded = false;
@@ -121,7 +121,7 @@ public abstract class Scene extends Canvas implements Drawable {
 				//recharge
 				if (Input.isPressed(Input.JUMP)) {
 					//camera.addTrauma(0.8);
-					player.velocity.setY(-0.2);
+					player.velocity.setY(-0.2f);
 				}
 			}
 			
@@ -133,7 +133,7 @@ public abstract class Scene extends Canvas implements Drawable {
 
 		Collisions.detection(bodies);
 
-		Vector constantForces = Vector.scale(Force.GRAVITY, dt * 0.5);
+		Vector constantForces = Vector.scale(Force.GRAVITY, dt * 0.5f);
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		Collisions.resolution();
@@ -160,7 +160,7 @@ public abstract class Scene extends Canvas implements Drawable {
 	//flickering setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
-		final double nthread = Runtime.getRuntime().availableProcessors();
+		final int nthread = Runtime.getRuntime().availableProcessors();
 		final AffineTransform transform = graphics.getTransform();
 		graphics.rotate(camera.getRotation(), camera.getWidth() / 2, camera.getHeight() / 2);
 		for (Layer layer : gameObjects.values()) {
@@ -173,11 +173,11 @@ public abstract class Scene extends Canvas implements Drawable {
 					public void run() {
 						for (Component component : batch) {
 							if (component.isOpaque()) {
-								double paralax = layer.depth;
-								component.getBounds().translate((1 + 0.05 * paralax) * -camera.getX(), (1 + 0.05 * paralax) * -camera.getY());
+								float paralax = layer.depth;
+								component.getBounds().translate((1 + 0.05f * paralax) * -camera.getX(), (1 + 0.05f * paralax) * -camera.getY());
 								if (camera.focuses(component))
 									component.render(graphics);
-								component.getBounds().translate((1 + 0.05 * paralax) * camera.getX(), (1 + 0.05 * paralax) * camera.getY());
+								component.getBounds().translate((1 + 0.05f * paralax) * camera.getX(), (1 + 0.05f * paralax) * camera.getY());
 							}
 						}
 					}

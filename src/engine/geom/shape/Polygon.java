@@ -12,7 +12,7 @@ public class Polygon extends Shape {
 	/**
      * The vertices of this {@code Polygon}.
      */
-	protected Point2D.Double[] points;
+	protected Point2D.Float[] points;
 
 	/**
 	 * The number of vertices in this {@code Polygon}.
@@ -26,15 +26,15 @@ public class Polygon extends Shape {
      * @param y the array of y coordinates
      * @throws ArithmeticException if any coordinate is either NaN or infinite
      * @throws NullPointerException if {@code x} or {@code y} is null
-     * @see validate(double[] coordonates, String name)
+     * @see validate(float[] coordonates, String name)
      */
-	public Polygon(double[] x, double[] y) {
+	public Polygon(float[] x, float[] y) {
 		validate(x, "x");
 		validate(y, "y");
 		vertices = Math.min(x.length, y.length);
-		points = new Point2D.Double[vertices];
+		points = new Point2D.Float[vertices];
 		for (int i = 0; i < points.length; ++i)
-			points[i] = new Point2D.Double(x[i], y[i]);
+			points[i] = new Point2D.Float(x[i], y[i]);
 	}
 
 	/**
@@ -45,14 +45,14 @@ public class Polygon extends Shape {
      * @throws NullPointerException unless {@code coordinates[]} is not <i>null</i>
      * @throws ArithmeticException if any coordinate is either <i>NaN</i> or infinite
      */
-	protected void validate(double[] coordonates, String name) {
+	protected void validate(float[] coordonates, String name) {
 		if (coordonates == null || coordonates.length < 1)
 			throw new NullPointerException();
 		for (int i = 0; i < coordonates.length; i++) {
-			if (Double.isNaN(coordonates[i]))
-				throw new ArithmeticException("Illegal double value : " + name + " coordinate " + i + " is NaN.");
-			if (Double.isInfinite(coordonates[i]))
-				throw new ArithmeticException("Illegal double value : " + name + " coordinate " + i + " is infinite.");
+			if (Float.isNaN(coordonates[i]))
+				throw new ArithmeticException("Illegal float value : " + name + " coordinate " + i + " is NaN.");
+			if (Float.isInfinite(coordonates[i]))
+				throw new ArithmeticException("Illegal float value : " + name + " coordinate " + i + " is infinite.");
 		}
 	}
 
@@ -63,11 +63,11 @@ public class Polygon extends Shape {
      * @param name the name of the variable
      * @throws ArithmeticException if {@code coordonate} is either <i>NaN</i> or infinite
      */
-	protected void validate(double coordonate, String name) {
-		if (Double.isNaN(coordonate))
-			throw new ArithmeticException("Illegal double value : " + name + " is NaN.");
-		if (Double.isInfinite(coordonate))
-			throw new ArithmeticException("Illegal double value : " + name + " is infinite.");
+	protected void validate(float coordonate, String name) {
+		if (Float.isNaN(coordonate))
+			throw new ArithmeticException("Illegal float value : " + name + " is NaN.");
+		if (Float.isInfinite(coordonate))
+			throw new ArithmeticException("Illegal float value : " + name + " is infinite.");
 	}
 
 	/**
@@ -78,16 +78,16 @@ public class Polygon extends Shape {
      * @return <i>true</i> if the point (x, y) is inside this {@code Polygon}, <i>false</i> otherwise
      */
 	@Override
-	public boolean contains(double x, double y) {
+	public boolean contains(float x, float y) {
 		if (vertices > 2) {
 			boolean pos = false, neg = false;
 			for (int i = 0; i < vertices; ++i) {
-				double px = points[i].x, py = points[i].y;
+				float px = points[i].x, py = points[i].y;
 				if (px == x && py == y)
 					return true;
 
 				int j = (i + 1)%vertices;
-				double crossProduct = (x - px)*(points[j].y - py) - (y - py)*(points[j].x - px);
+				float crossProduct = (x - px)*(points[j].y - py) - (y - py)*(points[j].x - px);
 				if (crossProduct > 0)
 					pos = true;
 				else if (crossProduct < 0)
@@ -110,23 +110,23 @@ public class Polygon extends Shape {
 	public boolean intersects(Polygon polygon) {
 		for (int i = 0; i < vertices; ++i) {
 			int ii = (i + 1)%vertices;
-			Point2D.Double[] edge = new Point2D.Double[] {points[i], points[ii]};
+			Point2D.Float[] edge = new Point2D.Float[] {points[i], points[ii]};
 			for (int j = 0; j < polygon.vertices; ++j) {
 				int jj = (j + 1)%polygon.vertices;
-				Point2D.Double[] edge1 = new Point2D.Double[] {polygon.points[j], polygon.points[jj]};
+				Point2D.Float[] edge1 = new Point2D.Float[] {polygon.points[j], polygon.points[jj]};
 				
-				double a = edge[1].y - edge[0].y;
-				double b = edge[0].x - edge[1].x;
-				double c = a*edge[0].x + b*edge[0].y;
-				double a1 = edge1[1].y - edge1[0].y;
-				double b1 = edge1[0].x - edge1[1].x;
-				double c1 = a1*edge1[0].x + b1*edge1[0].y;
+				float a = edge[1].y - edge[0].y;
+				float b = edge[0].x - edge[1].x;
+				float c = a * edge[0].x + b * edge[0].y;
+				float a1 = edge1[1].y - edge1[0].y;
+				float b1 = edge1[0].x - edge1[1].x;
+				float c1 = a1 * edge1[0].x + b1 * edge1[0].y;
 
-				double determinant = a*b1 - a1*b;
-				final double ACCURACY = 0.000001;
+				float determinant = a * b1 - a1 * b;
+				final float ACCURACY = 0.000001f;
 				if (determinant >= ACCURACY) {
-					double x = (b1*c - b*c1)/determinant;
-					double y = (a*c1 - a1*c)/determinant;
+					float x = (b1*c - b*c1)/determinant;
+					float y = (a*c1 - a1*c)/determinant;
 					
 					if (inside(x, edge[0].x, edge[1].x) && inside(x, edge1[0].x, edge1[1].x)
 						&& inside(y, edge[0].y, edge[1].y) && inside(y, edge1[0].y, edge1[1].y))
@@ -143,12 +143,12 @@ public class Polygon extends Shape {
 	 * @return the area
 	 */
 	@Override
-	public double area() {
-		double area = 0.0;
+	public float area() {
+		float area = 0;
 		for (int i = 0; i < vertices; ++i) {
-			int j = (i + 1)%vertices;
-			area += points[i].x*points[j].y;
-			area -= points[i].y*points[j].x;
+			int j = (i + 1) % vertices;
+			area += points[i].x * points[j].y;
+			area -= points[i].y * points[j].x;
 		}
 		return Math.abs(area) / 2;
 	}
@@ -161,7 +161,7 @@ public class Polygon extends Shape {
 	 * @throws ArithmeticException if {@code dx} is either <i>NaN</i> or infinite
      */
 	@Override
-	public void translateX(double dx) {
+	public void translateX(float dx) {
 		validate(dx, "dx");
 		for (int i = 0; i < vertices; ++i)
 			points[i].x += dx;
@@ -175,7 +175,7 @@ public class Polygon extends Shape {
 	 * @throws ArithmeticException if {@code dy} is either <i>NaN</i> or infinite
      */
 	@Override
-	public void translateY(double dy) {
+	public void translateY(float dy) {
 		validate(dy, "dy");
 		for (int i = 0; i < vertices; ++i)
 			points[i].y += dy;
@@ -187,18 +187,18 @@ public class Polygon extends Shape {
      * @return the center coordonates
      */
 	public Vector centroid() {
-		double tmp, determinant = 0.0;
-		double centroidX = 0.0, centroidY = 0.0;
+		float tmp, determinant = 0;
+		float centroidX = 0, centroidY = 0;
 		for (int i = 0; i < vertices; i++) {
-			int j = (i + 1)%vertices;
-			tmp = points[i].x * points[j].y - points[j].x*points[i].y;
+			int j = (i + 1) % vertices;
+			tmp = points[i].x * points[j].y - points[j].x * points[i].y;
 
-			centroidX += (points[i].x + points[j].x)*tmp;
-			centroidY += (points[i].y + points[j].y)*tmp;
+			centroidX += (points[i].x + points[j].x) * tmp;
+			centroidY += (points[i].y + points[j].y) * tmp;
 			determinant += tmp;
 		}
-		centroidX /= 3*determinant;
-		centroidY /= 3*determinant;
+		centroidX /= 3 * determinant;
+		centroidY /= 3 * determinant;
 		return new Vector(centroidX, centroidY);
 		
 	}
@@ -210,7 +210,7 @@ public class Polygon extends Shape {
      */
 	@Override
 	public Vector center() {
-		double centerX = 0.0, centerY = 0.0;
+		float centerX = 0, centerY = 0;
 		for (int i = 0; i < vertices; ++i) {
 			centerX += points[i].x;
 			centerY += points[i].y;
@@ -218,7 +218,6 @@ public class Polygon extends Shape {
 		centerX /= vertices;
 		centerY /= vertices;
 		return new Vector(centerX, centerY);
-		//TODO simplification vector
 	}
 
 	// public Vector center() {
@@ -233,15 +232,15 @@ public class Polygon extends Shape {
      * @param theta the angle of rotation in radians
      */
 	@Override
-	public void rotate(double theta) {
+	public void rotate(float theta) {
 		rotation -= theta;
 		Vector massCenter = centroid();
 		for (int i = 0; i < vertices; ++i) {
-			double centerX = massCenter.getX(), centerY = massCenter.getY();
+			float centerX = massCenter.getX(), centerY = massCenter.getY();
 			points[i].x -= centerX;
 			points[i].y -= centerY;
-			points[i].x = points[i].x * Math.cos(rotation) - points[i].y * Math.sin(rotation) + centerX;
-            points[i].y = points[i].x * Math.sin(rotation) + points[i].y * Math.cos(rotation) + centerY;
+			points[i].x = (float) (points[i].x * Math.cos(rotation) - points[i].y * Math.sin(rotation) + centerX);
+            points[i].y = (float) (points[i].x * Math.sin(rotation) + points[i].y * Math.cos(rotation) + centerY);
 		}
 	}
 
@@ -252,7 +251,7 @@ public class Polygon extends Shape {
 	 */
 	@Override
 	public java.awt.Shape stroke() {
-		Path2D path = new Path2D.Double();
+		Path2D path = new Path2D.Float();
 		path.moveTo(points[0].x, points[0].y);
         for (int i = 1; i < vertices; ++i)
             path.lineTo(points[i].x, points[i].y);
