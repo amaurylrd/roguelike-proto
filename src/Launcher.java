@@ -17,5 +17,7 @@ public class Launcher extends Application {
     public void stop() {}
 
     @Override
-    protected void init() {}
+    protected void init() {
+        System.setProperty("sun.java2d.opengl", "true");
+    }
 }
