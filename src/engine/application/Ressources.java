@@ -45,7 +45,9 @@ public final class Ressources {
                     for (String textureFile : textureFiles) {
                         String texturePath = textureRoot + "/" + textureFile;
                         try {
-                            BufferedImage texture = ImageIO.read(new File(texturePath));
+                            BufferedImage buffer = ImageIO.read(new File(texturePath));
+                            BufferedImage texture = new BufferedImage(buffer.getWidth(), buffer.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                            texture.getGraphics().drawImage(buffer, 0, 0, null);
                             String textureName = textureFile.substring(0, textureFile.lastIndexOf('.'));
                             if (assets.put(textureName, texture) != null)
                                 throw new RuntimeException(

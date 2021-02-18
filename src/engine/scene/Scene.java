@@ -36,11 +36,11 @@ public abstract class Scene extends Canvas implements Drawable {
 		public Collection<Component> objects;
 
 		/**
-		 * This class separates different elements of the {@code Scene}.
-		 * Layers are superimposed on another one.
+		 * This class separates different elements of the {@code Scene}. Layers are
+		 * superimposed on another one.
 		 * 
 		 * @param components the list of components
-		 * @param distance the depth of this {@code Layer}
+		 * @param distance   the depth of this {@code Layer}
 		 */
 		public Layer(Collection<Component> components, float distance) {
 			objects = components;
@@ -48,14 +48,27 @@ public abstract class Scene extends Canvas implements Drawable {
 		}
 	}
 
+	/**
+	 * This layer is reserved to tiles.
+	 */
 	public static final Integer TILES_LAYER = Integer.valueOf(-1);
+
+	/**
+	 * This layer contains the rest of collidable objects.
+	 */
 	public static final Integer ENTITIES_LAYER = Integer.valueOf(0);
 
+	/**
+	 * This maps a z-index to a collection of objects.
+	 */
 	private Map<Integer, Layer> gameObjects = new TreeMap<Integer, Layer>();
 
 	protected Player player;
-	//TODO: list d'ia player
-	
+	// TODO: list d'ia player
+
+	/**
+	 * The 2d {@code Camera} attached to this {@code Scene}.
+	 */
 	protected Camera camera;
 
 	public Scene() {
@@ -74,9 +87,10 @@ public abstract class Scene extends Canvas implements Drawable {
 	public void add(Component... components) {
 		for (Component component : components) {
 			if (component != null) {
-				if (component instanceof Player && player == null) //TODO addPlayer ?
+				if (component instanceof Player && player == null) // TODO addPlayer ?
 					player = (Player) component;
-				Layer layer = gameObjects.computeIfAbsent(component.getLayer(), k -> new Layer(new ArrayList<Component>(), k));
+				Layer layer = gameObjects.computeIfAbsent(component.getLayer(),
+						k -> new Layer(new ArrayList<Component>(), k));
 				layer.objects.add(component);
 			}
 		}
@@ -99,16 +113,15 @@ public abstract class Scene extends Canvas implements Drawable {
 
 	@Override
 	public void update(float dt) {
-		//abstract handleInputs()
+		// abstract handleInputs()
 
 		if (player != null) {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
-			
+
 			float targetvelocity = left * 0.2f + right * 0.2f + player.groundedVelocityX;
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1f);
 
-			
 			player.grounded = false;
 			for (Component tiles : gameObjects.get(TILES_LAYER).objects) {
 				if (tiles.getBounds().intersects(player.feet)) {
@@ -118,13 +131,13 @@ public abstract class Scene extends Canvas implements Drawable {
 			}
 
 			if (player.grounded || true) {
-				//recharge
+				// recharge
 				if (Input.isPressed(Input.JUMP)) {
-					//camera.addTrauma(0.8);
+					// camera.addTrauma(0.8);
 					player.velocity.setY(-0.2f);
 				}
 			}
-			
+
 		}
 
 		Collection<Component> prebodies = new ArrayList<Component>(gameObjects.get(ENTITIES_LAYER).objects);
@@ -138,7 +151,7 @@ public abstract class Scene extends Canvas implements Drawable {
 
 		Collisions.resolution();
 		bodies.forEach((body) -> body.applyImpulse());
-		
+
 		camera.update(dt);
 		for (Layer layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.objects.iterator();
@@ -157,14 +170,15 @@ public abstract class Scene extends Canvas implements Drawable {
 		Collisions.clear();
 	}
 
-	//flickering setColor setFont
+	// flickering setColor setFont
 	@Override
 	public void render(Graphics2D graphics) {
 		final int nthread = Runtime.getRuntime().availableProcessors();
 		final AffineTransform transform = graphics.getTransform();
 		graphics.rotate(camera.getRotation(), camera.getWidth() / 2, camera.getHeight() / 2);
 		for (Layer layer : gameObjects.values()) {
-			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer.objects), (int) Math.ceil((double) layer.objects.size() / nthread));
+			List<List<Component>> batches = Lists.chunk(new ArrayList<Component>(layer.objects),
+					(int) Math.ceil((double) layer.objects.size() / nthread));
 			Thread threads[] = new Thread[batches.size()];
 			for (int i = 0; i < threads.length; ++i) {
 				List<Component> batch = batches.get(i);
@@ -175,7 +189,7 @@ public abstract class Scene extends Canvas implements Drawable {
 							if (component.isOpaque()) {
 								float paralax = layer.depth;
 								component.getBounds().translate((1 + 0.05f * paralax) * -camera.getX(), (1 + 0.05f * paralax) * -camera.getY());
-								if (camera.focuses(component))
+								if (camera.focuses(component)) //remplacer le draw ici
 									component.render(graphics);
 								component.getBounds().translate((1 + 0.05f * paralax) * camera.getX(), (1 + 0.05f * paralax) * camera.getY());
 							}
@@ -188,11 +202,21 @@ public abstract class Scene extends Canvas implements Drawable {
 			for (Thread thread : threads) {
 				try {
 					thread.join();
-				} catch (InterruptedException exception) {}
+				} catch (InterruptedException exception) {
+				}
 			}
 		}
 		graphics.setTransform(transform);
 		camera.render(graphics);
+	}
+
+	public void CL_render() {
+		for (Layer layer : gameObjects.values()) {
+			for (Component component : layer.objects) {
+				
+				engine.render2d.OpenCL.XXX(getBuffer(), component.texture, component.getBounds().getX(), component.getBounds().getY());
+			}
+		}
 	}
 
 	/**
@@ -202,5 +226,14 @@ public abstract class Scene extends Canvas implements Drawable {
 	 */
 	public Camera getCamera() {
 		return camera;
+	}
+
+	/**
+	 * Gets the {@code Player} instance in this {@code Scene}.
+	 * 
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 }

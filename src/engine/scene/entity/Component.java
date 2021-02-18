@@ -3,12 +3,12 @@ package engine.scene.entity;
 import engine.geom.shape.Rectangle;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 
 public abstract class Component implements Drawable {
     /**
-     * The z-index of this {@code Component}.
-     * This index can take negativ value.
+     * The z-index of this {@code Component}. This index can take negativ value.
      */
     protected int layer;
 
@@ -25,9 +25,9 @@ public abstract class Component implements Drawable {
     /**
      * Constructs a {@code Component} with a specified size, location and layer.
      * 
-     * @param x the x coordinate of the bounding {@code Rectangle}
-     * @param y the y coordinate of the bounding {@code Rectangle}
-     * @param width the width of the bounding {@code Rectangle}
+     * @param x      the x coordinate of the bounding {@code Rectangle}
+     * @param y      the y coordinate of the bounding {@code Rectangle}
+     * @param width  the width of the bounding {@code Rectangle}
      * @param height the height of the bounding {@code Rectangle}
      * @param zindex the z-index of this {@code Component}
      */
@@ -35,6 +35,40 @@ public abstract class Component implements Drawable {
         bounds = new Rectangle(x, y, width, height);
         layer = zindex;
     }
+
+    //la texture
+    public BufferedImage texture = engine.application.Ressources.ressource("banana");;
+
+    /**
+     * This is the fill color.
+     */
+    public Color color = Color.WHITE;
+    
+    //TODO effacer ces merdes inutiles
+    private class VertexObjectBuffer {
+        public float x;
+        public float y;
+        public float width;
+        public float height;
+        public float rotation;
+    }
+
+    public VertexObjectBuffer getVBO() {
+        VertexObjectBuffer vbo = new VertexObjectBuffer();
+        vbo.x = bounds.getX();
+        vbo.y = bounds.getY();
+        vbo.width = bounds.getWidth();
+        vbo.height = bounds.getHeight();
+        return vbo;
+    }
+    /**
+     * Produces the vertex object buffer for this {@code Component} <red, green, blue, alpha, x, y, width, height>.
+     * 
+     * @return the vertex object buffer
+     */
+    public float[] getVertexObjectBuffer() {
+        return color.getComponents(new float[] { 0, 0, 0, 0, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight() });
+    }//TODO: rotation
 
     /**
      * The render method is called to draw this {@code Component}.
@@ -46,9 +80,9 @@ public abstract class Component implements Drawable {
     @Override
     public void render(Graphics2D graphics) {
         if (!isRemovable() && isOpaque()) {
-            //Color penColor = graphics.getColor();
+            // Color penColor = graphics.getColor();
             draw(graphics);
-            //graphics.setColor(penColor);
+            // graphics.setColor(penColor);
         }
     }
 
@@ -57,7 +91,8 @@ public abstract class Component implements Drawable {
     /**
      * Checks if this {@code Component} could be remove.
      * 
-     * @return <i>true</i> if this {@code Component} has to be remove from draw calls, <i>false</i> otherwise
+     * @return <i>true</i> if this {@code Component} has to be remove from draw
+     *         calls, <i>false</i> otherwise
      */
     public abstract boolean isRemovable();
 
@@ -68,17 +103,18 @@ public abstract class Component implements Drawable {
      * @see isOpaque()
      */
     public void setOpaque(boolean isOpaque) {
-    	opaque = isOpaque;
+        opaque = isOpaque;
     }
 
     /**
      * Checks whether or not this {@code Component} is opaque.
      * 
-     * @return <i>true</i> if this {@code Component} is completely opaque, <i>false</i> otherwise
+     * @return <i>true</i> if this {@code Component} is completely opaque,
+     *         <i>false</i> otherwise
      * @see setOpaque(boolean isOpaque)
      */
     public boolean isOpaque() {
-    	return opaque;
+        return opaque;
     }
 
     /**
@@ -103,17 +139,17 @@ public abstract class Component implements Drawable {
      * Draws the bounds of this {@code Component}.
      * 
      * @param graphics the graphics context
-     * @param color the color of the bounds
+     * @param color    the color of the bounds
      */
-    protected void drawBounds(Graphics2D graphics, Color color) { //TODO dans une classe Graphics2d
-        //Color penColor = graphics.getColor();
-        //graphics.setColor(color);
+    protected void drawBounds(Graphics2D graphics, Color color) { // TODO dans une classe Graphics2d
+        // Color penColor = graphics.getColor();
+        // graphics.setColor(color);
         graphics.draw(bounds.stroke());
-        //graphics.setColor(penColor);
+        // graphics.setColor(penColor);
     }
 
     @Override
-    public String toString() {
+    public String toString() { //getbuffer Arrays.toString()
         return this.getClass().getSimpleName() + " [x:" + bounds.getX() + ", y:" + bounds.getY() + ", width:" + bounds.getWidth() + ", height:" + bounds.getHeight() + "]";
     }
 }

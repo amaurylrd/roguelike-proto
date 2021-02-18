@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import engine.scene.entity.Tile;
 
 public class BoxTest extends Tile {
-
 	public BoxTest(float x, float y, float width, float height, int zindex) {
 		super("banana", x, y, width, height, zindex);
 		restitution = 0.5f;

@@ -14,13 +14,16 @@ public abstract class Application implements Launchable {
 
 	/**
 	 * Calls the method launch with no arguments.
+	 * 
+	 * @see launch(String[] args)
 	 */
 	public static void launch() {
 		Application.launch(null);
 	}
 
 	/**
-	 * Instanciates the main thread and calls the method launchApplication of class {@code Plateform}.
+	 * Instanciates the main thread and calls the method launchApplication of class
+	 * {@code Plateform}.
 	 * 
 	 * @param args the command-line arguments
 	 */
@@ -48,10 +51,10 @@ public abstract class Application implements Launchable {
 		if (!classFound)
 			throw new RuntimeException("Error: Unable to determine application class.");
 	}
-	
+
 	/**
-	 * This method is called by {@code Plateform} to initiliaze the {@code Application}.
-	 * This is also where are done preloads.
+	 * This method is called by {@code Plateform} to initiliaze the
+	 * {@code Application}. This is also where are done preloads.
 	 * 
 	 * @see init
 	 * @see onstart
@@ -82,7 +85,7 @@ public abstract class Application implements Launchable {
 			}
 		});
 		start(primaryStage);
-		new Thread(primaryStage, "game_loop_thread").start();
+		primaryStage.start();
 		Plateform.trace("Debug: The game loop starts now.");
 		primaryStage.pack();
 		primaryStage.requestFocusInWindow();
@@ -93,15 +96,15 @@ public abstract class Application implements Launchable {
 	}
 
 	/**
-	 * This method is called to exit the {@code Application} and release the {@code Stage}.
-	 * This is also where the game state is serialized.
+	 * This method is called to exit the {@code Application} and release the
+	 * {@code Stage}. This is also where the game state is serialized.
 	 */
 	@Override
 	public void onstop() {
 		stop();
 		primaryStage.setVisible(false);
 		Properties.save();
-		//primaryStage.save();
+		// primaryStage.save();
 		primaryStage.dispose();
 		System.exit(0);
 	}

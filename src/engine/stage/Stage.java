@@ -1,6 +1,7 @@
 package engine.stage;
 
 import java.util.Map;
+
 import java.util.Hashtable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +21,7 @@ public final class Stage extends Window implements Runnable {
      * The map of scenes that contain graphical {@code Component}.
      */
     private Map<String, Scene> scenes = new Hashtable<String, Scene>();
-    
+
     /**
      * The current scene's name in the map.
      */
@@ -31,7 +32,8 @@ public final class Stage extends Window implements Runnable {
      */
     private static Stage instance = null;
 
-    private Stage() {}
+    private Stage() {
+    }
 
     /**
      * Gets the instance of this singleton {@code Stage}.
@@ -109,8 +111,18 @@ public final class Stage extends Window implements Runnable {
 
             alpha = accumulator / DELTA_TIME;
             currentScene.clear();
-            currentScene.render(currentScene.getContext());
+            // currentScene.render(currentScene.getContext());
+            // currentScene.CL_render(currentScene.CL_getContext());
+            currentScene.CL_render();
             currentScene.show();
+        }
+    }
+
+    public void start() {
+        if (currentScene != null) {
+            Thread thread = new Thread(this, "game_loop_thread");
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 
