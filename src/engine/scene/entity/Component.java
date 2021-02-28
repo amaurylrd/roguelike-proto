@@ -37,7 +37,7 @@ public abstract class Component implements Drawable {
     }
 
     //la texture
-    public BufferedImage texture = engine.application.Ressources.ressource("banana");;
+    public BufferedImage texture = engine.application.Ressources.ressource("spritetest");;
 
     /**
      * This is the fill color.

@@ -16,7 +16,7 @@ public class Launcher extends Application {
 
     @Override
     public void stop() {
-        // OpenCL.realease();
+        // OpenCL.release();
     }
 
     @Override

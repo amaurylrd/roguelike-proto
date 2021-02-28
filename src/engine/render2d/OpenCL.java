@@ -155,7 +155,7 @@ public class OpenCL {
         return program;
     }
 
-    public static void realease() {
+    public static void release() {
         clRetainDevice(device);
         clUnloadPlatformCompiler(platform);
         clReleaseProgram(program);

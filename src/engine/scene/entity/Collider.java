@@ -126,6 +126,9 @@ public abstract class Collider extends Component {
         public float penetration;
     }
 
+    //mouvement max qu'on peut faire en dt * 2
+    private static final float PENETRATION_THRESOLD = 40;
+
     public Manifold collides(Collider collider) {
         Manifold collision = new Manifold();
         if (collision.collides = bounds.intersects(collider.bounds)) {
@@ -136,8 +139,8 @@ public abstract class Collider extends Component {
             float y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
             System.out.println(velocity.getY());
             if (collider.traversable)
-                collision.normal = (collision.collides = velocity.getY() > 0 && (y - Math.abs(center2.getY() - center.getY())) < 40 * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
-            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)                    // penetration < mouvement max quon peut faire en dt x2
+                collision.normal = (collision.collides = velocity.getY() > 0 && (y - Math.abs(center2.getY() - center.getY())) < PENETRATION_THRESOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
+            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
                 collision.normal = new Vector(0, 1);
