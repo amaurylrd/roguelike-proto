@@ -102,8 +102,12 @@ public abstract class Collider extends Component {
     }
 
     public void applyImpulse() {
-        //velocity += impulse / m;
         velocity.translate(impulse);
+        impulse.set(0, 0);
+    }
+    
+    public void corrImpulse() {
+        bounds.translate(impulse);
         impulse.set(0, 0);
     }
 
@@ -130,10 +134,10 @@ public abstract class Collider extends Component {
     
             float x = (bounds.getWidth() + collider.bounds.getWidth()) / 2;
             float y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
-            
+            System.out.println(velocity.getY());
             if (collider.traversable)
-                collision.normal = (collision.collides = velocity.getY() > 0) ? new Vector(0, 1) : new Vector(0, 0);
-            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
+                collision.normal = (collision.collides = velocity.getY() > 0 && (y - Math.abs(center2.getY() - center.getY())) < 40 * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
+            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)                    // penetration < mouvement max quon peut faire en dt x2
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
                 collision.normal = new Vector(0, 1);
@@ -156,7 +160,6 @@ public abstract class Collider extends Component {
                     collision.penetration = Math.signum(center.getX() - center2.getX()) * (x - Math.abs(center2.getX() - center.getX()));
                 else if (collision.normal.getY() == 1)
                     collision.penetration = Math.signum(center.getY() - center2.getY()) * (y - Math.abs(center2.getY() - center.getY()));
-                
                 collision.colliderA = this;
                 collision.colliderB = collider;
             }

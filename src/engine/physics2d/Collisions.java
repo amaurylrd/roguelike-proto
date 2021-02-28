@@ -72,11 +72,11 @@ public class Collisions {
 	public static void correction() {
 		for (Manifold contact : contacts) {
 			if (contact.colliderA.im + contact.colliderB.im > 0) {
-				float correction =  Math.max(contact.penetration - PENETRATION_ALLOWANCE, 0) / (contact.colliderA.im + contact.colliderB.im) * PENETRATION_CORRETION;
+				float correction =  (contact.penetration - Math.signum(contact.penetration) *  PENETRATION_ALLOWANCE) / (contact.colliderA.im + contact.colliderB.im) * PENETRATION_CORRETION;
 				if (contact.colliderA.isDynamic())
-					contact.colliderA.getBounds().translate(Vector.scale(contact.normal, contact.colliderA.im * correction));
+					contact.colliderA.updateImpulse(Vector.scale(contact.normal, contact.colliderA.im * correction));
 				if (contact.colliderB.isDynamic())
-					contact.colliderB.getBounds().translate(Vector.scale(contact.normal, -contact.colliderB.im * correction));
+					contact.colliderB.updateImpulse(Vector.scale(contact.normal, -contact.colliderB.im * correction));
 			}
 		}
 	}

@@ -41,7 +41,7 @@ public class LTest extends Level {
 				add(new BoxTest(i * 100 + 100, j * 100 + 500, 100, 100, Scene.TILES_LAYER)); // sol banane test
 			}
 		}
-		// add(new VerticalMovingPlateform(-200, 500, 150, 70, Scene.TILES_LAYER));
+		add(new VerticalMovingPlateform(-200, 500, 150, 70, Scene.TILES_LAYER));
 		// add(new LateralMovingPlateform(50, 100, 150, 70, Scene.TILES_LAYER));
 
 		// PhyEntity e = new PhyEntity(200, 0, 100, 100, Scene.ENTITIES_LAYER);
@@ -54,13 +54,13 @@ public class LTest extends Level {
 		// f.friction = 1;
 		// add(f);
 
-		// PhyEntity d = new PhyEntity(350, 100, 100, 100, Scene.TILES_LAYER, true);
-		// d.restitution = 0.8f;
-		// d.friction = 1;
-		// add(d);
+		PhyEntity d = new PhyEntity(350, 100, 100, 100, Scene.TILES_LAYER, true);
+		d.restitution = 0.8f;
+		d.friction = 1;
+		add(d);
 
-		// Player p = new Player(150, 300, 100, 100, Scene.ENTITIES_LAYER);
-		// add(p);
+		Player p = new Player(150, 300, 100, 100, Scene.ENTITIES_LAYER);
+		add(p);
 
 		// add(new MovingPlateform(100, 300, 300, 50, SOLIDS_LAYER));
 	}

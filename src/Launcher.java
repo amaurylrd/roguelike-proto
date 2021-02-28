@@ -16,12 +16,12 @@ public class Launcher extends Application {
 
     @Override
     public void stop() {
-        OpenCL.realease();
+        // OpenCL.realease();
     }
 
     @Override
     protected void init() { //System.setProperty("sun.java2d.opengl", "true");
         //engine.render2d.JOCLDeviceQuery.main();    
-        OpenCL.setup();
+        //OpenCL.setup();
     }
 }

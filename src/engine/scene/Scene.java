@@ -167,6 +167,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		Collisions.correction();
+		bodies.forEach((body) -> body.corrImpulse());
 		Collisions.clear();
 	}
 

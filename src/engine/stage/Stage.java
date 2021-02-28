@@ -111,9 +111,9 @@ public final class Stage extends Window implements Runnable {
 
             alpha = accumulator / DELTA_TIME;
             currentScene.clear();
-            // currentScene.render(currentScene.getContext());
+            currentScene.render(currentScene.getContext());
             // currentScene.CL_render(currentScene.CL_getContext());
-            currentScene.CL_render();
+            // currentScene.CL_render();
             currentScene.show();
         }
     }
