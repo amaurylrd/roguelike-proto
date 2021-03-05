@@ -13,7 +13,7 @@ import javax.swing.KeyStroke;
 /**
  * The class {@code Window} represents a graphical frame.
  * This is an abstract class that cannot be instantiated directly.
- * */
+ */
 @SuppressWarnings("serial")
 public abstract class Window extends JFrame implements WindowFocusListener, ComponentListener {
     /**
