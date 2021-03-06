@@ -40,16 +40,17 @@ public class Collisions {
 			Collider B = contact.colliderB;
 
 			float va = A.velocity.dot(normal), vb = B.velocity.dot(normal);
-			float bouciness = Math.max(A.restitution, B.restitution);
+			float bounciness = Math.max(A.restitution, B.restitution);
 			float friction = Math.min(A.friction, B.friction) * Vector.sub(A.velocity, B.velocity).dot(tangent);
+			float vm = (B.im * va + A.im * vb) / (A.im + B.im);
 
 			if (A.isDynamic()) {
-				float vf = bouciness * (2 * A.im * vb + (B.im - A.im) * va) / (A.im + B.im);
+				float vf = vm + bounciness * A.im * (vb - va) / (A.im + B.im);
 				A.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01f ? 0 : vf) - va));
 				A.updateImpulse(Vector.scale(tangent, friction * -A.im));
 			}
 			if (B.isDynamic()) {
-				float vf = bouciness * (2 * B.im * va + (A.im - B.im) * vb) / (A.im + B.im);
+				float vf = vm + bounciness * B.im * (va - vb) / (A.im + B.im);
 				B.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01f ? 0 : vf) - vb));
 				B.updateImpulse(Vector.scale(tangent, friction * B.im));
 			}

@@ -119,14 +119,16 @@ public abstract class Scene extends Canvas implements Drawable {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
 
-			float targetvelocity = left * 0.2f + right * 0.2f + player.groundedVelocityX;
+			float targetvelocity = left * 0.2f + right * 0.2f + player.groundVelocity.getX();
 			player.velocity.translateX((targetvelocity - player.velocity.getX()) * 0.1f);
 
 			player.grounded = false;
 			for (Component tiles : gameObjects.get(TILES_LAYER).objects) {
 				if (tiles.getBounds().intersects(player.feet)) {
 					player.grounded = true;
-					player.groundedVelocityX = ((Collider) tiles).velocity.getX();
+					player.groundVelocity.set(((Collider) tiles).velocity);
+					//player.groundVelocityX = ((Collider) tiles).velocity.getX();
+					//player.groundVelocityY = ((Collider) tiles).velocity.getY();
 				}
 			}
 
@@ -134,10 +136,9 @@ public abstract class Scene extends Canvas implements Drawable {
 				// recharge
 				if (Input.isPressed(Input.JUMP)) {
 					// camera.addTrauma(0.8);
-					player.velocity.setY(-0.2f);
+					player.velocity.setY(player.groundVelocity.getY() - 0.3f);
 				}
 			}
-
 		}
 
 		Collection<Component> prebodies = new ArrayList<Component>(gameObjects.get(ENTITIES_LAYER).objects);

@@ -1,6 +1,7 @@
 package engine.scene.entity;
 
 import java.awt.Graphics2D;
+import engine.physics2d.Vector;
 
 public class Player extends Entity { //abstract player à check instance of extends
 	//private int totalLife;
@@ -35,7 +36,9 @@ public class Player extends Entity { //abstract player à check instance of exte
 	
 
 	public boolean grounded = false;
-	public float groundedVelocityX = 0;
+	
+	public Vector groundVelocity = new Vector();
+	//public float groundedVelocityX = 0;
 	// public boolean isGrounded() {
 	// 	return grounded;
 	// }
