@@ -78,7 +78,15 @@ public abstract class Collider extends Component implements Collidable {
         return type.equals(CollisionType.STATIC);
     }
 
-    //TODO: commentaire
+    /**
+     * Constructs a {@code Component} driven by the physics system. 
+     * 
+     * @param x the specified x location
+     * @param y the spcecified y location
+     * @param width the specified width
+     * @param height the specified height
+     * @param zindex the z-index
+     */
     public Collider(float x, float y, float width, float height, int zindex) {
         super(x, y, width, height, zindex);
     }
@@ -169,7 +177,7 @@ public abstract class Collider extends Component implements Collidable {
             System.out.println(velocity.getY());
             if (collider.traversable)
                 collision.normal = (collision.collides = velocity.getY() > 0
-                    && (y - Math.abs(center2.getY() - center.getY())) < Collisions.PENETRATION_THRESOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
+                    && (y - Math.abs(center2.getY() - center.getY())) < Collisions.PENETRATION_THRESHOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
             else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1f)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)

@@ -25,9 +25,9 @@ public abstract class Component implements Drawable {
     /**
      * Constructs a {@code Component} with a specified size, location and layer.
      * 
-     * @param x      the x coordinate of the bounding {@code Rectangle}
-     * @param y      the y coordinate of the bounding {@code Rectangle}
-     * @param width  the width of the bounding {@code Rectangle}
+     * @param x the x coordinate of the bounding {@code Rectangle}
+     * @param y the y coordinate of the bounding {@code Rectangle}
+     * @param width the width of the bounding {@code Rectangle}
      * @param height the height of the bounding {@code Rectangle}
      * @param zindex the z-index of this {@code Component}
      */

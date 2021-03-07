@@ -70,7 +70,7 @@ public class Collisions {
 	/**
 	 * The maximum penetration in 2 * dt.
 	 */
-	public static final float PENETRATION_THRESOLD = 40;
+	public static final float PENETRATION_THRESHOLD = 40;
 
 	/**
 	 * This applies a positional correction for each contact.
