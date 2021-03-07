@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="roguelike-proto" default="default" basedir="./">
-	<property name="src.dir" value="./src"/>
+	<property name="src.dir" value="./sources"/>
 	<property name="dst.dir" value="./bin"/>
 	<property name="doc.dir" value="./javadoc"/>
-	<property name="lib.dir" value="./lib"/>
+	<property name="lib.dir" value="./libraries"/>
 
 	<path id="scala.classpath">
     	<fileset dir="${lib.dir}/runtime">
@@ -14,7 +14,6 @@
 	<path id="java.classpath">
 		<fileset id="dependencies" dir="${lib.dir}/third-party">
 			<include name="**/*.jar"/>
-			<!-- <include name="**/*"/> -->
 		</fileset>
 		<pathelement path="${dst.dir}"/>
 	</path>
