@@ -79,7 +79,7 @@ public abstract class Collider extends Component implements Collidable {
     }
 
     //TODO: commentaire
-	public Collider(float x, float y, float width, float height, int zindex) {
+    public Collider(float x, float y, float width, float height, int zindex) {
         super(x, y, width, height, zindex);
     }
 
@@ -152,9 +152,9 @@ public abstract class Collider extends Component implements Collidable {
      */
     public void updateImpulse(Vector vector) {
         if (Math.abs(impulse.getX()) < Math.abs(vector.getX()))
-			impulse.setX(vector.getX());
-		if (Math.abs(impulse.getY()) < Math.abs(vector.getY()))
-			impulse.setY(vector.getY());
+            impulse.setX(vector.getX());
+        if (Math.abs(impulse.getY()) < Math.abs(vector.getY()))
+            impulse.setY(vector.getY());
     }
 
     @Override
