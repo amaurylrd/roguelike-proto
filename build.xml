@@ -12,13 +12,14 @@
     </path>
 
 	<path id="java.classpath">
-		<fileset id="dependencies" dir="${lib.dir}">
+		<fileset id="dependencies" dir="${lib.dir}/third-party">
 			<include name="**/*.jar"/>
+			<!-- <include name="**/*"/> -->
 		</fileset>
 		<pathelement path="${dst.dir}"/>
 	</path>
 
-	<target name="default" depends="fclean,run,javadoc"></target>
+	<target name="default" depends="fclean, run, javadoc"></target>
 
 	<target name="compile" description="build">
 		<pathconvert pathsep="&#xA;" property="includes" refid="dependencies">
@@ -73,7 +74,14 @@
 	</target>
 
 	<!-- <target name="jar" depends="compile">
-        <jar destfile="${dist.dir}\${ant.project.name}.jar" basedir="${dst.dir}">
+        
+
+		<java jar="${jar.dir}/${app.name}-${app.version}.jar" fork="true">
+  			<classpath refid="classpath" />
+		</java>
+
+		ou	
+		<jar destfile="${dist.dir}\${ant.project.name}.jar" basedir="${dst.dir}">
             <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
             <manifest>
                 <attribute name="Main-Class" value="vml.coding.test.Test" />

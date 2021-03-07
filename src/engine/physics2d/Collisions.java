@@ -3,10 +3,10 @@ package engine.physics2d;
 import java.util.List;
 import java.util.ArrayList;
 
-import engine.scene.entity.Collider.Manifold;
-import engine.scene.entity.Collider;
-
 public class Collisions {
+	/**
+	 * The list of all contacts for this update.
+	 */
 	private static List<Manifold> contacts = new ArrayList<Manifold>();
 
 	/**
@@ -60,12 +60,17 @@ public class Collisions {
 	/**
 	 * The penetration allowance.
 	 */
-	private static final float PENETRATION_ALLOWANCE = 0.05f;
+	public static final float PENETRATION_ALLOWANCE = 0.05f;
 
 	/**
-	 * The penetration percentage to correct
+	 * The penetration percentage to correct.
 	 */
-	private static final float PENETRATION_CORRETION = 0.9f;
+	public static final float PENETRATION_CORRETION = 0.9f;
+
+	/**
+	 * The maximum penetration in 2 * dt.
+	 */
+	public static final float PENETRATION_THRESOLD = 40;
 
 	/**
 	 * This applies a positional correction for each contact.

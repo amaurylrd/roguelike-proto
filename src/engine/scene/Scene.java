@@ -3,10 +3,10 @@ package engine.scene;
 import engine.stage.Input;
 import engine.scene.entity.Component;
 import engine.scene.entity.Drawable;
-import engine.scene.entity.Collider;
 import engine.scene.entity.Player;
 import engine.physics2d.Force;
 import engine.physics2d.Vector;
+import engine.physics2d.Collider;
 import engine.util.collection.Lists;
 import engine.physics2d.Collisions;
 
@@ -168,7 +168,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		bodies.forEach((body) -> body.applyForce(constantForces));
 
 		Collisions.correction();
-		bodies.forEach((body) -> body.corrImpulse());
+		bodies.forEach((body) -> body.transalteImpulse());
 		Collisions.clear();
 	}
 

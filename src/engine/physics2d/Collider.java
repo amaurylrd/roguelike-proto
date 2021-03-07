@@ -1,11 +1,11 @@
-package engine.scene.entity;
+package engine.physics2d;
 
-import engine.physics2d.Vector;
+import engine.scene.entity.Component;
 
 /**
  * The class {@code Collider} represents a collidable body which is placed under the law of the physics engine.
  */
-public abstract class Collider extends Component {
+public abstract class Collider extends Component implements Collidable {
     /**
      * The attribut {@code velocity} specified the linear velocity of this body per update.
      */
@@ -45,32 +45,43 @@ public abstract class Collider extends Component {
     public float im = 0;
 
     /**
-     * Static bodies collide but are immovable.
-     * Kinematic bodies are movable but are not be driven by the physics engine.
-     * Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
+     * - Static bodies collide but are immovable.
+     * - Kinematic bodies are movable but are not be driven by the physics engine.
+     * - Dynamic bodies move at the whims of physics according to their velocities and other forces, and collision impacts exerted on them.
      */
     public enum CollisionType {
         STATIC, KINEMATIC, DYNAMIC
     }
 
+    /**
+     * The {@code CollisionType} of this object.
+     */
     protected CollisionType type = CollisionType.STATIC;
 
+    /**
+     * Tells if this {@code Collider} is {@code DYNAMIC}.
+     * 
+     * @return <i>true</i> if this object if {@code DYNAMIC}, <i>false</i> otherwise
+     * @see isStatic()
+     */
     public boolean isDynamic() {
         return type.equals(CollisionType.DYNAMIC);
     }
 
+    /**
+     * Tells if this {@code Collider} is {@code STATIC}.
+     * 
+     * @return <i>true</i> if this object if {@code STATIC}, <i>false</i> otherwise
+     * @see isDynamic()
+     */
     public boolean isStatic() {
         return type.equals(CollisionType.STATIC);
     }
 
+    //TODO: commentaire
 	public Collider(float x, float y, float width, float height, int zindex) {
         super(x, y, width, height, zindex);
     }
-
-    //TODO
-    // public void init(boolean solid, double im, double friction, double restituion, CollisionType type) {
-        
-    // }
 
 	/**
      * Specifies whether this {@code Collider} is solid or not.
@@ -92,43 +103,61 @@ public abstract class Collider extends Component {
         return solid;
     }
 
+    /**
+     * Translates the position by the specified {@code vector}.
+     * 
+     * @param vector the specified vector
+     */
     public void transform(Vector vector) {
         bounds.translate(vector);
     }
     
+    /**
+     * Translates the velocity by the specified {@code vector} only if this {@code Collider} is {@code DYNAMIC}.
+     * 
+     * @param vector the specified vector
+     */
     public void applyForce(Vector vector) {
         if (type.equals(CollisionType.DYNAMIC))
             velocity.translate(vector);
     }
 
+    /**
+     * Applies the impulse vector to the velocity.
+     * Then the impulse is reset to 0.
+     * 
+     * @see updateImpulse(Vector vector) 
+     */
     public void applyImpulse() {
         velocity.translate(impulse);
         impulse.set(0, 0);
     }
     
-    public void corrImpulse() {
+    /**
+     * Applies the impulse vector to the position for the correction.
+     * Then the impulse is reset to 0.
+     * 
+     * @see updateImpulse(Vector vector) 
+     */
+    public void transalteImpulse() {
         bounds.translate(impulse);
         impulse.set(0, 0);
     }
 
-    public void updateImpulse(Vector forces) {
-        if (Math.abs(impulse.getX()) < Math.abs(forces.getX()))
-			impulse.setX(forces.getX());
-		if (Math.abs(impulse.getY()) < Math.abs(forces.getY()))
-			impulse.setY(forces.getY());
+    /**
+     * Updates the impulse with the specified {@code vector}.
+     * 
+     * @param vector the specified vector
+     * @see applyImpulse()
+     */
+    public void updateImpulse(Vector vector) {
+        if (Math.abs(impulse.getX()) < Math.abs(vector.getX()))
+			impulse.setX(vector.getX());
+		if (Math.abs(impulse.getY()) < Math.abs(vector.getY()))
+			impulse.setY(vector.getY());
     }
 
-    public final class Manifold {
-        public Collider colliderA;
-        public Collider colliderB;
-        public boolean collides;
-        public Vector normal;
-        public float penetration;
-    }
-
-    //mouvement max qu'on peut faire en dt * 2
-    private static final float PENETRATION_THRESOLD = 40;
-
+    @Override
     public Manifold collides(Collider collider) {
         Manifold collision = new Manifold();
         if (collision.collides = bounds.intersects(collider.bounds)) {
@@ -139,8 +168,9 @@ public abstract class Collider extends Component {
             float y = (bounds.getHeight() + collider.bounds.getHeight()) / 2;
             System.out.println(velocity.getY());
             if (collider.traversable)
-                collision.normal = (collision.collides = velocity.getY() > 0 && (y - Math.abs(center2.getY() - center.getY())) < PENETRATION_THRESOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
-            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1)
+                collision.normal = (collision.collides = velocity.getY() > 0
+                    && (y - Math.abs(center2.getY() - center.getY())) < Collisions.PENETRATION_THRESOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
+            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1f)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
                 collision.normal = new Vector(0, 1);
@@ -169,6 +199,4 @@ public abstract class Collider extends Component {
         }
         return collision;
     }
-
-    //public abstract void applyCollision(Manifold manifold);
 }

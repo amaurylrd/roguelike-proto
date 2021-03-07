@@ -138,4 +138,7 @@ public final class Ressources {
     public static Enumeration<String> listNames() {
         return assets == null ? null : assets.keys();
     }
+
+    //TODO: refactoring cette classe hors du package application
+    //TODO; implementer les methodes getBytes et getString https://api.haxe.org/haxe/Resource.html
 }

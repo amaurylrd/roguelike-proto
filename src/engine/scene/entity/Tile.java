@@ -3,6 +3,7 @@ package engine.scene.entity;
 import java.awt.Graphics2D;
 
 import engine.application.Ressources;
+import engine.physics2d.Collider;
 
 public abstract class Tile extends Collider {
 

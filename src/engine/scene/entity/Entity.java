@@ -1,7 +1,7 @@
 package engine.scene.entity;
 
 import engine.physics2d.Vector;
-
+import engine.physics2d.Collider;
 public abstract class Entity extends Collider {
     //private boolean grounded = false;
     //private Map<String, Sprite> sprites;
