@@ -3,10 +3,10 @@
 	<property name="src.dir" value="./sources"/>
 	<property name="dst.dir" value="./bin"/>
 	<property name="doc.dir" value="./javadoc"/>
-	<property name="lib.dir" value="./libraries"/>
+	<property name="lib.dir" value="./includes"/>
 
 	<path id="scala.classpath">
-    	<fileset dir="${lib.dir}/runtime">
+    	<fileset dir="${lib.dir}/runtime-libraries">
 			<include name="*.jar"/>
 		</fileset>
     </path>
