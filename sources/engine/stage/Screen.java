@@ -95,6 +95,6 @@ public final class Screen {
      */
     public static float getScale() {
         Rectangle bounds = Screen.getBounds();
-        return bounds.height/bounds.width;
+        return bounds.height / bounds.width;
     } 
 }

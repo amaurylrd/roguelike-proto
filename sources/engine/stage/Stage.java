@@ -32,8 +32,7 @@ public final class Stage extends Window implements Runnable {
      */
     private static Stage instance = null;
 
-    private Stage() {
-    }
+    private Stage() {}
 
     /**
      * Gets the instance of this singleton {@code Stage}.
