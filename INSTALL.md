@@ -32,7 +32,7 @@ This project is a mixed Java and Scala application.
    1. jogl-all.jar
    1. jogl-all-natives-windows-amd64.jar
    
-latest aggregated autobuild:https://jogamp.org/deployment/jogamp-current/
+Follow this url (https://jogamp.org/deployment/jogamp-current/) to get the latest aggregated autobuild and download the archive *jogamp-all-platforms*.
 
 Visual Studio Code IDE speficication
 In some rare cases, you may need to clean the Java workspace by executing the command *Clean Java Language Server Workspace*
