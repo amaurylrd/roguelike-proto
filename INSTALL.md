@@ -34,7 +34,7 @@ This project is a mixed Java and Scala application.
    
 Follow this url (https://jogamp.org/deployment/jogamp-current/) to get the latest aggregated autobuild and download the archive *jogamp-all-platforms*.
 
-Visual Studio Code IDE speficication
+### Visual Studio Code speficication
 In some rare cases, you may need to clean the Java workspace by executing the command *Clean Java Language Server Workspace*
 from the Command Palette (Ctrl+Shift+P) to let the language server rebuild your dependencies.
 
