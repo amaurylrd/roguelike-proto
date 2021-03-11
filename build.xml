@@ -48,6 +48,7 @@
         		<pathelement location="${dst.dir}"/>
         		<path refid="java.classpath"/>
       		</classpath>
+			<jvmarg value="--illegal-access=permit"/>
 		</java>
 	</target>
 

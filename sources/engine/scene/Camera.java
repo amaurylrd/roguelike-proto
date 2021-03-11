@@ -137,6 +137,7 @@ public class Camera extends Rectangle implements Drawable {
 			graphics.setColor(new Color(209, 209, 209, 180));
 			FontMetrics metric = graphics.getFontMetrics(graphics.getFont());
 			String text = "FPS: " + (int) averageFPS();
+			//System.out.println(text);
 			int x = (int) (viewport.getX() + viewport.getWidth()) - MARGIN_LEFT - metric.stringWidth(text);
 			int y = (int) viewport.getY() + MARGIN_TOP + metric.getHeight();
 			graphics.drawString(text, x, y);

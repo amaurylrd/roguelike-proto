@@ -114,7 +114,7 @@ public abstract class Scene extends Canvas implements Drawable {
 	@Override
 	public void update(float dt) {
 		// abstract handleInputs()
-
+		
 		if (player != null) {
 			int left = Input.isPressed(Input.LEFT) ? -1 : 0;
 			int right = Input.isPressed(Input.RIGHT) ? 1 : 0;
@@ -152,7 +152,7 @@ public abstract class Scene extends Canvas implements Drawable {
 
 		Collisions.resolution();
 		bodies.forEach((body) -> body.applyImpulse());
-
+		
 		camera.update(dt);
 		for (Layer layer : gameObjects.values()) {
 			Iterator<Component> iterator = layer.objects.iterator();
@@ -164,8 +164,8 @@ public abstract class Scene extends Canvas implements Drawable {
 					component.update(dt);
 			}
 		}
-
 		bodies.forEach((body) -> body.applyForce(constantForces));
+		//que les entites
 
 		Collisions.correction();
 		bodies.forEach((body) -> body.transalteImpulse());
