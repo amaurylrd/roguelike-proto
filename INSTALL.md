@@ -32,7 +32,7 @@ This project is a mixed Java and Scala application.
    1. jogl-all.jar
    1. jogl-all-natives-windows-amd64.jar
    
-Follow this [url](https://jogamp.org/deployment/jogamp-current/) to get the latest aggregated autobuild and download the archive *jogamp-all-platforms* containing all the Jogamp jars, native libraries and sources.
+In case you need the latest stable version or whatever, follow this [url](https://jogamp.org/deployment/jogamp-current/) to get the latest aggregated autobuild and download the archive *jogamp-all-platforms* containing all the Jogamp jars, native libraries and sources.
 
 #### Visual Studio Code speficication
 
