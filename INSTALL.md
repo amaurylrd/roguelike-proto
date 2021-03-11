@@ -26,6 +26,7 @@ This project is a mixed Java and Scala application.
 
 >**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala-compiler unjared files after 2.12.8
 
+2. JOGL 2.0 in /includes/third-party/jogl/
 Visual Studio Code IDE speficication
 In some rare cases, you may need to clean the Java workspace by executing the command *Clean Java Language Server Workspace*
 from the Command Palette (Ctrl+Shift+P) to let the language server rebuild your dependencies.
