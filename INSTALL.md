@@ -12,10 +12,10 @@ This project is a mixed Java and Scala application.
 
 ### *Requirements*
 
-1. [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.7.0 or higher
+1. [Apache Ant](https://ant.apache.org/bindownload.cgi) 1.6.0 or higher (since scalac Ant task requires Apache Ant version 1.6)
 1. [Java JRE](https://www.java.com/en/download/) at least 8 (since Ant Binary Distribution 1.10.9 requires minimum of Java 8 at runtime)
 
->**NOTE:** scalac Ant task requires Apache Ant version 1.6 and OpenGL dependencies requires version 1.7
+>**NOTE:** Apache Ant 1.7 is required to run JOGL demos
 
 ### *Integration*
 
