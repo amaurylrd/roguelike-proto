@@ -49,6 +49,8 @@
         		<path refid="java.classpath"/>
       		</classpath>
 			<jvmarg value="--illegal-access=permit"/>
+			<jvmarg value="-Dsun.awt.noerasebackground=true"/> <!-- patch javax.swing flickering on resize -->
+			<jvmarg value="-Dopengl.1thread=false"/> <!-- disable single-threading of OpenGL work -->
 		</java>
 	</target>
 
