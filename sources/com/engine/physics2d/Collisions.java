@@ -3,7 +3,12 @@ package com.engine.physics2d;
 import java.util.List;
 import java.util.ArrayList;
 
-//TODO: comment + @version 1.0
+/**
+ * The class {@code Collisions} handles all the contacts between bodies.
+ * 
+ * @version 1.0 15 Mar 2021
+ * @author Amaury Le Roux Dupeyron
+ */
 public class Collisions {
 	/**
 	 * The list of all contacts for this update.
@@ -50,6 +55,7 @@ public class Collisions {
 				A.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01f ? 0 : vf) - va));
 				A.updateImpulse(Vector.scale(tangent, friction * -A.im));
 			}
+			
 			if (B.isDynamic()) {
 				float vf = vm + bounciness * B.im * (va - vb) / (A.im + B.im);
 				B.updateImpulse(Vector.scale(normal, (Math.abs(vf) < 0.01f ? 0 : vf) - vb));
@@ -74,7 +80,7 @@ public class Collisions {
 	public static final float PENETRATION_THRESHOLD = 40;
 
 	/**
-	 * This applies a positional correction for each contact.
+	 * Applies a positional correction for each contact.
 	 */
 	public static void correction() {
 		for (Manifold contact : contacts) {

@@ -181,7 +181,7 @@ public abstract class Collider extends Component implements Collidable {
             if (collider.traversable)
                 collision.normal = (collision.collides = velocity.getY() > 0
                     && (y - Math.abs(center2.getY() - center.getY())) < Collisions.PENETRATION_THRESHOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
-            else if (Vector.sub(center, center2).magnitude() > Math.sqrt(x * x  + y * y) - 0.1f)
+            else if (Vector.sub(center, center2).length() > Math.sqrt(x * x  + y * y) - 0.1f)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
                 collision.normal = new Vector(0, 1);

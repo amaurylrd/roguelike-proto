@@ -51,30 +51,72 @@ public class Vector {
 		this.y = y;
 	}
 
+	/**
+	 * Fills the elements of this {@code Vector}.
+	 * 
+	 * @param vector the specified vector
+	 * @see set(float x, float y)
+	 */
 	public void set(Vector vector) {
 		set(vector.x, vector.y);
 	}
 
+	/**
+	 * Gets the x coordinate of this {@code Vector}.
+	 * 
+	 * @return the value of x
+	 * @see setX(float x)
+	 */
 	public float getX() {
 		return x;
 	}
 
+	/**
+	 * Gets the y coordinate of this {@code Vector}.
+	 * 
+	 * @return the value of y
+	 * @see setY(float y)
+	 */
 	public float getY() {
 		return y;
 	}
 
+	/**
+	 * Sets the value of x to the specified value.
+	 * 
+	 * @param x the value
+	 * @see getX()
+	 */
 	public void setX(float x) {
 		this.x = x;
 	}
 
+	/**
+	 * Sets the value of y to the specified value.
+	 * 
+	 * @param y the value
+	 * @see getY()
+	 */
 	public void setY(float y) {
 		this.y = y;
 	}
 
+	/**
+     * This method translates this {@code Vector} by dx to become (x + dx, y).
+     *
+     * @param dx the x coordinate to be added
+	 * @see translate(float dx, float dy)
+     */
 	public void translateX(float dx) {
 		translate(dx, 0);
 	}
 
+	/**
+     * This method translates this {@code Vector} by dy to become (x, y + dy).
+     *
+     * @param dy the y coordinate to be added
+	 * @see translate(float dx, float dy)
+     */
 	public void translateY(float dy) {
 		translate(0, dy);
 	}
@@ -92,22 +134,51 @@ public class Vector {
 		return new Vector(x, y);
 	}
 
-	public static float magnitude(Vector vector) {
-		return vector.magnitude();
+	/**
+	 * Returns the squared length of a vector.
+	 * 
+	 * @param vector the specified vector
+	 * @return the squared length of the vector
+	 */
+	public static float lengthSquared(Vector vector) {
+		return vector.lengthSquared();
 	}
 
-	public float magnitude() {
+	/**
+	 * Returns the squared length of this {@code Vector}.
+	 * 
+	 * @return the squared length of the vector
+	 */
+	public float lengthSquared() {
 		return (float) Math.sqrt(length());
 	}
 
+	/**
+	 * Returns the length of a vector.
+	 * 
+	 * @param vector the specified vector
+	 * @return the length of the vector
+	 */
 	public static float length(Vector vector) {
 		return vector.length();
 	}
 
+	/**
+	 * Returns the length of this {@code Vector}.
+	 * 
+	 * @return the length of the vector
+	 */
 	public float length() {
 		return x * x + y * y;
 	}
 
+	/**
+	 * Returns a copy of the vector, which is the normalized vector.
+	 * 
+	 * @param vector the given vector
+	 * @return the normalized vector
+	 * @see normalize()
+	 */
 	public static Vector normalize(Vector vector) {
 		Vector normalized = vector.clone();
 		normalized.normalize();
@@ -118,11 +189,16 @@ public class Vector {
 	 * Normalises this {@code Vector}, making it a unit vector.
 	 */
 	public void normalize() {
-		float length = magnitude();
-		if (length > 0)
-			scale(1 / length);
+		float magnitude = length();
+		if (magnitude > 0)
+			scale(1 / magnitude);
 	}
 
+	/**
+	 * Rotates this {@code Vector} by the specified rotation.
+	 * 
+	 * @param radians the rotation
+	 */
 	public void rotate(float radians) {
 		float cos = (float) Math.cos(radians);
 		float sin = (float) Math.sin(radians);
@@ -145,10 +221,23 @@ public class Vector {
 		set(x, y * factor);
 	}
 
+	/**
+	 * Computes the dot product of the specified vectors.
+	 * 
+	 * @param v1 the first vector
+	 * @param v2 the second vector
+	 * @return the dot product
+	 */
 	public static float dot(Vector v1, Vector v2) {
 		return v1.dot(v2);
 	}
 
+	/**
+	 * Computes the dot product of the this {@code Vector} and the specified vector.
+	 * 
+	 * @param vector the specified vector
+	 * @return the dot product
+	 */
 	public float dot(Vector vector) {
 		return x * vector.x + y * vector.y;
 	}
