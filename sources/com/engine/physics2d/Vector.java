@@ -33,8 +33,8 @@ public class Vector {
 
 	/**
 	 * Construct a new {@code Vector} filled with the specified {@code vector}.
-     *
-	 * @param vector the specified vector
+	 *
+	 *  @param vector the specified vector
 	 */
 	public Vector(Vector vector) {
 		set(vector.x, vector.y);
@@ -102,11 +102,11 @@ public class Vector {
 	}
 
 	/**
-     * This method translates this {@code Vector} by dx to become (x + dx, y).
-     *
-     * @param dx the x coordinate to be added
+	 * This method translates this {@code Vector} by dx to become (x + dx, y).
+	 *
+	 * @param dx the x coordinate to be added
 	 * @see translate(float dx, float dy)
-     */
+	 */
 	public void translateX(float dx) {
 		translate(dx, 0);
 	}
