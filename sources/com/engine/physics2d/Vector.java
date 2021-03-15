@@ -104,7 +104,7 @@ public class Vector {
 	/**
 	 * This method translates this {@code Vector} by dx to become (x + dx, y).
 	 *
-	 * @param dx the x coordinate to be added
+	 * @param dx the x value to be added
 	 * @see translate(float dx, float dy)
 	 */
 	public void translateX(float dx) {
@@ -112,23 +112,40 @@ public class Vector {
 	}
 
 	/**
-     * This method translates this {@code Vector} by dy to become (x, y + dy).
-     *
-     * @param dy the y coordinate to be added
+	 * This method translates this {@code Vector} by dy to become (x, y + dy).
+	 *
+	 * @param dy the y value to be added
 	 * @see translate(float dx, float dy)
-     */
+	 */
 	public void translateY(float dy) {
 		translate(0, dy);
 	}
 
+	/**
+	 * This method translate this {@code Vector} by dx and dy to become (x + dx, y + dy).
+	 * 
+	 * @param dx the x value to be added
+	 * @param dy the y value to be added
+	 */
 	public void translate(float dx, float dy) {
 		set(x + dx, y + dy);
 	}
 
+	/**
+	 * This method translate this {@code Vector} by the vector values.
+	 * 
+	 * @param vector the specified vector
+	 * @see translate(float dx, float dy)
+	 */
 	public void translate(Vector vector) {
 		translate(vector.x, vector.y);
 	}
 
+	/**
+	 * Duplicates this {@code Vector}.
+	 * 
+	 * @return a copy of this {@code Vector} 
+	 */
 	@Override
 	public Vector clone() {
 		return new Vector(x, y);
