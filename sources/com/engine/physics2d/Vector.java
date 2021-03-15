@@ -15,9 +15,9 @@ public class Vector {
 
 	/**
 	 * Construct a new {@code Vector} with the specified values.
-     *
+	 *
 	 * @param x the specified x value
-     * @param y the specified y value
+	 * @param y the specified y value
 	 */
 	public Vector(float x, float y) {
 		set(x, y);
