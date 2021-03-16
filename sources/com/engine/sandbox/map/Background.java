@@ -1,4 +1,4 @@
-package com.sandbox.map;
+package com.engine.sandbox.map;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

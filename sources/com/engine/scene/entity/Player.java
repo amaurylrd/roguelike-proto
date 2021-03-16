@@ -25,7 +25,7 @@ public class Player extends Entity { //abstract player à check instance of exte
 		im = 0.01f;
 	}
 
-	public engine.geom.shape.Rectangle feet = new engine.geom.shape.Rectangle(bounds.getX() + bounds.getWidth() * 0.2f, bounds.getY() + bounds.getHeight(), bounds.getWidth() * 0.6f, 10f);
+	public com.engine.geom.shape.Rectangle feet = new com.engine.geom.shape.Rectangle(bounds.getX() + bounds.getWidth() * 0.2f, bounds.getY() + bounds.getHeight(), bounds.getWidth() * 0.6f, 10f);
 	
 	@Override
 	public void update(float dt) {

@@ -216,7 +216,7 @@ public abstract class Scene extends Canvas implements Drawable {
 		for (Layer layer : gameObjects.values()) {
 			for (Component component : layer.objects) {
 				
-				engine.render2d.OpenCL.XXX(getBuffer(), component.texture, component.getBounds().getX(), component.getBounds().getY());
+				//engine.render2d.OpenCL.XXX(getBuffer(), component.texture, component.getBounds().getX(), component.getBounds().getY());
 			}
 		}
 	}
