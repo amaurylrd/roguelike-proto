@@ -1,6 +1,5 @@
 package com.engine.physics2d;
 
-//TODO comments cette classe
 /**
  * The class {@code Vector} represents a 2 element vector to store floating coordinates like so (x, y).
  *
@@ -222,18 +221,42 @@ public class Vector {
 		set(x * cos - y * sin, x * sin + y * cos);
 	}
 
+	/**
+	 * This method scales the vector by the factor and returns the result in a new {@code Vector}.
+	 * 
+	 * @param vector the specified vector
+	 * @param factor the given factor of scale
+	 * @return the scaled vector
+	 */
 	public static Vector scale(Vector vector, float factor) {
 		return new Vector(vector.x * factor, vector.y * factor);
 	}
 
+	/**
+	 * This method scales this {@code Vector} by the given factor.
+	 * 
+	 * @param factor the scaling factor
+	 */
 	public void scale(float factor) {
 		set(x * factor, y * factor);
 	}
 
+	/**
+	 * This method scales this {@code Vector} on the X Coordinate.
+	 * 
+	 * @param factor the scaling factor
+	 * @see scale(float factor)
+	 */
 	public void scaleX(float factor) {
 		set(x * factor, y);
 	}
 
+	/**
+	 * This method scales this {@code Vector} on the Y Coordinate.
+	 * 
+	 * @param factor the scaling factor
+	 * @see scale(float factor)
+	 */
 	public void scaleY(float factor) {
 		set(x, y * factor);
 	}
@@ -241,12 +264,12 @@ public class Vector {
 	/**
 	 * Computes the dot product of the specified vectors.
 	 * 
-	 * @param v1 the first vector
-	 * @param v2 the second vector
+	 * @param a the first vector
+	 * @param b the second vector
 	 * @return the dot product
 	 */
-	public static float dot(Vector v1, Vector v2) {
-		return v1.dot(v2);
+	public static float dot(Vector a, Vector b) {
+		return a.dot(b);
 	}
 
 	/**
@@ -259,14 +282,30 @@ public class Vector {
 		return x * vector.x + y * vector.y;
 	}
 
+	/**
+	 * Substracts the vectors values and returns the result in a new {@code Vector}.
+	 *  
+	 * @param a the first vector
+	 * @param b the second vector
+	 */
 	public static Vector sub(Vector a, Vector b) {
 		return new Vector(a.x - b.x, a.y - b.y);
 	}
 
+	/**
+	 * Substracts this {@code Vector} values to given vector values.
+	 *  
+	 * @param vector the specified vector
+	 */
 	public void sub(Vector vector) {
 		set(x - vector.x, y - vector.y);
 	}
 
+	/**
+	 * Returns the string representing this {@code Vector}.
+	 * 
+	 * @return the string representing this object
+	 */
 	@Override
 	public String toString() {
 		return this.getClass().getName() + "[" + x + ", " + y + "]";
