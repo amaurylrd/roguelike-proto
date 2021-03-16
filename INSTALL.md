@@ -17,6 +17,13 @@ This project is a mixed Java and Scala application.
 
 >**NOTE:** Apache Ant 1.7 is sometimes required to run JOGL demos
 
+### *XXX*
+
+The workspace contains two folders by default, where:
+
+- `src`: the folder to maintain sources
+- `lib`: the folder to maintain dependencies
+
 ### *Integration*
 
 1. Scala 2.12.2 in /includes/runtime-libraries/
