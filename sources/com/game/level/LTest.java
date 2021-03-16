@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import com.engine.scene.Scene;
 import com.engine.scene.entity.Player;
 import com.engine.util.Random;
-import com.sandbox.LateralMovingPlateform;
-import com.sandbox.VerticalMovingPlateform;
-import com.sandbox.collission.BoxTest;
-import com.sandbox.collission.PhyEntity;
+import com.engine.sandbox.LateralMovingPlateform;
+import com.engine.sandbox.VerticalMovingPlateform;
+import com.engine.sandbox.collission.BoxTest;
+import com.engine.sandbox.collission.PhyEntity;
 
 public class LTest extends Level {
 	private final static int EMPTY = 0000;

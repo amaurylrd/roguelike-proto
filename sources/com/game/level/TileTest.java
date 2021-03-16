@@ -1,4 +1,4 @@
-package game.level;
+package com.game.level;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
