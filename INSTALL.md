@@ -19,7 +19,7 @@ This project is a mixed Java and Scala application.
 
 ### *Integration*
 
-The folder /includes/ maintains dependencies.
+The folder /includes/ at the root maintains dependencies.
 
 1. Scala 2.12.2 in /includes/runtime-libraries/
    1. scala-compiler-2.12.2.jar
@@ -27,6 +27,7 @@ The folder /includes/ maintains dependencies.
    1. scala-reflect-2.12.2.jar (needed since scala 2.10.2)
 
 >**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala-compiler unjared files after 2.12.8
+
 
 2. [JOGL](https://jogamp.org/) 2.0 in /includes/third-party/jogl/
    1. gluegen-rt.jar
