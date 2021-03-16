@@ -36,7 +36,8 @@ In case you need the latest stable version or whatever, follow this [url](https:
 
 #### Visual Studio Code speficication
 
-To configure the classpath of the project, open via the command *Configure 'Java' Language Based Settings* the settings and add this line *"java.project.referencedLibraries": [ "includes/\*\*/\*.jar" ],*.
+To configure the classpath of the project and get rid of external packages declaration errors, you can open via the command *Configure 'Java' Language Based Settings* the settings and add this line: *"java.project.referencedLibraries": [ "includes/\*\*/\*.jar" ],*.
+
 In some rare cases, you may need to clean the Java workspace by executing the command *Clean Java Language Server Workspace*
 from the Command Palette (Ctrl+Shift+P) to let the language server rebuild your dependencies.
 
