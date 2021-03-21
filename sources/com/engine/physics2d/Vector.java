@@ -262,7 +262,7 @@ public class Vector {
 	}
 
 	/**
-	 * Computes the dot product of the specified vectors.
+	 * Computes the dot (scalar) product of the specified vectors.
 	 * 
 	 * @param a the first vector
 	 * @param b the second vector
@@ -273,7 +273,7 @@ public class Vector {
 	}
 
 	/**
-	 * Computes the dot product of the this {@code Vector} and the specified vector.
+	 * Computes the dot (scalar) product of the this {@code Vector} and the specified vector.
 	 * 
 	 * @param vector the specified vector
 	 * @return the dot product
