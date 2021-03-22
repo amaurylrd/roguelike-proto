@@ -2,7 +2,7 @@ package com.engine.application;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import com.engine.stage.Stage;
+import com.engine.render2d.stage.Stage;
 
 @SuppressWarnings("unchecked")
 public abstract class Application implements Launchable {
@@ -17,6 +17,7 @@ public abstract class Application implements Launchable {
 	 * @see launch(String[] args)
 	 */
 	public static void launch() {
+		Properties.load();
 		Application.launch(null);
 	}
 
@@ -60,8 +61,7 @@ public abstract class Application implements Launchable {
 	 */
 	protected void setup() {
 		Plateform.trace("Debug: The application reached setup functions.");
-		Properties.load();
-		Ressources.preload();
+		//Ressources.preload();
 		init();
 		onstart();
 	}

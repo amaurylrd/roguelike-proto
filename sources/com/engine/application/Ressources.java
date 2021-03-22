@@ -12,6 +12,7 @@ import com.aspose.psd.fileformats.psd.PsdImage;
 import com.aspose.psd.fileformats.psd.layers.Layer;
 import com.aspose.psd.fileformats.psd.layers.LayerGroup;
 
+//TODO: déplacer
 /**
  * The class {@code Ressources} stores all the assets .
  */
