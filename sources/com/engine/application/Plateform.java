@@ -2,6 +2,10 @@ package com.engine.application;
 
 import java.lang.reflect.Constructor;
 
+/**
+ * The abstract class {@code Plateform} is the parent for the class {@code Application}.
+ * 
+ */
 public abstract class Plateform {
 	/**
 	 * Command line arguments.

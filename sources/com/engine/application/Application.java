@@ -2,7 +2,7 @@ package com.engine.application;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import com.engine.render2d.stage.Stage;
+import com.engine.stage.Stage;
 
 @SuppressWarnings("unchecked")
 public abstract class Application implements Launchable {
@@ -102,7 +102,7 @@ public abstract class Application implements Launchable {
 	public void onstop() {
 		stop();
 		primaryStage.setVisible(false);
-		Properties.save();
+		// Properties.save();
 		// primaryStage.save();
 		primaryStage.dispose();
 		System.exit(0);

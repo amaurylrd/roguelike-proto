@@ -1,6 +1,6 @@
 package com.engine.application;
 
-import com.engine.render2d.stage.Stage;
+import com.engine.stage.Stage;
 
 public interface Launchable {
     public void onstart();
