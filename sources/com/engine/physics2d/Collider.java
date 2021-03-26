@@ -1,11 +1,11 @@
 package com.engine.physics2d;
 
-import com.engine.scene.entity.Component;
+import com.engine.scene.Component;
 
 /**
  * The class {@code Collider} represents a collidable body which is placed under the law of the physics engine.
  *
- * @version 1.0 15 Mar 2021
+ * @version 1.1 26 Mar 2021
  * @author Amaury Le Roux Dupeyron
  */
 public abstract class Collider extends Component implements Collidable {
@@ -151,7 +151,7 @@ public abstract class Collider extends Component implements Collidable {
      * 
      * @see updateImpulse(Vector vector) 
      */
-    public void transalteImpulse() {
+    public void translateImpulse() {
         bounds.translate(impulse);
         impulse.set(0, 0);
     }
@@ -182,7 +182,7 @@ public abstract class Collider extends Component implements Collidable {
             if (collider.traversable)
                 collision.normal = (collision.collides = velocity.getY() > 0
                     && (y - Math.abs(center2.getY() - center.getY())) < Collisions.PENETRATION_THRESHOLD * velocity.getY()) ? new Vector(0, 1) : new Vector(0, 0);
-            else if (Vector.sub(center, center2).length() > Math.sqrt(x * x  + y * y) - 0.1f)
+            else if (Vector.sub(center, center2).lengthSquared() > Math.sqrt(x * x  + y * y) - 0.1f)
                 collision.normal = new Vector(0, 0);
             else if (Math.abs(center.getX() - center2.getX()) < collider.bounds.getWidth() / 2)
                 collision.normal = new Vector(0, 1);
@@ -199,8 +199,8 @@ public abstract class Collider extends Component implements Collidable {
                     collision.normal = new Vector(1, 0);
             }
 
-            if (collision.collides = (collision.collides && (velocity.dot(collision.normal) - collider.velocity.dot(collision.normal))
-                * Vector.sub(bounds.getLocation(), collider.bounds.getLocation()).dot(collision.normal) < 0)) {
+            if (collision.collides = (collision.collides && Vector.sub(velocity, collider.velocity).dot(collision.normal)
+                * Vector.sub(center, center2).dot(collision.normal) < 0)) {
                 if (collision.normal.getX() == 1)
                     collision.penetration = Math.signum(center.getX() - center2.getX()) * (x - Math.abs(center2.getX() - center.getX()));
                 else if (collision.normal.getY() == 1)
