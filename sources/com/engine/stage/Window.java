@@ -31,7 +31,7 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
         addComponentListener(this);
 
         setFocusTraversalKeysEnabled(true);
-        addKeyListener(new Input()); //TODO
+        //addKeyListener(new Input());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getRootPane().registerKeyboardAction(event -> {
@@ -69,11 +69,7 @@ public abstract class Window extends JFrame implements WindowFocusListener, Comp
      * @param event the event to be processed
      */
     @Override
-    public void windowLostFocus(WindowEvent event) {
-        System.out.println(this.getContentPane());
-        getContentPane().setLocation(10, 10);
-    }
-
+    public void windowLostFocus(WindowEvent event) {}
 
     /**
      * Invoked when the component's size changes.

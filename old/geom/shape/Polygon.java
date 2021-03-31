@@ -200,7 +200,6 @@ public class Polygon extends Shape {
 		centroidX /= 3 * determinant;
 		centroidY /= 3 * determinant;
 		return new Vector(centroidX, centroidY);
-		
 	}
 
 	/**
