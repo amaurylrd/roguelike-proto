@@ -30,7 +30,8 @@ public class TestScene extends Scene {
             buffer.put(0, indices);
             buffer.flip();
 
-            graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length, buffer, GL2.GL_DYNAMIC_DRAW);
+            //graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length, buffer, GL2.GL_DYNAMIC_DRAW);
+            graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
             
             //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
         }
@@ -45,7 +46,8 @@ public class TestScene extends Scene {
             buffer.put(0, data);
             buffer.flip();
             
-            graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length, buffer, GL2.GL_DYNAMIC_DRAW);
+            //graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length, buffer, GL2.GL_DYNAMIC_DRAW);
+            graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
             graphics.glVertexAttribPointer(0, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
             graphics.glEnableVertexAttribArray(0);
             graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, 0);
@@ -74,7 +76,7 @@ public class TestScene extends Scene {
                     1
                 };
 
-                int[] indices = { 0, 1, 2, 2, 1, 3 };
+                int[] indices = { 0, 1, 3, 3, 1, 2 };
 
                 //creation vao
                 int[] id = new int[1];

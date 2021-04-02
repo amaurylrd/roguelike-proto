@@ -3,6 +3,14 @@ package com.engine.graphics2d;
 import javax.media.opengl.GL2;
 import com.engine.geom.Rectangle;
 
+//classe de tests immediate mode maggle
+
+/*
+final String GL_VENDOR = gl.glGetString(GL2.GL_VENDOR);
+        final String GL_RENDERER = gl.glGetString(GL2.GL_RENDERER);
+        final String GL_VERSION = gl.glGetString(GL2.GL_VERSION);
+        */
+
 public abstract class Graphics {
     private static GL2 gl; //pas fait
 

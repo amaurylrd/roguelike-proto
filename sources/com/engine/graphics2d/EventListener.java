@@ -45,7 +45,7 @@ public interface EventListener extends GLEventListener {
 
     public default void init(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
-        
+
         gl.glClearColor(CLEAR_COLOR.getRed(), CLEAR_COLOR.getGreen(), CLEAR_COLOR.getBlue(), CLEAR_COLOR.getAlpha());
         gl.glClearDepth(1.0);
         gl.glClearStencil(0);
