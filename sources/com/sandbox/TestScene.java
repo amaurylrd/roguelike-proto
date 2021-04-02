@@ -81,7 +81,7 @@ public class TestScene extends Scene {
 
                 allocateIndexBuffer(graphics, indices);
                 allocateAttributeBuffer(graphics, 0, vertices);
-                allocateAttributeBuffer(graphics, 1, colors);
+                //allocateAttributeBuffer(graphics, 1, colors);
 
                 //unbind vao
                 graphics.glBindVertexArray(0);
@@ -89,8 +89,10 @@ public class TestScene extends Scene {
                 //render
                 graphics.glBindVertexArray(vaoId);
 		        graphics.glEnableVertexAttribArray(0);
-                    graphics.glDrawArrays(GL2.GL_TRIANGLES, 0, indices.length);
+                //graphics.glEnableVertexAttribArray(1);
+                    graphics.glDrawElements(GL2.GL_TRIANGLES, indices.length, GL2.GL_UNSIGNED_INT, 0);
                 graphics.glDisableVertexAttribArray(0);
+                //graphics.glDisableVertexAttribArray(1);
 		        graphics.glBindVertexArray(0);
                 graphics.glFlush();
             } else if (mode.equals("old")) {
