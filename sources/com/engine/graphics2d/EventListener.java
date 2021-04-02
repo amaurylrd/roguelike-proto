@@ -14,7 +14,7 @@ import java.awt.Color;
 
 public interface EventListener extends GLEventListener {  
     public static final Color CLEAR_COLOR = Color.BLACK;
-
+    
     public default void display(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
         

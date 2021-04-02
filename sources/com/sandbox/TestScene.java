@@ -5,7 +5,6 @@ import java.nio.IntBuffer;
 
 import javax.media.opengl.GL2;
 
-import com.aspose.psd.internal.A.a;
 import com.engine.entity.Player;
 import com.engine.physics2d.Collider;
 import com.engine.scene.Scene;
@@ -20,10 +19,11 @@ public class TestScene extends Scene {
         @Override
         public void update(float dt) {}
 
+        //Do not unbind the index buffer anywhere.
         private void allocateIndexBuffer(GL2 graphics, int[] indices) {
-            int[] vb = new int[1];
-            graphics.glGenBuffers(1, vb, 0);
-            int vboId = vb[0];
+            int[] id = new int[1];
+            graphics.glGenBuffers(1, id, 0);
+            int vboId = id[0];
             graphics.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, vboId);
                 
             IntBuffer buffer = IntBuffer.allocate(indices.length);
@@ -31,24 +31,27 @@ public class TestScene extends Scene {
             buffer.flip();
 
             graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length, buffer, GL2.GL_DYNAMIC_DRAW);
-            graphics.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, 0);
-            //graphics.glDeleteBuffers(vboId, buffer);
+            
+            //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
         }
         
         private void allocateAttributeBuffer(GL2 graphics, int attribute, float[] data) {
-            int[] vb = new int[1];
-            graphics.glGenBuffers(1, vb, 0);
-            int vboId = vb[0];
-            graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, vboId);
+            int[] id = new int[1];
+            graphics.glGenBuffers(1, id, 0);
+            int vboId = id[0];
+            graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, vboId); //juste remplir vboId ou le remplacer à chaque fois ?
 
             FloatBuffer buffer = FloatBuffer.allocate(data.length);
             buffer.put(0, data);
             buffer.flip();
-
+            
             graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length, buffer, GL2.GL_DYNAMIC_DRAW);
-            graphics.glVertexAttribPointer(0, 2, GL2.GL_FLOAT, false, 0, 0);
+            graphics.glVertexAttribPointer(0, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
+            graphics.glEnableVertexAttribArray(0);
             graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, 0);
-            //graphics.glDeleteBuffers(vboId, buffer);
+            
+            //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
+            //graphics.glDeleteVertexArrays(vboId, null); TODO: clean up vaos
         }
 
         @Override
@@ -62,7 +65,7 @@ public class TestScene extends Scene {
                     bounds.getX() + bounds.getWidth(), bounds.getY(),
                 };
 
-                int rgb = java.awt.Color.WHITE.getRGB();
+                int rgb = java.awt.Color.RED.getRGB();
                 float color = rgb / 250f;
                 float[] colors = {
                     color,
@@ -74,27 +77,24 @@ public class TestScene extends Scene {
                 int[] indices = { 0, 1, 2, 2, 1, 3 };
 
                 //creation vao
-                int[] va = new int[1];
-                graphics.glGenVertexArrays(1, va, 0);
-                int vaoId = va[0];
+                int[] id = new int[1];
+                graphics.glGenVertexArrays(1, id, 0);
+                int vaoId = id[0];
+
                 graphics.glBindVertexArray(vaoId);
-
-                allocateIndexBuffer(graphics, indices);
-                allocateAttributeBuffer(graphics, 0, vertices);
-                //allocateAttributeBuffer(graphics, 1, colors);
-
-                //unbind vao
+                    allocateIndexBuffer(graphics, indices);
+                    allocateAttributeBuffer(graphics, 0, vertices);
+                    //allocateAttributeBuffer(graphics, 1, colors);
                 graphics.glBindVertexArray(0);
 
                 //render
                 graphics.glBindVertexArray(vaoId);
-		        graphics.glEnableVertexAttribArray(0);
-                //graphics.glEnableVertexAttribArray(1);
-                    graphics.glDrawElements(GL2.GL_TRIANGLES, indices.length, GL2.GL_UNSIGNED_INT, 0);
-                graphics.glDisableVertexAttribArray(0);
-                //graphics.glDisableVertexAttribArray(1);
+		            graphics.glEnableVertexAttribArray(0);
+                        graphics.glDrawElements(GL2.GL_TRIANGLES, indices.length, GL2.GL_UNSIGNED_INT, 0);
+                    graphics.glDisableVertexAttribArray(0);
 		        graphics.glBindVertexArray(0);
                 graphics.glFlush();
+
             } else if (mode.equals("old")) {
                 graphics.glColor3f(255, 0, 0);
                 graphics.glBegin(GL2.GL_QUADS);
@@ -113,7 +113,6 @@ public class TestScene extends Scene {
     }
 
     public TestScene() {
-        float constant = -100;
         for (int i = 0; i < 15; i++) {
 			for (int j = 0; j < 4; j++) {
 				add(new TestComponent(i * 100, 250, 100, 10, Scene.TILES_LAYER, true)); // plafond traversable
