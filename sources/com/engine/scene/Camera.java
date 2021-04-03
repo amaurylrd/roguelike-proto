@@ -25,7 +25,7 @@ public class Camera implements Drawable {
     @Override
     public void update(float dt) {
         if (scene.getPlayer() != null) {
-			Rectangle playerBounds = scene.getPlayer().getBounds();
+			//Rectangle playerBounds = scene.getPlayer().getBounds();
 			//float targetX = playerBounds.getX() + playerBounds.getWidth() / 2 - scene.getWidth() / 2.3f;
 			//float targetY = playerBounds.getY() + playerBounds.getHeight() / 2 - scene.getHeight() / 2;
 			//translate((targetX - getX()) * 0.1f, (targetY - getY()) * 0.02f);

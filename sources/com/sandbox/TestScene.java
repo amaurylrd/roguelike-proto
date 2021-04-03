@@ -48,12 +48,13 @@ public class TestScene extends Scene {
             
             //graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length, buffer, GL2.GL_DYNAMIC_DRAW);
             graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
-            graphics.glVertexAttribPointer(0, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
-            graphics.glEnableVertexAttribArray(0);
+            graphics.glVertexAttribPointer(attribute, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
+            graphics.glEnableVertexAttribArray(attribute);
             graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, 0);
             
             //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
             //graphics.glDeleteVertexArrays(vboId, null); TODO: clean up vaos
+            //gl.glDeleteBuffers(1, vboName, 0);
         }
 
         @Override
