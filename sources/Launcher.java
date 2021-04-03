@@ -12,7 +12,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         primaryStage.addScene("test_opengl", new com.sandbox.TestScene());
         primaryStage.setScene("test_opengl");
-        new com.sandbox.ShaderProgram(null, "sources/Launcher.java", "");
+        
         //primaryStage.setVisible(true);
         //while (true) {}
         //primaryStage.addScene("test2", new LTest());

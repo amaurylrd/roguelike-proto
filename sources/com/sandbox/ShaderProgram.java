@@ -6,7 +6,7 @@ import java.util.Scanner;
 import javax.media.opengl.GL2;
 
 public abstract class ShaderProgram {
-    protected final static String SHADER_FOLDER = "ressources/shader/";
+    protected final static String SHADER_FOLDER = "ressources/shaders/";
 
     private int programId;
 	private int vertexShaderId;
@@ -19,8 +19,10 @@ public abstract class ShaderProgram {
         programId = gl.glCreateProgram();
 		gl.glAttachShader(programId, vertexShaderId);
 		gl.glAttachShader(programId, fragmentShaderId);
-		//bindAttributes();
-		gl.glLinkProgram(programId);
+
+		bindAttributes(gl);
+		
+        gl.glLinkProgram(programId);
 		gl.glValidateProgram(programId);
     }
 
@@ -72,9 +74,8 @@ public abstract class ShaderProgram {
             }
             scanner.close();
         } catch (IOException exception) {
-            System.out.println("erreur 3");
+            System.out.println("erreur 3" + exception);
             System.exit(1);
-
             //TODO: error 3
         }
         return shaderId;
