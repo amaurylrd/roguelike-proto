@@ -3,8 +3,8 @@ package com.sandbox;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import javax.media.opengl.GL2;
-
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.opengl.GL2;
 import com.engine.entity.Player;
 import com.engine.physics2d.Collider;
 import com.engine.scene.Scene;
@@ -25,11 +25,8 @@ public class TestScene extends Scene {
             graphics.glGenBuffers(1, id, 0);
             int vboId = id[0];
             graphics.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, vboId);
-                
-            IntBuffer buffer = IntBuffer.allocate(indices.length);
-            buffer.put(0, indices);
-            buffer.flip();
-
+            
+            IntBuffer buffer = Buffers.newDirectIntBuffer(indices);
             graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
             buffer = null;
             //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
@@ -41,10 +38,7 @@ public class TestScene extends Scene {
             int vboId = id[0];
             graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, vboId); //juste remplir vboId ou le remplacer à chaque fois ?
 
-            FloatBuffer buffer = FloatBuffer.allocate(data.length);
-            buffer.put(0, data);
-            buffer.flip();
-            
+            FloatBuffer buffer = Buffers.newDirectFloatBuffer(data);
             graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
             buffer = null;
             graphics.glVertexAttribPointer(attribute, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound

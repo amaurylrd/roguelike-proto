@@ -1,6 +1,6 @@
 package com.sandbox;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 public class StaticShader extends ShaderProgram {
     private static final String VERTEX_SHADER_PATH = SHADER_FOLDER + "vertex_shader.glsl";

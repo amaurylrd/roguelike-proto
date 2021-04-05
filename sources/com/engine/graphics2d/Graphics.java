@@ -1,6 +1,6 @@
 package com.engine.graphics2d;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 import com.engine.geom.Rectangle;
 
 //classe de tests immediate mode maggle

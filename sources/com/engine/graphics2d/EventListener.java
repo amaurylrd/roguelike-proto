@@ -1,8 +1,8 @@
 package com.engine.graphics2d;
 
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GL2;
 import java.awt.Color;
 
 // import java.awt.image.BufferedImage;

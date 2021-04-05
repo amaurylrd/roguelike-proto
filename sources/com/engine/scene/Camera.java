@@ -1,6 +1,6 @@
 package com.engine.scene;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import com.engine.geom.Rectangle;
 

@@ -1,6 +1,6 @@
 package com.engine.scene;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 /**
  * This interface {@code Drawable} defines any graphical game object.

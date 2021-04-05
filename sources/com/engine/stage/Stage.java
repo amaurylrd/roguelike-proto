@@ -3,9 +3,9 @@ package com.engine.stage;
 import java.util.Map;
 import java.util.Hashtable;
 import java.awt.BorderLayout;
-import javax.media.opengl.GLProfile;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLException;
 import com.engine.graphics2d.Canvas;
 import com.engine.scene.Scene;
 

@@ -1,7 +1,6 @@
 package com.engine.entity;
 
-import javax.media.opengl.GL2;
-
+import com.jogamp.opengl.GL2;
 import com.engine.physics2d.Vector;
 
 public class Player extends Entity {

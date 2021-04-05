@@ -3,7 +3,7 @@ package com.sandbox;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 public abstract class ShaderProgram {
     protected final static String SHADER_FOLDER = "ressources/shaders/";
@@ -55,13 +55,13 @@ public abstract class ShaderProgram {
         try {
             Scanner scanner = new Scanner(new File(shader), "UTF-8");
             String source = scanner.useDelimiter("\\A").next();
+            scanner.close();
             
             if ((shaderId = gl.glCreateShader(type)) == GL2.GL_INVALID_ENUM) {
                 System.out.println("error 1");
                 System.exit(1); //TODO
             }
             
-            //gl.glShaderSource(shaderId, 1, new String[] { source }, null); //? par ligne ou par mot ?
             gl.glShaderSource(shaderId, 1, new String[] { source }, new int[] { source.length() }, 0);
             gl.glCompileShader(shaderId);
 
@@ -75,12 +75,12 @@ public abstract class ShaderProgram {
                 gl.glGetShaderInfoLog(shaderId, error[0], null, 0, log, 0);
 
                 throw new RuntimeException("Error compiling the shader " + shader + ": " + new String(log));
-            }
-            scanner.close();
+            }    
         } catch (IOException exception) {
             System.out.println("error 3" + exception);
             System.exit(1); //TODO:
         }
+
         return shaderId;
     }
 }
