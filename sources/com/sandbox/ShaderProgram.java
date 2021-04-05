@@ -57,26 +57,29 @@ public abstract class ShaderProgram {
             String source = scanner.useDelimiter("\\A").next();
             
             if ((shaderId = gl.glCreateShader(type)) == GL2.GL_INVALID_ENUM) {
-                System.out.println("erreur 1");
-                System.exit(1);
-                //TODO: error 1
+                System.out.println("error 1");
+                System.exit(1); //TODO
             }
             
-            gl.glShaderSource(shaderId, 1, new String[] { source }, null); //? par ligne ou par mot ?
+            //gl.glShaderSource(shaderId, 1, new String[] { source }, null); //? par ligne ou par mot ?
+            gl.glShaderSource(shaderId, 1, new String[] { source }, new int[] { source.length() }, 0);
             gl.glCompileShader(shaderId);
+
             int[] result = new int[1];
             gl.glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, result, 0);
             if (result[0] == GL2.GL_FALSE) {
-                System.out.println("erreur 2");
-                System.exit(1);
+                int[] error = new int[1];
+                gl.glGetShaderiv(shaderId, GL2.GL_INFO_LOG_LENGTH, error, 0);
 
-                //TODO: error 2        
+                byte[] log = new byte[error[0]];
+                gl.glGetShaderInfoLog(shaderId, error[0], null, 0, log, 0);
+
+                throw new RuntimeException("Error compiling the shader " + shader + ": " + new String(log));
             }
             scanner.close();
         } catch (IOException exception) {
-            System.out.println("erreur 3" + exception);
-            System.exit(1);
-            //TODO: error 3
+            System.out.println("error 3" + exception);
+            System.exit(1); //TODO:
         }
         return shaderId;
     }

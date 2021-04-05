@@ -18,7 +18,7 @@ public interface EventListener extends GLEventListener {
     public default void display(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
         
-        gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+        gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
 
         begin(gl);
     }
@@ -26,6 +26,10 @@ public interface EventListener extends GLEventListener {
     public abstract void begin(GL2 graphics);
 
     public default void dispose(GLAutoDrawable drawable) {
+        GL2 gl = drawable.getGL().getGL2();
+
+        gl.glUseProgram(0);
+
         end();
     }
 
@@ -50,10 +54,15 @@ public interface EventListener extends GLEventListener {
         gl.glClearDepth(1.0);
         gl.glClearStencil(0);
 
-        gl.glEnable(GL2.GL_DEPTH_TEST);
         gl.glEnable(GL2.GL_TEXTURE_2D);
         gl.glEnable(GL2.GL_BLEND);
         gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
         gl.glShadeModel(GL2.GL_SMOOTH);
+
+        System.err.println("Chosen GLCapabilities: " + drawable.getChosenGLCapabilities());
+        System.err.println("INIT GL IS: " + gl.getClass().getName());
+        System.err.println("GL_VENDOR: " + gl.glGetString(GL2.GL_VENDOR));
+        System.err.println("GL_RENDERER: " + gl.glGetString(GL2.GL_RENDERER));
+        System.err.println("GL_VERSION: " + gl.glGetString(GL2.GL_VERSION));
     }
 }

@@ -12,7 +12,7 @@ public class StaticShader extends ShaderProgram {
 
     @Override
     public void bindAttributes(GL2 gl) {
-        bindAttribute(gl, 0, "position");
+        bindAttribute(gl, 0, "attribute_position");
     }
     
 }
