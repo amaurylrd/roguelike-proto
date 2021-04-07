@@ -34,7 +34,7 @@ public abstract class ShaderProgram {
             byte[] log = new byte[error[0]];
             gl.glGetProgramInfoLog(programId, error[0], null, 0, log, 0);
             
-            throw new RuntimeException("Error lniking the program: " + new String(log));
+            throw new RuntimeException("Error linking the program: " + new String(log));
         }
 
         gl.glDetachShader(programId, vertexShaderId);
