@@ -122,7 +122,6 @@ public abstract class Scene implements EventListener, Drawable {
         }
 		shader.stop(graphics);
 		//camera.render()
-		//https://jogamp.org/deployment/v2.4.0-rc-20200115/jar/
     }
 
     @Override
