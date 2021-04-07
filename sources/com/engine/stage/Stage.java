@@ -122,7 +122,7 @@ public final class Stage extends Window implements Loopable {
             accumulator += (currentTime - frameStart) / 1000000;
             if (currentTime - frameStart > 1000) {
                 fps = 1000000000 / (currentTime - frameStart);
-                System.out.println(fps);
+                //System.out.println(fps);
                 //currentScene.getCamera().updateFPS(fps);
             }
             frameStart = currentTime;

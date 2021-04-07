@@ -19,87 +19,69 @@ public class TestScene extends Scene {
         @Override
         public void update(float dt) {}
 
-        //Do not unbind the index buffer anywhere.
-        private void allocateIndexBuffer(GL2 graphics, int[] indices) {
+        //generate VBO
+        private int generate(GL2 gl) { 
             int[] id = new int[1];
-            graphics.glGenBuffers(1, id, 0);
-            int vboId = id[0];
-            graphics.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, vboId);
+            gl.glGenBuffers(1, id, 0);
+            return id[0];
+        }
+
+        //Do not unbind the index buffer anywhere.
+        private void allocateIndexBuffer(GL2 gl, int[] indices) {
+            int vboId = generate(gl);
+            gl.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, vboId);
             
             IntBuffer buffer = Buffers.newDirectIntBuffer(indices);
-            graphics.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
+            gl.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
             buffer = null;
             //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
         }
-        
-        private void allocateAttributeBuffer(GL2 graphics, int attribute, float[] data) {
-            int[] id = new int[1];
-            graphics.glGenBuffers(1, id, 0);
-            int vboId = id[0];
-            graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, vboId); //juste remplir vboId ou le remplacer à chaque fois ?
+
+
+        private void allocateAttributeBuffer(GL2 gl, int attribute, float[] data) {
+            int vboId = generate(gl);
+            gl.glBindBuffer(GL2.GL_ARRAY_BUFFER, vboId); //binds the buffer
 
             FloatBuffer buffer = Buffers.newDirectFloatBuffer(data);
-            graphics.glBufferData(GL2.GL_ARRAY_BUFFER, data.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
+            gl.glBufferData(GL2.GL_ARRAY_BUFFER, data.length * 4, buffer, GL2.GL_DYNAMIC_DRAW); //fills the buffer
             buffer = null;
-            graphics.glVertexAttribPointer(attribute, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
-            graphics.glEnableVertexAttribArray(attribute);
-            graphics.glBindBuffer(GL2.GL_ARRAY_BUFFER, 0);
+            gl.glEnableVertexAttribArray(attribute); //enables the attribute at that location
+            gl.glVertexAttribPointer(attribute, 2, GL2.GL_FLOAT, false, 0, 0); //once the buffer is bound
+            gl.glBindBuffer(GL2.GL_ARRAY_BUFFER, 0); //unbinds the buffer
             
-            //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
-            //graphics.glDeleteVertexArrays(vboId, null); TODO: clean up vaos
+            //gl.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
+            //gl.glDeleteVertexArrays(vboId, null); TODO: clean up vaos
             //gl.glDeleteBuffers(1, vboName, 0);
         }
 
         @Override
         protected void draw(GL2 graphics) {
-            String mode = "new";
-            if (mode.equals("new")) {
-                float[] vertices = {
-                    bounds.getX(), bounds.getY(),
-                    bounds.getX(), bounds.getY() + bounds.getHeight(),
-                    bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight(),
-                    bounds.getX() + bounds.getWidth(), bounds.getY(),
-                };
+            float[] vertices = {
+                bounds.getX(), bounds.getY(),
+                bounds.getX(), bounds.getY() + bounds.getHeight(),
+                bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight(),
+                bounds.getX() + bounds.getWidth(), bounds.getY(),
+            };
 
-                int rgb = java.awt.Color.RED.getRGB();
-                float color = rgb / 250f;
-                float[] colors = {
-                    color,
-                    color,
-                    color,
-                    1
-                };
+            int[] indices = { 0, 1, 3, 3, 1, 2 };
 
-                int[] indices = { 0, 1, 3, 3, 1, 2 };
+            //creation vao
+            int[] id = new int[1];
+            graphics.glGenVertexArrays(1, id, 0);
+            int vaoId = id[0];
 
-                //creation vao
-                int[] id = new int[1];
-                graphics.glGenVertexArrays(1, id, 0);
-                int vaoId = id[0];
+            graphics.glBindVertexArray(vaoId);
+                allocateIndexBuffer(graphics, indices);
+                allocateAttributeBuffer(graphics, 0, vertices);
+            graphics.glBindVertexArray(0);
 
-                graphics.glBindVertexArray(vaoId);
-                    allocateIndexBuffer(graphics, indices);
-                    allocateAttributeBuffer(graphics, 0, vertices);
-                    //allocateAttributeBuffer(graphics, 1, colors);
-                graphics.glBindVertexArray(0);
-
-                //render
-                graphics.glBindVertexArray(vaoId);
-		            graphics.glEnableVertexAttribArray(0);
-                        graphics.glDrawElements(GL2.GL_TRIANGLES, indices.length, GL2.GL_UNSIGNED_INT, 0);
-                    graphics.glDisableVertexAttribArray(0);
-		        graphics.glBindVertexArray(0);
-                graphics.glFlush();
-
-            } else if (mode.equals("old")) {
-                graphics.glColor3f(255, 0, 0);
-                graphics.glBegin(GL2.GL_QUADS);
-                    graphics.glVertex2f(bounds.getX(), bounds.getY());
-                    graphics.glVertex2f(bounds.getX() + bounds.getWidth(), bounds.getY());
-                    graphics.glVertex2f(bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight());
-                    graphics.glVertex2f(bounds.getX(), bounds.getY() + bounds.getHeight());
-                graphics.glEnd();
-            }
+            //render
+            graphics.glBindVertexArray(vaoId);
+		        graphics.glEnableVertexAttribArray(0);
+                    graphics.glDrawElements(GL2.GL_TRIANGLES, indices.length, GL2.GL_UNSIGNED_INT, 0);
+                graphics.glDisableVertexAttribArray(0);
+		    graphics.glBindVertexArray(0);
+            graphics.glFlush();
         }
 
         @Override

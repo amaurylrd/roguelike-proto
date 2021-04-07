@@ -24,6 +24,23 @@ public abstract class ShaderProgram {
 		
         gl.glLinkProgram(programId);
 		gl.glValidateProgram(programId);
+
+        int[] status = new int[1];
+        gl.glGetProgramiv(programId, GL2.GL_LINK_STATUS, status, 0);
+        if (status[0] == GL2.GL_FALSE) {
+            int[] error = new int[1];
+            gl.glGetProgramiv(programId, GL2.GL_INFO_LOG_LENGTH, error, 0);
+
+            byte[] log = new byte[error[0]];
+            gl.glGetProgramInfoLog(programId, error[0], null, 0, log, 0);
+            
+            throw new RuntimeException("Error lniking the program: " + new String(log));
+        }
+
+        gl.glDetachShader(programId, vertexShaderId);
+		gl.glDetachShader(programId, fragmentShaderId);
+        gl.glDeleteShader(vertexShaderId);
+        gl.glDeleteShader(fragmentShaderId);
     }
 
     public void start(GL2 gl) {
@@ -34,15 +51,9 @@ public abstract class ShaderProgram {
         gl.glUseProgram(0);
     }
 
-    /*
-    clean up
-    :   + stop()
-        GL20.glDetachShader(programID, vertexShaderID);
-		GL20.glDetachShader(programID, fragmentShaderID);
-		GL20.glDeleteShader(vertexShaderID);
-		GL20.glDeleteShader(fragmentShaderID);
-		GL20.glDeleteProgram(programID);
-    */
+    public void free(GL2 gl) {
+		gl.glDeleteProgram(programId);
+    }
 
     protected abstract void bindAttributes(GL2 gl);
     
@@ -65,9 +76,9 @@ public abstract class ShaderProgram {
             gl.glShaderSource(shaderId, 1, new String[] { source }, new int[] { source.length() }, 0);
             gl.glCompileShader(shaderId);
 
-            int[] result = new int[1];
-            gl.glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, result, 0);
-            if (result[0] == GL2.GL_FALSE) {
+            int[] status = new int[1];
+            gl.glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, status, 0);
+            if (status[0] == GL2.GL_FALSE) {
                 int[] error = new int[1];
                 gl.glGetShaderiv(shaderId, GL2.GL_INFO_LOG_LENGTH, error, 0);
 
