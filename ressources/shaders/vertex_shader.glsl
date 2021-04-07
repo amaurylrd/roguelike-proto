@@ -1,8 +1,8 @@
 #version 330
 
-in vec2     attribute_position;
+layout(location = 0) in vec2 attribute_position;
 
-out vec3    v_color;
+out vec3 v_color;
 
 void    main(void)
 {

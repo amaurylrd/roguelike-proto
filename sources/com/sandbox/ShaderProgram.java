@@ -9,12 +9,10 @@ public abstract class ShaderProgram {
     protected final static String SHADER_FOLDER = "ressources/shaders/";
 
     private int programId;
-	private int vertexShaderId;
-	private int fragmentShaderId;
 
     public ShaderProgram(GL2 gl, String vertexShader, String fragmentShader) {
-        vertexShaderId = loadShader(gl, vertexShader, GL2.GL_VERTEX_SHADER);
-        fragmentShaderId = loadShader(gl, fragmentShader, GL2.GL_FRAGMENT_SHADER);
+        int vertexShaderId = loadShader(gl, vertexShader, GL2.GL_VERTEX_SHADER);
+        int fragmentShaderId = loadShader(gl, fragmentShader, GL2.GL_FRAGMENT_SHADER);
         
         programId = gl.glCreateProgram();
 		gl.glAttachShader(programId, vertexShaderId);
