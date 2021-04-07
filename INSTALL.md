@@ -28,7 +28,7 @@ The folder /includes/ at the root maintains dependencies.
 
 >**NOTE:** scala/tools/antlib.xml used to compile with Ant was removed from scala-compiler unjared files after 2.12.8
 
-2. [JOGL](https://jogamp.org/) 2.0 in /includes/third-party/jogl/
+2. [JOGL](https://jogamp.org/) 2.4.0 RC in /includes/third-party/jogl/
    1. gluegen-rt.jar
    1. gluegen-rt-natives-windows-amd64.jar
    1. jogl-all.jar
