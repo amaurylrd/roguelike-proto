@@ -34,7 +34,7 @@ The folder /includes/ at the root maintains dependencies.
    1. jogl-all.jar
    1. jogl-all-natives-windows-amd64.jar
    
-In case you need the latest stable version or whatever, follow this [url](jogamp.org/deployment/v2.4.0-rc-20210111/fat/jogamp-fat.jar) to get the most recent aggregated autobuild and download the archive *jogamp-all-platforms* containing all the Jogamp jars, native libraries and sources.
+In case you need the latest stable version or whatever, follow this [url](https://jogamp.org/deployment/v2.4.0-rc-20210111/fat/jogamp-fat.jar) to get the most recent aggregated autobuild and download the archive *jogamp-all-platforms* containing all the Jogamp jars, native libraries and sources.
 
 #### Visual Studio Code speficication
 
