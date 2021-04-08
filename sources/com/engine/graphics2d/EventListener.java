@@ -41,8 +41,8 @@ public interface EventListener extends GLEventListener {
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         
-        double scale = 0.8;
-        gl.glOrtho(0.0, width / scale, height / scale, 0.0, -1.0, 1.0);
+        double scale = 1.5;
+        gl.glOrtho(0.0, width * scale, height * scale, 0.0, -1.0, 1.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }

@@ -106,13 +106,8 @@ public abstract class Scene implements EventListener, Drawable {
         render(graphics);
     }
 
-	com.sandbox.ShaderProgram shader = null;
-
     @Override
     public void render(GL2 graphics) {
-		if (shader == null)
-			shader = new com.sandbox.StaticShader(graphics);
-		//shader.start(graphics);
         for (Layer layer : gameObjects.values()) {
             for (Component component : layer.objects) {
                 if (component.isOpaque()) {
@@ -120,7 +115,6 @@ public abstract class Scene implements EventListener, Drawable {
                 }
             }
         }
-		//shader.stop(graphics);
 		//camera.render()
     }
 

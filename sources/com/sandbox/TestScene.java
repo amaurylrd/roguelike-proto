@@ -32,7 +32,7 @@ public class TestScene extends Scene {
             gl.glBindBuffer(GL2.GL_ELEMENT_ARRAY_BUFFER, vboId);
             
             IntBuffer buffer = Buffers.newDirectIntBuffer(indices);
-            gl.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_DYNAMIC_DRAW);
+            gl.glBufferData(GL2.GL_ELEMENT_ARRAY_BUFFER, indices.length * 4, buffer, GL2.GL_STATIC_DRAW);
             buffer = null;
             //graphics.glDeleteBuffers(vboId, buffer); TODO: clean up when on closing
         }
@@ -63,6 +63,7 @@ public class TestScene extends Scene {
                 bounds.getX() + bounds.getWidth(), bounds.getY(),
             };
 
+            //sens anti-horaire
             int[] indices = { 0, 1, 3, 3, 1, 2 };
 
             //creation vao
@@ -99,5 +100,16 @@ public class TestScene extends Scene {
 			}
 		}
 		add(new Player(150, 300, 100, 100, Scene.ENTITIES_LAYER));
+    }
+
+    ShaderProgram shader = null;
+
+    @Override
+    public void render(GL2 gl) {
+        if (shader == null)
+			shader = new StaticShader(gl);
+        shader.start(gl);
+        super.render(gl);
+        shader.stop(gl);
     }
 }
