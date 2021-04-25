@@ -3,9 +3,7 @@ package com.engine.stage;
 import java.util.Map;
 import java.util.Hashtable;
 import java.awt.BorderLayout;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLException;
+import com.engine.graphics2d.Capabilities;
 import com.engine.graphics2d.Canvas;
 import com.engine.scene.Scene;
 
@@ -39,28 +37,9 @@ public final class Stage extends Window implements Loopable {
      * Constructor of this class. Instantiates the openGL profile and capabilities.
      */
     private Stage() {
-        try {
-            GLProfile.initSingleton();
-            GLProfile profile = GLProfile.get(GLProfile.GL2);
-            
-            GLCapabilities capabilities = new GLCapabilities(profile);
-            capabilities.setRedBits(8);
-            capabilities.setGreenBits(8);
-            capabilities.setBlueBits(8);
-            capabilities.setAlphaBits(8);
-            capabilities.setDoubleBuffered(true);
-            capabilities.setBackgroundOpaque(true);
-            capabilities.setHardwareAccelerated(true);
-            capabilities.setNumSamples(4);
-            capabilities.setBackgroundOpaque(false);
-            capabilities.setSampleBuffers(true);
-
-            canvas = new Canvas(capabilities);
+            canvas = new Canvas();
             canvas.setSize(getSize());
             getContentPane().add(canvas, BorderLayout.CENTER);
-        } catch (GLException exception) {
-            throw new RuntimeException("Error: OpenGL version is not supported.", exception);
-        }
     }
 
     /**

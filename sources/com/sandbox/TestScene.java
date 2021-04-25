@@ -23,6 +23,7 @@ public class TestScene extends Scene {
         private int generate(GL2 gl) { 
             int[] id = new int[1];
             gl.glGenBuffers(1, id, 0);
+            //gl.glGenBuffers();
             return id[0];
         }
 
@@ -108,8 +109,8 @@ public class TestScene extends Scene {
     public void render(GL2 gl) {
         if (shader == null)
 			shader = new StaticShader(gl);
-        shader.start(gl);
+        //shader.start(gl);
         super.render(gl);
-        shader.stop(gl);
+        //shader.stop(gl);
     }
 }

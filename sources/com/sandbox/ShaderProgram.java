@@ -3,7 +3,9 @@ package com.sandbox;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.nio.IntBuffer;
 import com.jogamp.opengl.GL2;
+import com.jogamp.common.nio.Buffers;
 
 public abstract class ShaderProgram {
     protected final static String SHADER_FOLDER = "ressources/shaders/";
@@ -71,17 +73,18 @@ public abstract class ShaderProgram {
                 System.exit(1); //TODO
             }
             
-            gl.glShaderSource(shaderId, 1, new String[] { source }, new int[] { source.length() }, 0);
+            IntBuffer length = Buffers.newDirectIntBuffer(new int[] { source.length() });
+            gl.glShaderSource(shaderId, 1, new String[] { source }, length);
             gl.glCompileShader(shaderId);
 
-            int[] status = new int[1];
-            gl.glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, status, 0);
-            if (status[0] == GL2.GL_FALSE) {
-                int[] error = new int[1];
-                gl.glGetShaderiv(shaderId, GL2.GL_INFO_LOG_LENGTH, error, 0);
+            IntBuffer status = Buffers.newDirectIntBuffer(1);
+            gl.glGetShaderiv(shaderId, GL2.GL_COMPILE_STATUS, status);
+            if (status.get(0) == GL2.GL_FALSE) {
+                IntBuffer error = Buffers.newDirectIntBuffer(1);
+                gl.glGetShaderiv(shaderId, GL2.GL_INFO_LOG_LENGTH, error);
 
-                byte[] log = new byte[error[0]];
-                gl.glGetShaderInfoLog(shaderId, error[0], null, 0, log, 0);
+                byte[] log = new byte[error.get(0)];
+                gl.glGetShaderInfoLog(shaderId, error.get(0), null, 0, log, 0);
 
                 throw new RuntimeException("Error compiling the shader " + shader + ": " + new String(log));
             }    
