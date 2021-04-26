@@ -72,7 +72,7 @@ public class Collisions {
 	/**
 	 * The penetration percentage to correct.
 	 */
-	public static final float PENETRATION_CORRETION = 0.9f;
+	public static final float PENETRATION_CORRECTION = 0.9f;
 
 	/**
 	 * The maximum penetration in 2 * dt.
@@ -85,7 +85,7 @@ public class Collisions {
 	public static void correction() {
 		for (Manifold contact : contacts) {
 			if (contact.colliderA.im + contact.colliderB.im > 0) {
-				float correction =  (contact.penetration - Math.signum(contact.penetration) *  PENETRATION_ALLOWANCE) / (contact.colliderA.im + contact.colliderB.im) * PENETRATION_CORRETION;
+				float correction = (contact.penetration - Math.signum(contact.penetration) *  PENETRATION_ALLOWANCE) / (contact.colliderA.im + contact.colliderB.im) * PENETRATION_CORRECTION;
 				if (contact.colliderA.isDynamic())
 					contact.colliderA.updateImpulse(Vector.scale(contact.normal, contact.colliderA.im * correction));
 				if (contact.colliderB.isDynamic())

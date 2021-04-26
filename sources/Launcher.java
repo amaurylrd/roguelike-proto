@@ -9,6 +9,11 @@ public class Launcher extends Application {
     }
 
     @Override
+    protected void init() {
+        System.setProperty("sun.java2d.opengl", "true");
+    }
+
+    @Override
     public void start(Stage primaryStage) {
         primaryStage.addScene("test_opengl", new com.sandbox.TestScene());
         primaryStage.setScene("test_opengl");
@@ -21,9 +26,4 @@ public class Launcher extends Application {
 
     @Override
     public void stop() {}
-
-    @Override
-    protected void init() {
-        System.setProperty("sun.java2d.opengl", "true");
-    }
 }

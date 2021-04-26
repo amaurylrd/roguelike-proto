@@ -42,10 +42,10 @@ public abstract class Collider extends Component implements Collidable {
     protected boolean traversable = false;
 
     /**
-    * Specifies the density of this {@code Collider}.
-    * An object with 0 invert mass have infinite mass.
-    * This value must be positiv.
-    */
+     * Specifies the density of this {@code Collider}.
+     * An object with 0 invert mass have infinite mass.
+     * This value must be positiv.
+     */
     public float im = 0;
 
     /**
